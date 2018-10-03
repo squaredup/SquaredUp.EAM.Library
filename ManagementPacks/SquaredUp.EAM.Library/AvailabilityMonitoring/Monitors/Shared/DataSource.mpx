@@ -1,0 +1,122 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <TypeDefinitions>
+    
+    <ModuleTypes>
+      
+      <DataSourceModuleType ID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" Accessibility="Internal" Batching="false">
+        <Configuration>
+          <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" type="xsd:string" name="ConfigurationJson" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" type="xsd:string" name="Script" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" type="xsd:double" name="ResponseTimeThreshold" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="ConfigurationJson" Selector="$Config/ConfigurationJson$" ParameterType="string" />
+          <OverrideableParameter ID="Script" Selector="$Config/Script$" ParameterType="string" />
+          <OverrideableParameter ID="ResponseTimeThreshold" Selector="$Config/ResponseTimeThreshold$" ParameterType="double" />
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.Scheduler">
+                <Scheduler>
+                  <SimpleReccuringSchedule>
+                    <Interval Unit="Seconds">$Config/IntervalSeconds$</Interval>
+                    <SyncTime>$Config/SyncTime$</SyncTime>
+                  </SimpleReccuringSchedule>
+                  <ExcludeDates />
+                </Scheduler>
+              </DataSource>
+              <ProbeAction ID="PA" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagTriggerOnlyProbe">
+                <ScriptName>SquaredUp.EAM.AvailabilityMonitoring.Web.Basic.Monitor.DataSource.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/AvailabilityMonitoring/Monitors/Shared/Scripts/SquaredUp.EAM.AvailabilityMonitoring.Web.Basic.Monitor.DataSource.ps1$</ScriptBody>
+                <Parameters>
+                  <Parameter>
+                    <Name>ConfigurationJson</Name>
+                    <Value>$Config/ConfigurationJson$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Script</Name>
+                    <Value>$Config/Script$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>ResponseTimeThreshold</Name>
+                    <Value>$Config/ResponseTimeThreshold$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Username</Name>
+                    <Value>$RunAs[Name='SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.Custom.Parameter']/UserName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Password</Name>
+                    <Value>$RunAs[Name='SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.Custom.Parameter']/Password$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="PA">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.PropertyBagData</OutputType>
+      </DataSourceModuleType>
+      
+    </ModuleTypes>
+    
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript">
+          <Name>Enterprise Application Availability Monitoring PowerShell script DataSource</Name>
+          <Description>Executes the given PowerShell script using and returns the results and response time.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" SubElementID="ConfigurationJson">
+          <Name>Configuration JSON</Name>
+          <Description>A JSON blob containing configuration data for the provided script.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" SubElementID="IntervalSeconds">
+          <Name>Interval (Seconds)</Name>
+          <Description>The number of seconds between script executions.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" SubElementID="ResponseTimeThreshold">
+          <Name>Response Time Threshold (ms)</Name>
+          <Description>The number of milliseconds that the given script should complete in.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" SubElementID="Script">
+          <Name>Script</Name>
+          <Description>The script to execute.  Should either return an object with a Success and Description property, or throw an exception if the test fails.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" SubElementID="SyncTime">
+          <Name>Sync Time (hh:mm)</Name>
+          <Description>The time around which executions should be synchronised.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" SubElementID="TimeoutSeconds">
+          <Name>Timeout (Seconds)</Name>
+          <Description>The number of seconds after which the script will be terminated.</Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+  
+</ManagementPackFragment>

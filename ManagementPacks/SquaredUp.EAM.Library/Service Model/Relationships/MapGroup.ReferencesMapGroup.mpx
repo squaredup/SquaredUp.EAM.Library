@@ -1,0 +1,49 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <RelationshipTypes>
+
+        <RelationshipType
+            ID="SquaredUp.EAM.Library.Relationship.MapGroup.ReferencesMapGroup"
+            Base="System!System.Reference"
+            Abstract="false"
+            Accessibility="Public">
+
+          <Property ID="TargetPortNumbers" Type="string" CaseSensitive="false" MaxLength="4000" MinLength="1" />
+
+          <Source ID="Source" Type="SquaredUp.EAM.Library.Class.MapGroup"/>
+          <Target ID="Target" Type="SquaredUp.EAM.Library.Class.MapGroup"/>
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+    <Monitors>
+    </Monitors>
+  </Monitoring>
+
+  <Presentation>
+    <StringResources>
+    </StringResources>
+  </Presentation>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.MapGroup.ReferencesMapGroup">
+          <Name>MapGroup references MapGroup</Name>
+          <Description>A relationship representing a dependency between map group instances within the Map collection of an Enterprise Application.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.MapGroup.ReferencesMapGroup" SubElementID="TargetPortNumbers">
+          <Name>Port numbers</Name>
+          <Description>A comma-separated list of the TCP port numbers which should be probed on all servers in the target map group from all servers in the source group using TCP link monitoring.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

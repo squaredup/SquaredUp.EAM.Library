@@ -1,0 +1,127 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <RelationshipTypes>
+
+        <!-- Relationship to host our TCP config objects on DependenciesNode objects -->
+        <!-- SquaredUp.EAM.TcpMonitor.DependenciesNodeHostsTcpConfiguration -->
+        <RelationshipType ID="SquaredUp.EAM.Library.Relationship.TcpMonitor.DependenciesNodeHostsTcpConfiguration" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="source" Type="SquaredUp.EAM.Library.Class.DependenciesNode" />
+          <Target ID="target" Type="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration" />
+        </RelationshipType>
+        
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+    <Monitors>
+
+      <!-- Single one of these dependency monitors needed to make sure the health of each
+           SquaredUp.EAM.TcpMonitor.Configuration instance rolls up to its hosting Dependency
+           Monitoring object -->
+      <DependencyMonitor
+        ID="SquaredUp.EAM.Library.Monitor.TcpMonitor.RollupAvailabilityHealth"
+        Accessibility="Public"
+        Enabled="true"
+        Target="SquaredUp.EAM.Library.Class.DependenciesNode"
+        ParentMonitorID="Health!System.Health.AvailabilityState"
+        Remotable="true"
+        Priority="Normal"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.TcpMonitor.DependenciesNodeHostsTcpConfiguration"
+        MemberMonitor="Health!System.Health.AvailabilityState">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor
+        ID="SquaredUp.EAM.Library.Monitor.TcpMonitor.RollupConfigurationHealth"
+        Accessibility="Public"
+        Enabled="true"
+        Target="SquaredUp.EAM.Library.Class.DependenciesNode"
+        ParentMonitorID="Health!System.Health.ConfigurationState"
+        Remotable="true"
+        Priority="Normal"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.TcpMonitor.DependenciesNodeHostsTcpConfiguration"
+        MemberMonitor="Health!System.Health.ConfigurationState">
+        <Category>ConfigurationHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor
+      ID="SquaredUp.EAM.Library.Monitor.TcpMonitor.RollupPerformanceHealth"
+      Accessibility="Public"
+      Enabled="true"
+      Target="SquaredUp.EAM.Library.Class.DependenciesNode"
+      ParentMonitorID="Health!System.Health.PerformanceState"
+      Remotable="true"
+      Priority="Normal"
+      RelationshipType="SquaredUp.EAM.Library.Relationship.TcpMonitor.DependenciesNodeHostsTcpConfiguration"
+      MemberMonitor="Health!System.Health.PerformanceState">
+        <Category>PerformanceHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor
+      ID="SquaredUp.EAM.Library.Monitor.TcpMonitor.RollupSecurityHealth"
+      Accessibility="Public"
+      Enabled="true"
+      Target="SquaredUp.EAM.Library.Class.DependenciesNode"
+      ParentMonitorID="Health!System.Health.SecurityState"
+      Remotable="true"
+      Priority="Normal"
+      RelationshipType="SquaredUp.EAM.Library.Relationship.TcpMonitor.DependenciesNodeHostsTcpConfiguration"
+      MemberMonitor="Health!System.Health.SecurityState">
+        <Category>SecurityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+      
+    </Monitors>
+  </Monitoring>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.TcpMonitor.DependenciesNodeHostsTcpConfiguration">
+          <Name>Dependencies Node Hosts TCP Configuration</Name>
+          <Description>Enterprise Application Dependencies node hosts TCP Monitoring Configuration</Description>
+        </DisplayString>
+
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.RollupAvailabilityHealth">
+          <Name>Enterprise Application TCP Availability Roll-up</Name>
+          <Description>
+            This rolls the health state of all TCP Monitoring instances on a computer to
+            the Dependency Monitoring object on that computer.
+          </Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.RollupConfigurationHealth">
+          <Name>Enterprise Application TCP Configuration Roll-up</Name>
+          <Description>
+            This rolls the health state of all TCP Monitoring instances on a computer to
+            the Dependency Monitoring object on that computer.
+          </Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.RollupPerformanceHealth">
+          <Name>Enterprise Application TCP Performance Roll-up</Name>
+          <Description>
+            This rolls the health state of all TCP Monitoring instances on a computer to
+            the Dependency Monitoring object on that computer.
+          </Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.RollupSecurityHealth">
+          <Name>Enterprise Application TCP Security Roll-up</Name>
+          <Description>
+            This rolls the health state of all TCP Monitoring instances on a computer to
+            the Dependency Monitoring object on that computer.
+          </Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

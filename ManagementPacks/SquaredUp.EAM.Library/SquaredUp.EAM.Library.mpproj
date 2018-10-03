@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{196967a7-da6a-4983-a3eb-3390ad065a31}</ProjectGuid>
+    <RootNamespace>SquaredUp.EAM.Library</RootNamespace>
+    <Name>SquaredUp.EAM.Library</Name>
+    <ManagementPackName>SquaredUp.EAM.Library</ManagementPackName>
+    <Version>1.0.1.0</Version>
+    <MpFrameworkVersion>v7.0</MpFrameworkVersion>
+    <MpFrameworkProfile>OM</MpFrameworkProfile>
+    <ProductVersion>1.1.0.0</ProductVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <GenerateSealed>True</GenerateSealed>
+    <Company>Squared Up Ltd.</Company>
+    <Copyright>Copyright (c) Squared Up Ltd. All rights reserved.</Copyright>
+    <DelaySigning>False</DelaySigning>
+    <AssemblyOriginatorKeyFile>..\SquaredUp.EAM.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DelaySigning>False</DelaySigning>
+    <Company>Squared Up Ltd.</Company>
+    <Copyright>Copyright (c) Squared Up Ltd. All rights reserved.</Copyright>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\SquaredUp.EAM.snk</AssemblyOriginatorKeyFile>
+    <GenerateSealed>True</GenerateSealed>
+  </PropertyGroup>
+  <ItemGroup>
+    <ManagementPackReference Include="Microsoft.SystemCenter.DataWarehouse.Library">
+      <Alias>MSDL</Alias>
+      <MinVersion>7.0.8427.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.InstanceGroup.Library">
+      <Alias>MSIL</Alias>
+      <MinVersion>7.5.8501.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Library">
+      <Alias>SC</Alias>
+      <MinVersion>7.0.8427.0</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Library">
+      <Alias>System</Alias>
+      <PackageToBundle>False</PackageToBundle>
+      <MinVersion>7.5.8501.0</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.Windows.Library">
+      <Alias>Windows</Alias>
+      <PackageToBundle>False</PackageToBundle>
+      <MinVersion>7.5.8501.0</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Health.Library">
+      <Alias>Health</Alias>
+      <PackageToBundle>False</PackageToBundle>
+      <MinVersion>7.0.8427.0</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.SyntheticTransactions.Library">
+      <Alias>Synth</Alias>
+      <PackageToBundle>False</PackageToBundle>
+      <MinVersion>7.0.8560.0</MinVersion>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Performance.Library">
+      <Alias>Perf</Alias>
+      <MinVersion>7.0.8427.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AvailabilityMonitoring\Classes\ApplicationAvailabilityMonitoringNode.Hosts.ApplicationAvailabilityWatcher.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Classes\ApplicationAvailabilityMonitoringNode.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Classes\ApplicationAvailabilityWatcher.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Classes\StaticDiscoveryDataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Groups\TestGroups.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Shared\ConditionDetection.OptimizedPerfMapper.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Shared\DataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Shared\MonitorType.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Custom\ApplicationAvailabilityWatcher.Custom.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Custom\ApplicationAvailabilityWatcher.Custom.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Custom\ApplicationAvailabilityWatcher.Custom.Rule.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Tcp\ApplicationAvailabilityWatcher.Tcp.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Tcp\ApplicationAvailabilityWatcher.Tcp.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Tcp\ApplicationAvailabilityWatcher.Tcp.Rule.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Web\ApplicationAvailabilityWatcher.Web.Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Web\ApplicationAvailabilityWatcher.Web.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Monitors\Types\Web\ApplicationAvailabilityWatcher.Web.Rule.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Secure References\SecureReference.AvailabilityMonitoring.Custom.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Secure References\SecureReference.AvailabilityMonitoring.Custom.Parameter.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Secure References\SecureReference.AvailabilityMonitoring.TCP.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AvailabilityMonitoring\Secure References\SecureReference.AvailabilityMonitoring.Web.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManagementPack.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\Datasource.DiscoveryProvider.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\Datasource.NTServiceMonitoringDiscoveryProvider.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\AggregateMonitor.ApplicationHealth.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\UnitMonitor.NTServiceMonitor.ServiceRunning.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Tasks\AgentTask.NTServiceMonitor.CheckDependentServices.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Tasks\AgentTask.NTServiceMonitor.Start.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Modules\Datasource.TcpMonitoringDiscoveryProvider.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\Monitors\UnitMonitor.TcpMonitor.ConnectionState.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monitoring\MonitorTypes\MonitorType.TcpProbe.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManualAvailability\Monitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManualAvailability\Task.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\Availability.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\Dependencies.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\DependenciesNode.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\EnterpriseApplication.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\ExistingAvailability.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\Map.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\MapGroup.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\TcpMonitor.Configuration.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Classes\NTServiceMonitor.Configuration.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\Availability.ContainsEntity.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\Computer.HostsDependenciesNode.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\Dependencies.ContainsEntity.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\DependenciesNode.Hosts.NTServiceMonitor.Configuration.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\DependenciesNode.HostsTcpMonitor.Configuration.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\EnterpriseApplication.ContainsAvailability.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\EnterpriseApplication.ContainsDependencies.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\EnterpriseApplication.ContainsMap.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\ExistingAvailability.ContainsEntity.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\Map.ContainsMapGroup.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\MapGroup.ContainsEntity.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\MapGroup.ContainsTcpMonitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Service Model\Relationships\MapGroup.ReferencesMapGroup.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AvailabilityMonitoring\Classes" />
+    <Folder Include="AvailabilityMonitoring\Groups" />
+    <Folder Include="AvailabilityMonitoring\Monitors" />
+    <Folder Include="AvailabilityMonitoring\Monitors\Shared\Scripts" />
+    <Folder Include="AvailabilityMonitoring\Monitors\Types" />
+    <Folder Include="AvailabilityMonitoring\Monitors\Shared" />
+    <Folder Include="AvailabilityMonitoring\Monitors\Types\Custom" />
+    <Folder Include="AvailabilityMonitoring\Monitors\Types\Tcp\Scripts" />
+    <Folder Include="AvailabilityMonitoring\Monitors\Types\Web" />
+    <Folder Include="AvailabilityMonitoring\Monitors\Types\Tcp" />
+    <Folder Include="AvailabilityMonitoring\Monitors\Types\Web\Scripts" />
+    <Folder Include="AvailabilityMonitoring\Secure References" />
+    <Folder Include="ManualAvailability" />
+    <Folder Include="Modules" />
+    <Folder Include="Modules\Scripts" />
+    <Folder Include="Monitoring" />
+    <Folder Include="Monitoring\Monitors" />
+    <Folder Include="Monitoring\Tasks" />
+    <Folder Include="Monitoring\MonitorTypes" />
+    <Folder Include="Monitoring\Discoveries" />
+    <Folder Include="AvailabilityMonitoring" />
+    <Folder Include="Service Model" />
+    <Folder Include="Service Model\Classes" />
+    <Folder Include="Service Model\Relationships" />
+    <Folder Include="Service Model\Overrides" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="AvailabilityMonitoring\Monitors\Shared\Scripts\SquaredUp.EAM.AvailabilityMonitoring.Web.Basic.Monitor.DataSource.ps1" />
+    <EmbeddedResource Include="AvailabilityMonitoring\Monitors\Types\Tcp\Scripts\TcpTest.ps1" />
+    <EmbeddedResource Include="AvailabilityMonitoring\Monitors\Types\Web\Scripts\WebTest.ps1" />
+    <EmbeddedResource Include="Modules\Scripts\SquaredUp.EAM.Discovery.ps1" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
+</Project>

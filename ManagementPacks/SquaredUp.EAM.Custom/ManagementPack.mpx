@@ -1,0 +1,26 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Custom">
+          <Name>Squared Up Enterprise Application Monitoring Overrides</Name>
+          <Description>Provides default overrides and customisable content for Squared Up Enterprise Application Monitoring.</Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+      <KnowledgeArticles>
+  
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Custom" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>An intentionally unsealed management pack that contains sample settings and defaults.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+    
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

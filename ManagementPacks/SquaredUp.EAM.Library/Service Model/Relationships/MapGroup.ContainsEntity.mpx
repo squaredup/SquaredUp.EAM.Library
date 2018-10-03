@@ -1,0 +1,114 @@
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <RelationshipTypes>
+
+        <RelationshipType
+            ID="SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity" 
+            Base="System!System.Containment"
+            Abstract="true"
+            Accessibility="Public">
+          <Source ID="Source" Type="SquaredUp.EAM.Library.Class.MapGroup"/>
+          <Target ID="Target" Type="System!System.Entity"/>
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+    <Monitors>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.MapGroup.ContainsEntity.Rollup.Availability"
+          Target="SquaredUp.EAM.Library.Class.MapGroup"
+          RelationshipType="SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity"
+          ParentMonitorID="Health!System.Health.AvailabilityState"
+          MemberMonitor="Health!System.Health.AvailabilityState"
+          Accessibility="Public"
+          Priority="Normal"
+          Remotable="true"
+          Enabled="true">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.MapGroup.ContainsEntity.Rollup.Configuration"
+          Target="SquaredUp.EAM.Library.Class.MapGroup"
+          RelationshipType="SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity"
+          ParentMonitorID="Health!System.Health.ConfigurationState"
+          MemberMonitor="Health!System.Health.ConfigurationState"
+          Accessibility="Public"
+          Priority="Normal"
+          Remotable="true"
+          Enabled="true">
+        <Category>ConfigurationHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.MapGroup.ContainsEntity.Rollup.Performance"
+          Target="SquaredUp.EAM.Library.Class.MapGroup"
+          RelationshipType="SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity"
+          ParentMonitorID="Health!System.Health.PerformanceState"
+          MemberMonitor="Health!System.Health.PerformanceState"
+          Accessibility="Public"
+          Priority="Normal"
+          Remotable="true"
+          Enabled="true">
+        <Category>PerformanceHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.MapGroup.ContainsEntity.Rollup.Security"
+          Target="SquaredUp.EAM.Library.Class.MapGroup"
+          RelationshipType="SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity"
+          ParentMonitorID="Health!System.Health.SecurityState"
+          MemberMonitor="Health!System.Health.SecurityState"
+          Accessibility="Public"
+          Priority="Normal"
+          Remotable="true"
+          Enabled="true">
+        <Category>SecurityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+      
+    </Monitors>
+  </Monitoring>
+
+  <Presentation>
+    <StringResources>
+    </StringResources>
+  </Presentation>
+  
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity">
+          <Name>MapGroup contains Entity</Name>
+          <Description>Abstract relationship to contain objects of any type within map groups of an Enterprise Application. Each Enterprise Application will create its own specialised sub-class(es) of this relationship.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.MapGroup.ContainsEntity.Rollup.Availability">
+          <Name>Group Availability Rollup</Name>
+          <Description>Rollup availability health of a contained entity.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.MapGroup.ContainsEntity.Rollup.Configuration">
+          <Name>Group Configuration Rollup</Name>
+          <Description>Rollup configuration health of a contained entity.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.MapGroup.ContainsEntity.Rollup.Performance">
+          <Name>Group Performance Rollup</Name>
+          <Description>Rollup performance health of a contained entity.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.MapGroup.ContainsEntity.Rollup.Security">
+          <Name>Group Security Rollup</Name>
+          <Description>Rollup security health of a contained entity.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

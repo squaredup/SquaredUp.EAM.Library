@@ -1,0 +1,142 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <RelationshipTypes>
+
+        <RelationshipType ID="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies" Base="System!System.Containment" Abstract="false" Accessibility="Public">
+          <Source ID="Source" Type="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"/>
+          <Target ID="Target" Type="SquaredUp.EAM.Library.Class.Dependencies"/>
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+    <Monitors>
+
+      <AggregateMonitor
+        ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.DependenciesState"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        ParentMonitorID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ApplicationHealthState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="false">
+        <!-- NOTE: Enabled is false, ensuring that this does *not* rollup to overall entity health -->
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </AggregateMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup"
+                         Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+                         RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies"
+                         ParentMonitorID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.DependenciesState"
+                         MemberMonitor="Health!System.Health.EntityState"
+                         Accessibility="Public"
+                         Priority="Normal"
+                         Remotable="true"
+                         Enabled="true">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup.Availability"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies"
+        ParentMonitorID="Health!System.Health.AvailabilityState"
+        MemberMonitor="Health!System.Health.AvailabilityState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="false">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup.Configuration"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies"
+        ParentMonitorID="Health!System.Health.ConfigurationState"
+        MemberMonitor="Health!System.Health.ConfigurationState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="false">
+        <Category>ConfigurationHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup.Performance"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies"
+        ParentMonitorID="Health!System.Health.PerformanceState"
+        MemberMonitor="Health!System.Health.PerformanceState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="false">
+        <Category>PerformanceHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup.Security"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies"
+        ParentMonitorID="Health!System.Health.SecurityState"
+        MemberMonitor="Health!System.Health.SecurityState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="false">
+        <Category>SecurityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+
+    </Monitors>
+  </Monitoring>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies">
+          <Name>Enterprise Application contains Dependencies</Name>
+          <Description>Relationship to contain the top-level Dependencies collection within an Enterprise Application (by default does not roll-up health-state).</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.DependenciesState">
+          <Name>Dependencies</Name>
+          <Description>The health of all dependencies of this application.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup">
+          <Name>Rollup of Dependencies</Name>
+          <Description>Rollup entity health of dependencies. Note that this condenses overall entity health (availability, performance, configuration and security) to availability health.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup.Availability">
+          <Name>Dependencies Availability rollup</Name>
+          <Description>Rollup availability health of the top-level Dependencies collection.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup.Configuration">
+          <Name>Dependencies Configuration rollup</Name>
+          <Description>Rollup configuration health of the top-level Dependencies collection.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup.Performance">
+          <Name>Dependencies Performance rollup</Name>
+          <Description>Rollup performance health of the top-level Dependencies collection.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsDependencies.Rollup.Security">
+          <Name>Dependencies Security rollup</Name>
+          <Description>Rollup security health of the top-level Dependencies collection.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -1,0 +1,56 @@
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType
+          ID="SquaredUp.EAM.Library.Class.MapGroup"
+          Base="System!System.LogicalEntity"
+          Accessibility="Public"
+          Abstract="true"
+          Hosted="false"
+          Singleton="false">
+
+          <Property ID="ApplicationId" Type="guid" Key="true" />
+          <Property ID="GroupId" Type="guid" Key="true" />
+          <Property ID="HorizIndex" Type="int" Key="false" />
+          <Property ID="VertIndex" Type="int" Key="false" />
+
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.MapGroup">
+          <Name>Enterprise Application - MapGroup</Name>
+          <Description>A single group of components and hosting objects within the map collection of an Enterprise Application as created by Squared Up Visual Application Discovery &amp; Analysis.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.MapGroup" SubElementID="ApplicationId">
+          <Name>Enterprise Application Id</Name>
+          <Description>The Id of the Enterprise Application within which this map group is contained.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.MapGroup" SubElementID="GroupId">
+          <Name>Group Id</Name>
+          <Description>The Id of this map group (used internally by the EA Designer).</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.MapGroup" SubElementID="HorizIndex">
+          <Name>Horizontal Index</Name>
+          <Description>The horizontal index of this map group inside the EA map (used internally by the EA Designer).</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.MapGroup" SubElementID="VertIndex">
+          <Name>Vertical Index</Name>
+          <Description>The vertical index of this map group inside the EA map (used internally by the EA Designer).</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

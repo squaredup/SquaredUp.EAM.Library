@@ -1,0 +1,175 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <TypeDefinitions>
+    
+    <MonitorTypes>
+      
+      <UnitMonitorType ID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" Accessibility="Internal">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="ErrorCondition" NoDetection="false" />
+          <MonitorTypeState ID="WarningCondition" NoDetection="false" />
+          <MonitorTypeState ID="SuccessCondition" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration>
+		      <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+		      <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+		      <xsd:element minOccurs="1" type="xsd:integer" name="TimeoutSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" type="xsd:string" name="ConfigurationJson" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" type="xsd:string" name="Script" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="1" type="xsd:double" name="ResponseTimeThreshold" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+		      <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+		      <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+		      <OverrideableParameter ID="TimeoutSeconds" Selector="$Config/TimeoutSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="Script" Selector="$Config/Script$" ParameterType="string" />
+          <OverrideableParameter ID="Configuration" Selector="$Config/ConfigurationJson$" ParameterType="string" />
+          <OverrideableParameter ID="ResponseTimeThreshold" Selector="$Config/ResponseTimeThreshold$" ParameterType="double" />
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+            <DataSource ID="DS" TypeID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript">
+			        <IntervalSeconds>$Config/IntervalSeconds$</IntervalSeconds>
+			        <SyncTime>$Config/SyncTime$</SyncTime>	
+			        <TimeoutSeconds>$Config/TimeoutSeconds$</TimeoutSeconds>
+              <ConfigurationJson>$Config/ConfigurationJson$</ConfigurationJson>
+              <Script>$Config/Script$</Script>
+              <ResponseTimeThreshold>$Config/ResponseTimeThreshold$</ResponseTimeThreshold>
+            </DataSource>
+            <ConditionDetection ID="SuccessConditionFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="String">Property[@Name='Success']</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="Boolean">true</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="WarningConditionFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='Success']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="Boolean">false</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='Level']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">warning</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="ErrorConditionFilter" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <And>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='Success']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="Boolean">false</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                  <Expression>
+                    <SimpleExpression>
+                      <ValueExpression>
+                        <XPathQuery Type="String">Property[@Name='Level']</XPathQuery>
+                      </ValueExpression>
+                      <Operator>Equal</Operator>
+                      <ValueExpression>
+                        <Value Type="String">error</Value>
+                      </ValueExpression>
+                    </SimpleExpression>
+                  </Expression>
+                </And>
+                </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="SuccessCondition">
+              <Node ID="SuccessConditionFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="WarningCondition">
+              <Node ID="WarningConditionFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ErrorCondition">
+              <Node ID="ErrorConditionFilter">
+                <Node ID="DS" />
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+    </MonitorTypes>
+    
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript">
+          <Name>Enterprise Application Availability Monitoring PowerShell Script MonitorType</Name>
+          <Description>Three state monitortype that sets state depending on the results of the given script.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" SubElementID="Configuration">
+          <Name>Configuration</Name>
+          <Description>A block of JSON converted to an object and available in the script as $config.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" SubElementID="IntervalSeconds">
+          <Name>Interval (Seconds)</Name>
+          <Description>The number of seconds between script executions.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" SubElementID="ResponseTimeThreshold">
+          <Name>Response Time Threshold (ms)</Name>
+          <Description>The number of milliseconds that the given script should complete in.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" SubElementID="Script">
+          <Name>Script</Name>
+          <Description>The script to execute.  Should either return an object with a Success and Description property, or throw an exception if the test fails.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" SubElementID="SyncTime">
+          <Name>Sync Time (hh:mm)</Name>
+          <Description>The time around which executions should be synchronised.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" SubElementID="TimeoutSeconds">
+          <Name>Timeout (Seconds)</Name>
+          <Description>The number of seconds after which the script will be terminated.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+  
+</ManagementPackFragment>

@@ -1,0 +1,78 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+    <ModuleTypes>
+
+      <DataSourceModuleType ID="SquaredUp.EAM.Library.Datasource.DiscoveryProvider" Accessibility="Public" Batching="false">
+        <Configuration>
+          <xsd:element name="DiscoveriesJson" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="IntervalSeconds" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" ParameterType="int" Selector="$Config/IntervalSeconds$"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.Discovery.Scheduler">
+                <Scheduler>
+                  <SimpleReccuringSchedule>
+                    <Interval>$Config/IntervalSeconds$</Interval>
+                    <SyncTime></SyncTime>
+                  </SimpleReccuringSchedule>
+                  <ExcludeDates />
+                </Scheduler>
+              </DataSource>
+              <ProbeAction ID="Discovery" TypeID="Windows!Microsoft.Windows.PowerShellDiscoveryProbe">
+                <ScriptName>SquaredUp.EAM.Discovery.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/Modules/Scripts/SquaredUp.EAM.Discovery.ps1$</ScriptBody>
+                <Parameters>
+                  <Parameter>
+                    <Name>sourceId</Name>
+                    <Value>$MPElement$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>managedEntityId</Name>
+                    <Value>$Target/Id$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>DiscoveriesJson</Name>
+                    <Value>$Config/DiscoveriesJson$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>300</TimeoutSeconds>
+              </ProbeAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="Discovery">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.Discovery.Data</OutputType>
+      </DataSourceModuleType>
+
+    </ModuleTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.DiscoveryProvider">
+          <Name>Squared Up EAM Discovery provider data source</Name>
+          <Description>Discovers additional objects and relationships for Enterprise Applications.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.DiscoveryProvider" SubElementID="IntervalSeconds">
+          <Name>Interval (Seconds)</Name>
+          <Description>The number of seconds between discovery attempts.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+
+
+</ManagementPackFragment>

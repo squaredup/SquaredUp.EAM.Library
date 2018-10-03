@@ -1,0 +1,35 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- This is the class of the Dependency Monitoring object we create under every computer
+             which has EA monitoring objects on -->
+        <ClassType
+          ID="SquaredUp.EAM.Library.Class.DependenciesNode"
+          Base="System!System.LogicalEntity"
+          Accessibility="Public"
+          Abstract="false"
+          Hosted="true"
+          Singleton="false">
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.DependenciesNode">
+          <Name>Enterprise Application Dependency Monitoring</Name>
+          <Description>Instances of this class are hosted on Windows Computer objects to contain any dependency monitoring for Enterprise applications.</Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+  
+</ManagementPackFragment>

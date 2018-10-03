@@ -1,0 +1,26 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <RelationshipTypes>
+
+        <RelationshipType ID="SquaredUp.EAM.Library.Relationship.AvailabilityMonitoring.MonitoringNode.Hosts.Watcher" Base="System!System.Hosting" Abstract="false" Accessibility="Public">
+          <Source ID="Source" Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode"/>
+          <Target ID="Target" Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"/>
+        </RelationshipType>
+        
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.AvailabilityMonitoring.MonitoringNode.Hosts.Watcher">
+          <Name>Squared Up Application Availability MonitoringNode hosts ApplicationAvailabilityWatcher</Name>
+          <Description>Monitoring Nodes host watchers</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

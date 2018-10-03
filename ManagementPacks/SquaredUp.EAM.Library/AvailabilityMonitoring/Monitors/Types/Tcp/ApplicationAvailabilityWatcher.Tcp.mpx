@@ -1,0 +1,25 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType ID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.TCP" Base="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false">
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.TCP">
+          <Name>Enterprise Application Availability Monitoring Test (TCP)</Name>
+          <Description>Runs a test to measure application availability using a TCP connection test.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -1,0 +1,64 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <Monitoring>
+    
+    <Rules>
+      <Rule ID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.Custom.PerformanceCollection" Enabled="true" Target="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Custom" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>PerformanceCollection</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" RunAs="SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.Custom">
+            <IntervalSeconds>120</IntervalSeconds>
+			      <SyncTime></SyncTime>
+		        <TimeoutSeconds>120</TimeoutSeconds>
+            <ConfigurationJson>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ConfigurationJson$</ConfigurationJson>
+            <Script>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Custom"]/Script$</Script>
+            <ResponseTimeThreshold>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ResponseTimeThreshold$</ResponseTimeThreshold>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="Mapper" TypeID="SquaredUp.EAM.Library.ConditionDetection.AvailabilityMonitoring.OptimizedPerfMapper">
+          <ObjectName>CustomTest</ObjectName>
+          <CounterName>ResponseTime</CounterName>
+          <InstanceName/>
+          <Value>$Data/Property[@Name='ResponseTime']$</Value>
+          <Tolerance>10</Tolerance>
+          <ToleranceType>Absolute</ToleranceType>
+          <MaximumSampleSeparation>8</MaximumSampleSeparation>
+          <SamplingPeriodInSeconds>120</SamplingPeriodInSeconds>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+    </Rules>
+    
+  </Monitoring>
+  
+  <LanguagePacks>
+    
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.Custom.PerformanceCollection">
+          <Name>Enterprise Application Availability Monitoring Test (Custom) ResponseTime Performance Collection Rule</Name>
+          <Description>Collects the Response Time for the targeted custom availability test.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles>
+        
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.Custom.PerformanceCollection" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>Collects the response time of the application - if no time is returned by the user-defined script this will collect the script runtime instead.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+    </LanguagePack>
+    
+  </LanguagePacks>  
+  
+</ManagementPackFragment>

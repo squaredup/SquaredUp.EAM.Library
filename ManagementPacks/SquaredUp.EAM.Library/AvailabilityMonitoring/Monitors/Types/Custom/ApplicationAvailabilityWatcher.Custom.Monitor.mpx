@@ -1,0 +1,104 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <Monitoring>
+    
+    <Monitors>
+      <UnitMonitor ID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom" 
+        Accessibility="Public" 
+        Enabled="true" 
+        Target="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Custom" 
+        ParentMonitorID="Health!System.Health.AvailabilityState" 
+        Remotable="true" 
+        Priority="Normal" 
+        TypeID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" 
+        ConfirmDelivery="false" 
+        RunAs="SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.Custom">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+        <AlertParameters>
+          <AlertParameter1>$Data/Context/Property[@Name='Description']$</AlertParameter1>
+        </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="SuccessCondition" MonitorTypeStateID="SuccessCondition" HealthState="Success" />
+          <OperationalState ID="WarningCondition" MonitorTypeStateID="WarningCondition" HealthState="Warning" />
+          <OperationalState ID="ErrorCondition" MonitorTypeStateID="ErrorCondition" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>120</IntervalSeconds>
+          <SyncTime></SyncTime>
+          <TimeoutSeconds>120</TimeoutSeconds>
+          <ConfigurationJson>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ConfigurationJson$</ConfigurationJson>
+          <Script>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Custom"]/Script$</Script>
+          <ResponseTimeThreshold>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ResponseTimeThreshold$</ResponseTimeThreshold>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+    
+  </Monitoring>
+  
+  <Presentation>
+    
+    <StringResources>
+      <StringResource ID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom.AlertMessage" />
+    </StringResources>
+    
+  </Presentation>
+  
+  <LanguagePacks>
+    
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom">
+          <Name>Enterprise Application Availability Test (Custom)</Name>
+          <Description>Application availability test using a custom script.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom" SubElementID="SuccessCondition">
+          <Name>Healthy</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom" SubElementID="WarningCondition">
+          <Name>Warning</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom" SubElementID="ErrorCondition">
+          <Name>Error</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom.AlertMessage">
+          <Name>Availability test failed (custom)</Name>
+          <Description>A custom availability test has failed. {0}</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles>
+
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Custom" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>Application availability test using a custom user-defined PowerShell script.</maml:para>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Causes</maml:title>
+              <maml:para>A failure in this monitor means the script indicated there may be an availability issues.  Consult the Alert description or context for further details.</maml:para>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Resolutions</maml:title>
+              <maml:para>Consult with the application team to resolve this alert.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+    </LanguagePack>
+    
+  </LanguagePacks>
+  
+</ManagementPackFragment>

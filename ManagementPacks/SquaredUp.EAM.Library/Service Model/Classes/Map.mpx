@@ -1,0 +1,51 @@
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType
+          ID="SquaredUp.EAM.Library.Class.Map"
+          Base="System!System.LogicalEntity"
+          Accessibility="Public"
+          Abstract="true"
+          Hosted="false"
+          Singleton="false">
+
+          <Property ID="ApplicationId" Type="guid" Key="true" />
+          <Property ID="CreateTcpMonitors" Type="bool" Key="false" />
+          <Property ID="CreateServiceMonitors" Type="bool" Key="false" />
+
+        </ClassType>
+
+      </ClassTypes>
+
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.Map">
+          <Name>Enterprise Application - Map</Name>
+          <Description>The top-level collection within an Enterprise Application containing the groups of components and hosting objects of which it comprises as created by Squared Up Visual Application Discovery &amp; Analysis.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.Map" SubElementID="ApplicationId">
+          <Name>Enterprise Application Id</Name>
+          <Description>The Id of the Enterprise Application within which this map collection is contained.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.Map" SubElementID="CreateTcpMonitors">
+          <Name>Create TCP Monitors</Name>
+          <Description>Indicates if TCP monitors should be created by the EA Designer.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.Map" SubElementID="CreateServiceMonitors">
+          <Name>Create Service Monitors</Name>
+          <Description>Indicates if Windows service monitors should be created by the EA Designer.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

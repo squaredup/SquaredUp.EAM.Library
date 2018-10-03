@@ -1,0 +1,72 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+    <EntityTypes>
+      
+      <ClassTypes>
+        <ClassType ID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode" Base="Windows!Microsoft.Windows.ComputerRole" Accessibility="Public" Abstract="false" Hosted="true" Singleton="false"/>
+      </ClassTypes>
+      
+    </EntityTypes>
+  </TypeDefinitions>
+  
+  <Monitoring>
+    
+    <Discoveries>
+      <Discovery ID="SquaredUp.EAM.Library.Discovery.AvailabilityMonitoring.MonitoringNode" Target="Windows!Microsoft.Windows.Server.OperatingSystem" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+	    <Category>Discovery</Category>
+        <DiscoveryTypes>
+			<DiscoveryClass TypeID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticDiscovery">
+          <IntervalSeconds>86400</IntervalSeconds>
+          <ClassId>$MPElement[Name="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode"]$</ClassId>
+          <InstanceSettings>
+            <Settings>
+              <Setting>
+                <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                <Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+                <Value>EAM Availability Monitoring</Value>
+              </Setting>
+            </Settings>
+          </InstanceSettings>
+        </DataSource>
+      </Discovery>
+    </Discoveries>
+    
+  </Monitoring>
+  
+  <LanguagePacks>
+    
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode">
+          <Name>Enterprise Application Availability Monitoring Node</Name>
+          <Description>Machine which hosts one or more Application availability tests.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Discovery.AvailabilityMonitoring.MonitoringNode">
+          <Name>Discover Enterprise Application Availability Monitoring Nodes</Name>
+          <Description>This discovery is disabled by default, and if enabled will mark the target server as an Application availability monitoring node.</Description>
+        </DisplayString>
+      </DisplayStrings>
+      <KnowledgeArticles>
+
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Discovery.AvailabilityMonitoring.MonitoringNode" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>This discovery is disabled by default, and if enabled will mark the target server as an Application availability monitoring node.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+
+      </KnowledgeArticles>
+    </LanguagePack>
+    
+  </LanguagePacks>
+  
+</ManagementPackFragment>

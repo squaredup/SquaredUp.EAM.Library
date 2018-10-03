@@ -1,0 +1,121 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+    <ModuleTypes>
+
+      <DataSourceModuleType ID="SquaredUp.EAM.Library.Datasource.NTServiceMonitoringDiscoveryProvider" Accessibility="Public" Batching="false">
+        <Configuration>
+          <xsd:element name="Server" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="ServiceName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="DisplayName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="CheckStartupType" type="xsd:boolean" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="IntervalSeconds" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="CheckStartupType" ParameterType="bool" Selector="$Config/CheckStartupType$"/>
+          <OverrideableParameter ID="IntervalSeconds" ParameterType="int" Selector="$Config/IntervalSeconds$"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.Discovery.Scheduler">
+                <Scheduler>
+                  <SimpleReccuringSchedule>
+                    <Interval>$Config/IntervalSeconds$</Interval>
+                    <SyncTime></SyncTime>
+                  </SimpleReccuringSchedule>
+                  <ExcludeDates />
+                </Scheduler>
+              </DataSource>
+              <ConditionDetection ID="Mapper" TypeID="System!System.Discovery.ClassAndRelationshipSnapshotDataMapper" >
+                <ClassId>$MPElement[Name='SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration']$</ClassId>
+                <ClassInstanceSettings>
+                  <Settings>
+                    <Setting>
+                      <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+                      <Value>$Config/DisplayName$ ($Config/Server$)</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                      <Value>$Config/Server$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"]/ServiceName$</Name>
+                      <Value>$Config/ServiceName$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"]/CheckStartupType$</Name>
+                      <Value>$Config/CheckStartupType$</Value>
+                    </Setting>
+                  </Settings>
+                </ClassInstanceSettings>
+                <RelationshipId>$MPElement[Name='SquaredUp.EAM.Library.Relationship.NTServiceMonitor.DependenciesNodeHostsNTServiceConfiguration']$</RelationshipId>
+                <SourceTypeId>$MPElement[Name='SquaredUp.EAM.Library.Class.DependenciesNode']$</SourceTypeId>
+                <SourceRoleSettings>
+                  <Settings>
+                    <Setting>
+                      <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                      <Value>$Config/Server$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+                      <Value>Dependency Monitoring</Value>
+                    </Setting>
+                  </Settings>
+                </SourceRoleSettings>
+                <TargetTypeId>$MPElement[Name='SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration']$</TargetTypeId>
+                <TargetRoleSettings>
+                  <Settings>
+                    <Setting>
+                      <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                      <Value>$Config/Server$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"]/ServiceName$</Name>
+                      <Value>$Config/ServiceName$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"]/CheckStartupType$</Name>
+                      <Value>$Config/CheckStartupType$</Value>
+                    </Setting>
+                  </Settings>
+                </TargetRoleSettings>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="Mapper">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.Discovery.Data</OutputType>
+      </DataSourceModuleType>
+
+    </ModuleTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.NTServiceMonitoringDiscoveryProvider">
+          <Name>Squared Up EAM Windows service Monitoring Discovery provider data source</Name>
+          <Description>Discovers Windows service monitoring classes and the hosting object.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.NTServiceMonitoringDiscoveryProvider" SubElementID="IntervalSeconds">
+          <Name>Interval (Seconds)</Name>
+          <Description>The number of seconds between discovery attempts.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.NTServiceMonitoringDiscoveryProvider" SubElementID="CheckStartupType">
+          <Name>Check Startup Type</Name>
+          <Description>If true the service will only be monitored if the start type is set to Automatic</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+
+
+</ManagementPackFragment>

@@ -1,0 +1,37 @@
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <Monitoring>
+    <ServiceLevelObjectives>
+      
+      <MonitorSLO ID="SquaredUp.EAM.Custom.SLO.EnterpriseApplicationHealth.Monitor" ConfigurationGroupId="SquaredUp.EAM.Custom.SLO.EnterpriseApplicationHealth" Target="EAM!SquaredUp.EAM.Library.Class.EnterpriseApplication.v1">
+        <MonitorId>Health!System.Health.EntityState</MonitorId>
+        <Goal>99</Goal>
+      </MonitorSLO>
+    
+    </ServiceLevelObjectives>
+  </Monitoring>
+  
+  <ConfigurationGroups>
+    
+    <ConfigurationGroup ID="SquaredUp.EAM.Custom.SLO.EnterpriseApplicationHealth" Accessibility="Public" Target="EAM!SquaredUp.EAM.Library.Class.EnterpriseApplication.v1" />
+    
+  </ConfigurationGroups>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Custom.SLO.EnterpriseApplicationHealth">
+          <Name>Enterprise Application Health SLA</Name>
+          <Description>Measures the health of Squared Up Enterprise Applications using all health categories.</Description>
+        </DisplayString>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Custom.SLO.EnterpriseApplicationHealth.Monitor">
+          <Name>Enterprise Application Health</Name>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+</ManagementPackFragment>

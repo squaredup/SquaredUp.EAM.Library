@@ -1,0 +1,64 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <Monitoring>
+    
+    <Rules>
+      <Rule ID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.Web.PerformanceCollection" Enabled="true" Target="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Web" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>PerformanceCollection</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" RunAs="SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.Web">
+            <IntervalSeconds>120</IntervalSeconds>
+			      <SyncTime></SyncTime>
+		        <TimeoutSeconds>120</TimeoutSeconds>
+            <ConfigurationJson>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ConfigurationJson$</ConfigurationJson>
+            <Script>$IncludeFileContent/AvailabilityMonitoring/Monitors/Types/Web/Scripts/WebTest.ps1$</Script>
+            <ResponseTimeThreshold>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ResponseTimeThreshold$</ResponseTimeThreshold>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="Mapper" TypeID="SquaredUp.EAM.Library.ConditionDetection.AvailabilityMonitoring.OptimizedPerfMapper">
+          <ObjectName>WebTest</ObjectName>
+          <CounterName>ResponseTime</CounterName>
+          <InstanceName/>
+          <Value>$Data/Property[@Name='ResponseTime']$</Value>
+          <Tolerance>10</Tolerance>
+          <ToleranceType>Absolute</ToleranceType>
+          <MaximumSampleSeparation>8</MaximumSampleSeparation>
+          <SamplingPeriodInSeconds>120</SamplingPeriodInSeconds>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+    </Rules>
+  
+  </Monitoring>
+  
+  <LanguagePacks>
+    
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.Web.PerformanceCollection">
+          <Name>Enterprise Application Availability Monitoring Test (Web) ResponseTime Performance Collection Rule</Name>
+          <Description>Collects the response time of Web availability monitoring tests.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles>
+      
+      <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.Web.PerformanceCollection" Visible="true">
+        <MamlContent>
+          <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+            <maml:title>Summary</maml:title>
+            <maml:para>Collects the response time of the application, based on the response time of a web connection test.</maml:para>
+          </maml:section>
+        </MamlContent>
+      </KnowledgeArticle>
+      
+    </KnowledgeArticles>
+    </LanguagePack>
+    
+  </LanguagePacks> 
+  
+</ManagementPackFragment>

@@ -1,0 +1,175 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Monitoring>
+    <Monitors>
+
+      <!-- Single one of these unit monitors needed targeted on each SquaredUp.EAM.Library.Class.TcpMonitor.Configuration
+           instance (the instance is hosted on the Dependency Monitoring object on the correct "watcher" computer,
+           so the probe runs on the source machine, the instance contains other information like the target server
+           and port, so the correct check is made). -->
+      <UnitMonitor ID="SquaredUp.EAM.Library.Monitor.TcpMonitor.ConnectionState"
+                   Accessibility="Public"
+                   Enabled="true"
+                   Target="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"
+                   ParentMonitorID="Health!System.Health.AvailabilityState"
+                   TypeID="SquaredUp.EAM.Library.MonitorType.TcpMonitor.TcpProbeMonitorType"
+                   ConfirmDelivery="false" Remotable="true" Priority="Normal" >
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="SquaredUp.EAM.Library.Monitor.TcpMonitor.ConnectionState.AlertMessage">
+          <AlertOnState>Error</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Host/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type='SquaredUp.EAM.Library.Class.TcpMonitor.Configuration']/TargetServerName$</AlertParameter2>
+            <AlertParameter3>$Target/Property[Type='SquaredUp.EAM.Library.Class.TcpMonitor.Configuration']/TargetPort$</AlertParameter3>
+            <AlertParameter4>$Data/Context/StatusCode$</AlertParameter4>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="ConnectionOk" MonitorTypeStateID="ConnectionOk" HealthState="Success" />
+          <OperationalState ID="ConnectionFailed" MonitorTypeStateID="ConnectionFailed" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <TargetServerName>$Target/Property[Type="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/TargetServerName$</TargetServerName>
+          <TargetPort>$Target/Property[Type="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/TargetPort$</TargetPort>
+          <Interval>$Target/Property[Type="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/Interval$</Interval>
+        
+      </Configuration>
+      </UnitMonitor>
+
+    </Monitors>
+  </Monitoring>
+
+  <Presentation>
+    <StringResources>
+      <StringResource ID="SquaredUp.EAM.Library.Monitor.TcpMonitor.ConnectionState.AlertMessage"/>
+    </StringResources>
+  </Presentation>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.ConnectionState">
+          <Name>Squared Up TCP Connection Monitor</Name>
+          <Description>
+            This monitors the TCP connectivity from the hosting computer to the specified port on the
+            specified target computer.
+          </Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.ConnectionState" SubElementID="ConnectionFailed">
+          <Name>Connection Failed</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.ConnectionState" SubElementID="ConnectionOk">
+          <Name>Connection Ok</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.ConnectionState.AlertMessage">
+          <Name>Unable to establish TCP connection to dependency</Name>
+          <Description>A TCP link could not be established between {0} and {1} on port {2}.  
+          
+Connection status code: {3}
+          
+This may impact the health of one or more Enterprise Applications.
+          </Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles>
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Monitor.TcpMonitor.ConnectionState" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>Unable to establish a TCP connection between Enterprise Application components.  This may impact the health of one or more Enterprise Applications.</maml:para>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Causes</maml:title>
+              <maml:para>The below table lists the status codes that this monitor may return, and their meaning.</maml:para>
+              <maml:table>
+                <maml:title>Status codes</maml:title>
+                <maml:tableHeader>
+                  <maml:row>
+                    <maml:entry><maml:para>Status code</maml:para></maml:entry>
+                    <maml:entry><maml:para>Definition</maml:para></maml:entry>
+                  </maml:row>
+                </maml:tableHeader>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>0</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Success</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>2147952460</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Connection timed out</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>2147952461</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Connection refused</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>2147952465</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Destination unreachable</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>2147953401</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>DNS resolution failure</maml:para>
+                  </maml:entry>
+                </maml:row>
+              </maml:table>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Resolutions</maml:title>
+              <maml:para>Failures may be caused by a number of issues related to component availability or configuration.  Things to check include:</maml:para>
+              <maml:list>
+                <maml:listItem>
+                  <maml:para>Network connectivity</maml:para>
+                </maml:listItem>
+                <maml:listItem>
+                  <maml:para>Hosting infrastructure availability</maml:para>
+                </maml:listItem>
+                <maml:listItem>
+                  <maml:para>Software configuration</maml:para>
+                  <maml:list>
+                    <maml:listItem>
+                      <maml:para>Incorrect destination specified at source</maml:para>
+                    </maml:listItem>
+                    <maml:listItem>
+                      <maml:para>Listening port changed at destination</maml:para>
+                    </maml:listItem>
+                    <maml:listItem>
+                      <maml:para>Firewall rule change (source or destination)</maml:para>
+                    </maml:listItem>
+                  </maml:list>
+                </maml:listItem>
+              </maml:list>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>

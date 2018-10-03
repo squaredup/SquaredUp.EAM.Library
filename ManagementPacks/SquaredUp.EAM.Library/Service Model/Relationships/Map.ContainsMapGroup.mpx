@@ -1,0 +1,44 @@
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <RelationshipTypes>
+
+        <RelationshipType
+            ID="SquaredUp.EAM.Library.Relationship.Map.ContainsMapGroup" 
+            Base="System!System.Containment"
+            Abstract="true"
+            Accessibility="Public">
+          <Source ID="Source" Type="SquaredUp.EAM.Library.Class.Map"/>
+          <Target ID="Target" Type="SquaredUp.EAM.Library.Class.MapGroup"/>
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+    <Monitors>
+
+      <!-- EAM should create these for each group, one for each category -->
+
+    </Monitors>
+  </Monitoring>
+
+  <Presentation>
+    <StringResources>
+    </StringResources>
+  </Presentation>
+  
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.Map.ContainsMapGroup">
+          <Name>Map contains MapGroup</Name>
+          <Description>Abstract relationship to contain map groups within the top-level Map collection of an Enterprise Application. Each Enterprise Application will create its own specialised sub-class(es) of this relationship.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

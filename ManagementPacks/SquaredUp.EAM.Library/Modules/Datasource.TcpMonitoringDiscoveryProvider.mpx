@@ -1,0 +1,135 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+    <ModuleTypes>
+      
+      <DataSourceModuleType ID="SquaredUp.EAM.Library.Datasource.TCPMonitoringDiscoveryProvider" Accessibility="Public" Batching="false">
+        <Configuration>
+          <xsd:element name="SourceServer" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="TargetServer" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="TargetPort" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="MonitoringIntervalSeconds" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="IntervalSeconds" type="xsd:int" minOccurs="1" maxOccurs="1"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="TargetPort" ParameterType="int" Selector="$Config/TargetPort$"/>
+          <OverrideableParameter ID="MonitoringIntervalSeconds" ParameterType="int" Selector="$Config/MonitoringIntervalSeconds$"/>
+          <OverrideableParameter ID="IntervalSeconds" ParameterType="int" Selector="$Config/IntervalSeconds$"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.Discovery.Scheduler">
+                <Scheduler>
+                  <SimpleReccuringSchedule>
+                    <Interval>$Config/IntervalSeconds$</Interval>
+                    <SyncTime></SyncTime>
+                  </SimpleReccuringSchedule>
+                  <ExcludeDates />
+                </Scheduler>
+              </DataSource>
+              <ConditionDetection ID="Mapper" TypeID="System!System.Discovery.ClassAndRelationshipSnapshotDataMapper" >
+                <ClassId>$MPElement[Name='SquaredUp.EAM.Library.Class.TcpMonitor.Configuration']$</ClassId>
+                <ClassInstanceSettings>
+                  <Settings>
+                    <Setting>
+                      <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+                      <Value>TCP Connection to $Config/TargetServer$:$Config/TargetPort$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                      <Value>$Config/SourceServer$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/TargetServerName$</Name>
+                      <Value>$Config/TargetServer$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/TargetPort$</Name>
+                      <Value>$Config/TargetPort$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/Interval$</Name>
+                      <Value>$Config/MonitoringIntervalSeconds$</Value>
+                    </Setting>
+                  </Settings>
+                </ClassInstanceSettings>
+                <RelationshipId>$MPElement[Name='SquaredUp.EAM.Library.Relationship.TcpMonitor.DependenciesNodeHostsTcpConfiguration']$</RelationshipId>
+                <SourceTypeId>$MPElement[Name='SquaredUp.EAM.Library.Class.DependenciesNode']$</SourceTypeId>
+                <SourceRoleSettings>
+                  <Settings>
+                    <Setting>
+                      <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                      <Value>$Config/SourceServer$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="System!System.Entity"]/DisplayName$</Name>
+                      <Value>Dependency Monitoring</Value>
+                    </Setting>
+                  </Settings>
+                </SourceRoleSettings>
+                <TargetTypeId>$MPElement[Name='SquaredUp.EAM.Library.Class.TcpMonitor.Configuration']$</TargetTypeId>
+                <TargetRoleSettings>
+                  <Settings>
+                    <Setting>
+                      <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                      <Value>$Config/SourceServer$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/TargetServerName$</Name>
+                      <Value>$Config/TargetServer$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/TargetPort$</Name>
+                      <Value>$Config/TargetPort$</Value>
+                    </Setting>
+                    <Setting>
+                      <Name>$MPElement[Name="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"]/Interval$</Name>
+                      <Value>$Config/MonitoringIntervalSeconds$</Value>
+                    </Setting>
+                  </Settings>
+                </TargetRoleSettings>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="Mapper">
+                <Node ID="Scheduler" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.Discovery.Data</OutputType>
+      </DataSourceModuleType>
+      
+    </ModuleTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.TCPMonitoringDiscoveryProvider">
+          <Name>Squared Up EAM TCP Monitoring Discovery provider data source</Name>
+          <Description>Discovers TCP monitoring classes and the hosting object.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.TCPMonitoringDiscoveryProvider" SubElementID="IntervalSeconds">
+          <Name>Interval (Seconds)</Name>
+          <Description>The number of seconds between discovery attempts.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.TCPMonitoringDiscoveryProvider" SubElementID="MonitoringIntervalSeconds">
+          <Name>Monitoring Interval (Seconds)</Name>
+          <Description>The number of seconds between TCP connectivity checks.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Datasource.TCPMonitoringDiscoveryProvider" SubElementID="TargetPort">
+          <Name>Target Port</Name>
+          <Description>The port number that TCP monitoring should attempt to connect to.</Description>
+        </DisplayString>
+        
+        
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+  
+  
+</ManagementPackFragment>

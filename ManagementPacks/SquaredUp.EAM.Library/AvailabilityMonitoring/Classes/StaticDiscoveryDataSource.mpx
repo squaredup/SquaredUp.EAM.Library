@@ -1,0 +1,74 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <TypeDefinitions>
+    
+    <ModuleTypes>
+      <DataSourceModuleType ID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticDiscovery" Accessibility="Public">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>System!System.ExpressionEvaluatorSchema</SchemaType>
+            <SchemaType>System!System.Discovery.MapperSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element minOccurs="1" type="xsd:integer" name="IntervalSeconds" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element minOccurs="0" type="xsd:string" name="SyncTime" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="ClassId" type="xsd:string"/>
+          <xsd:element name="InstanceSettings" minOccurs="0" maxOccurs="1" type="SettingsType"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.Discovery.Scheduler">
+                <Scheduler>
+                  <SimpleReccuringSchedule>
+                    <Interval Unit="Seconds">$Config/IntervalSeconds$</Interval>
+                    <SyncTime>$Config/SyncTime$</SyncTime>
+                  </SimpleReccuringSchedule>
+                  <ExcludeDates />
+                </Scheduler>
+              </DataSource>
+              <ConditionDetection ID="Mapper" TypeID="System!System.Discovery.ClassSnapshotDataMapper">
+                <ClassId>$Config/ClassId$</ClassId>
+                <InstanceSettings>$Config/InstanceSettings$</InstanceSettings>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="Mapper">
+                <Node ID="Scheduler"/>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.Discovery.Data</OutputType>
+      </DataSourceModuleType>
+    </ModuleTypes>
+  
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticDiscovery">
+          <Name>Enterprise Application Availability Monitoring Static Discovery</Name>
+          <Description>Uses a ClassSnapshotDataMapper to always discover instances against the workflow target.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticDiscovery" SubElementID="IntervalSeconds">
+          <Name>Interval (Seconds)</Name>
+          <Description>The number of seconds between discovery attempts.</Description>
+        </DisplayString>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticDiscovery" SubElementID="SyncTime">
+          <Name>Sync Time (hh:mm)</Name>
+          <Description>The time around which discovery attempts will be synchronised.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+  
+</ManagementPackFragment>

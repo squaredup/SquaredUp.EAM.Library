@@ -1,0 +1,104 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <UnitMonitor ID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP" 
+        Accessibility="Public" 
+        Enabled="true" 
+        Target="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.TCP" 
+        ParentMonitorID="Health!System.Health.AvailabilityState" 
+        Remotable="true" 
+        Priority="Normal" 
+        TypeID="SquaredUp.EAM.Library.MonitorType.AvailabilityMonitoring.PowerShellScript" 
+        ConfirmDelivery="false" 
+        RunAs="SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.TCP">
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Data/Context/Property[@Name='Description']$</AlertParameter1>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="SuccessCondition" MonitorTypeStateID="SuccessCondition" HealthState="Success" />
+          <OperationalState ID="WarningCondition" MonitorTypeStateID="WarningCondition" HealthState="Warning" />
+          <OperationalState ID="ErrorCondition" MonitorTypeStateID="ErrorCondition" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <IntervalSeconds>120</IntervalSeconds>
+          <SyncTime></SyncTime>
+          <TimeoutSeconds>120</TimeoutSeconds>
+          <ConfigurationJson>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ConfigurationJson$</ConfigurationJson>
+          <Script>$IncludeFileContent/AvailabilityMonitoring/Monitors/Types/Tcp/Scripts/TcpTest.ps1$</Script>
+          <ResponseTimeThreshold>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ResponseTimeThreshold$</ResponseTimeThreshold>
+        </Configuration>
+      </UnitMonitor>
+    </Monitors>
+  </Monitoring>
+  <Presentation>
+    <StringResources>
+      <StringResource ID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP.AlertMessage" />
+    </StringResources>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP">
+          <Name>Enterprise Application Availability Test (TCP)</Name>
+          <Description>Application availability test using a TCP connection test.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP" SubElementID="SuccessCondition">
+          <Name>Healthy</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP" SubElementID="WarningCondition">
+          <Name>Warning</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP" SubElementID="ErrorCondition">
+          <Name>Error</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP.AlertMessage">
+          <Name>Availability test failed (TCP)</Name>
+          <Description>A TCP availability test has failed. {0}</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles>
+
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.TCP" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>Application availability test using a TCP connection to a user specified port.</maml:para>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Causes</maml:title>
+              <maml:para>A failure in this monitor indicates that the specified port may be:</maml:para>
+              <maml:list>
+                <maml:listItem>
+                  <maml:para>Unavailable from one or more locations.</maml:para>
+                </maml:listItem>
+                <maml:listItem>
+                  <maml:para>Responding poorly.</maml:para>
+                </maml:listItem>
+                <maml:listItem></maml:listItem>
+                <maml:listItem></maml:listItem>
+              </maml:list>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Resolutions</maml:title>
+              <maml:para>Consult with the application team to resolve this alert.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

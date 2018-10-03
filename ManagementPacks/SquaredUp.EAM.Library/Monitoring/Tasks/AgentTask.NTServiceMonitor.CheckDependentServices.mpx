@@ -1,0 +1,27 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Tasks>
+
+      <Task ID="SquaredUp.EAM.Library.AgentTask.NTServiceMonitor.CheckDependentService" Accessibility="Public" Target="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration" Enabled="true" Timeout="300" Remotable="true">
+        <Category>Maintenance</Category>
+        <ProbeAction ID="PA" TypeID="Windows!Microsoft.Windows.DependentNTServiceStateProbe">
+          <Computer>$Target/Host/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Computer>
+          <ServiceName>$Target/Property[Type="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"]/ServiceName$</ServiceName>
+        </ProbeAction>
+      </Task>
+      
+    </Tasks>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.AgentTask.NTServiceMonitor.CheckDependentService">
+          <Name>Check dependent services</Name>
+          <Description>Checks the state of services this service depends on.</Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

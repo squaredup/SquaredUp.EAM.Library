@@ -1,0 +1,126 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <RelationshipTypes>
+
+        <!-- Relationship to host our NTService config objects on DependenciesNode objects -->
+        <RelationshipType ID="SquaredUp.EAM.Library.Relationship.NTServiceMonitor.DependenciesNodeHostsNTServiceConfiguration" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="source" Type="SquaredUp.EAM.Library.Class.DependenciesNode" />
+          <Target ID="target" Type="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration" />
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+    <Monitors>
+
+      <!-- Single one of these dependency monitors needed to make sure the health of each
+           SquaredUp.EAM.NTServiceMonitor.Configuration instance rolls up to its hosting Dependency
+           Monitoring object -->
+      <DependencyMonitor
+        ID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.RollupAvailabilityHealth"
+        Accessibility="Public"
+        Enabled="true"
+        Target="SquaredUp.EAM.Library.Class.DependenciesNode"
+        ParentMonitorID="Health!System.Health.AvailabilityState"
+        Remotable="true"
+        Priority="Normal"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.NTServiceMonitor.DependenciesNodeHostsNTServiceConfiguration"
+        MemberMonitor="Health!System.Health.AvailabilityState">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor
+        ID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.RollupConfigurationHealth"
+        Accessibility="Public"
+        Enabled="true"
+        Target="SquaredUp.EAM.Library.Class.DependenciesNode"
+        ParentMonitorID="Health!System.Health.ConfigurationState"
+        Remotable="true"
+        Priority="Normal"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.NTServiceMonitor.DependenciesNodeHostsNTServiceConfiguration"
+        MemberMonitor="Health!System.Health.ConfigurationState">
+        <Category>ConfigurationHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor
+      ID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.RollupPerformanceHealth"
+      Accessibility="Public"
+      Enabled="true"
+      Target="SquaredUp.EAM.Library.Class.DependenciesNode"
+      ParentMonitorID="Health!System.Health.PerformanceState"
+      Remotable="true"
+      Priority="Normal"
+      RelationshipType="SquaredUp.EAM.Library.Relationship.NTServiceMonitor.DependenciesNodeHostsNTServiceConfiguration"
+      MemberMonitor="Health!System.Health.PerformanceState">
+        <Category>PerformanceHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor
+      ID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.RollupSecurityHealth"
+      Accessibility="Public"
+      Enabled="true"
+      Target="SquaredUp.EAM.Library.Class.DependenciesNode"
+      ParentMonitorID="Health!System.Health.SecurityState"
+      Remotable="true"
+      Priority="Normal"
+      RelationshipType="SquaredUp.EAM.Library.Relationship.NTServiceMonitor.DependenciesNodeHostsNTServiceConfiguration"
+      MemberMonitor="Health!System.Health.SecurityState">
+        <Category>SecurityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+    </Monitors>
+  </Monitoring>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.NTServiceMonitor.DependenciesNodeHostsNTServiceConfiguration">
+          <Name>Dependencies Node Hosts Windows Service Monitoring Configuration</Name>
+          <Description>Enterprise Application Dependencies node hosts Windows Service Monitoring Configuration</Description>
+        </DisplayString>
+
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.RollupAvailabilityHealth">
+          <Name>Enterprise Application Windows Service Availability Roll-up</Name>
+          <Description>
+            This rolls the health state of all Windows Service Monitoring instances on a computer to
+            the Dependency Monitoring object on that computer.
+          </Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.RollupConfigurationHealth">
+          <Name>Enterprise Application Windows Service Configuration Roll-up</Name>
+          <Description>
+            This rolls the health state of all Windows Service Monitoring instances on a computer to
+            the Dependency Monitoring object on that computer.
+          </Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.RollupPerformanceHealth">
+          <Name>Enterprise Application Windows Service Performance Roll-up</Name>
+          <Description>
+            This rolls the health state of all Windows Service Monitoring instances on a computer to
+            the Dependency Monitoring object on that computer.
+          </Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.RollupSecurityHealth">
+          <Name>Enterprise Application Windows Service Security Roll-up</Name>
+          <Description>
+            This rolls the health state of all Windows Service Monitoring instances on a computer to
+            the Dependency Monitoring object on that computer.
+          </Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

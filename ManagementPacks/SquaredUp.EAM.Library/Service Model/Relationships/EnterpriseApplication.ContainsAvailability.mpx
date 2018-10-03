@@ -1,0 +1,163 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <RelationshipTypes>
+
+        <RelationshipType ID="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability" Base="System!System.Containment" Abstract="false" Accessibility="Public">
+          <Source ID="Source" Type="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"/>
+          <Target ID="Target" Type="SquaredUp.EAM.Library.Class.Availability"/>
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+    <Monitors>
+
+      <AggregateMonitor
+        ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.AvailabilityState"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        ParentMonitorID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ApplicationHealthState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="true">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </AggregateMonitor>
+
+      <DependencyMonitor
+        ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability"
+        ParentMonitorID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.AvailabilityState"
+        MemberMonitor="Health!System.Health.EntityState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="true">
+
+        <Category>AvailabilityHealth</Category>
+
+        <AlertSettings AlertMessage="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.AlertMessage">
+          <AlertOnState>Warning</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters></AlertParameters>
+        </AlertSettings>
+
+        <Algorithm>WorstOf</Algorithm>
+
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.Availability"
+          Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+          RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability"
+          ParentMonitorID="Health!System.Health.AvailabilityState"
+          MemberMonitor="Health!System.Health.AvailabilityState"
+          Accessibility="Public"
+          Priority="Normal"
+          Remotable="true"
+          Enabled="true">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.Configuration"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability"
+        ParentMonitorID="Health!System.Health.ConfigurationState"
+        MemberMonitor="Health!System.Health.ConfigurationState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="true">
+        <Category>ConfigurationHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.Performance"
+        Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+        RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability"
+        ParentMonitorID="Health!System.Health.PerformanceState"
+        MemberMonitor="Health!System.Health.PerformanceState"
+        Accessibility="Public"
+        Priority="Normal"
+        Remotable="true"
+        Enabled="true">
+        <Category>PerformanceHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.Security"
+          Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+          RelationshipType="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability"
+          ParentMonitorID="Health!System.Health.SecurityState"
+          MemberMonitor="Health!System.Health.SecurityState"
+          Accessibility="Public"
+          Priority="Normal"
+          Remotable="true"
+          Enabled="true">
+        <Category>SecurityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+    </Monitors>
+  </Monitoring>
+
+  <Presentation>
+    <StringResources>
+      <StringResource ID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.AlertMessage"/>
+    </StringResources>
+  </Presentation>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability">
+          <Name>Enterprise Application contains Availability</Name>
+          <Description>Relationship to contain the top-level Availability collection within an Enterprise Application.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.AvailabilityState">
+          <Name>Availability (monitored)</Name>
+          <Description>The health of all availability tests for this application.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup">
+          <Name>Rollup of Availability</Name>
+          <Description>Rollup entity health of availability. Note that this condenses overall entity health (availability, performance, configuration and security) to availability health.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.AlertMessage">
+          <Name>Application availability issue (monitored)</Name>
+          <Description>Application monitoring is reporting an availability issue. View the application's alerts for more details.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.Availability">
+          <Name>Availability tests Availability rollup</Name>
+          <Description>Rollup availability health of availability tests.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.Configuration">
+          <Name>Availability tests Configuration rollup</Name>
+          <Description>Rollup configuration health of availability tests.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.Performance">
+          <Name>Availability tests Performance rollup</Name>
+          <Description>Rollup performance health of availability tests.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.EnterpriseApplication.ContainsAvailability.Rollup.Security">
+          <Name>Availability tests Security rollup</Name>
+          <Description>Rollup security health of availability tests.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

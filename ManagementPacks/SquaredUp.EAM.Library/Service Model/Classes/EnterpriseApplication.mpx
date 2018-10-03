@@ -1,0 +1,88 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        
+        <ClassType
+          ID="SquaredUp.EAM.Library.Class.EnterpriseApplication.Base"
+          Base="System!System.Service"
+          Accessibility="Public"
+          Abstract="true"
+          Hosted="false"
+          Singleton="false">
+        </ClassType>
+
+        <ClassType
+          ID="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"
+          Base="SquaredUp.EAM.Library.Class.EnterpriseApplication.Base"
+          Accessibility="Public"
+          Abstract="true"
+          Hosted="false"
+          Singleton="false">
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+ 
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.EnterpriseApplication.Base">
+          <Name>Enterprise Application (Base)</Name>
+          <Description>
+            A base class for all Enterprise Application classes. Use a versioned subclass to create new instances.
+          </Description>
+        </DisplayString>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1">
+          <Name>Enterprise Application (v1)</Name>
+          <Description>
+            The top-level object that represents an application. It contains collections for availability monitoring, component map, and dependencies.
+            The object's health is only determined by the availability monitoring. (version 1)
+          </Description>
+        </DisplayString>
+
+      </DisplayStrings>
+
+      <KnowledgeArticles>
+        
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Class.EnterpriseApplication.Base" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>This is a base class for all distributed applications created by Squared Up Enterprise Application Monitoring.</maml:para>
+              <maml:para>DO NOT USE DIRECTLY. Instead use a versioned subclass.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Class.EnterpriseApplication.v1" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>An Enterprise Application is a top-level distributed application for modelling an enterprise application. It is designed for use by Squared Up Enterprise Application Monitoring.</maml:para>
+              <maml:para>The distributed application contains separate collection objects for availability monitoring, the component map, and the dependencies. The object's health is only determined by the availability monitoring.</maml:para>
+              <maml:para>This is version 1 of an Enterprise Application.</maml:para>
+              <maml:para>Predefined Top-level Collection Objects:</maml:para>
+              <maml:list>
+                <maml:listItem>
+                  <maml:para>Availability: Contains the objects representing the availability of the application. Typically these are simple HTTP or TCP monitors or synthetic transactions. The health of this group affects the overall health of the Enterprise Application.</maml:para>
+                </maml:listItem>
+                <maml:listItem>
+                  <maml:para>Map: Contains groups of the application components and hosting objects as created by Squared Up Visual Application Discovery &amp; Analysis. The health of this group does NOT affect the overall health of the Enterprise Application.</maml:para>
+                </maml:listItem>
+                <maml:listItem>
+                  <maml:para>Dependencies: Contains objects that represent external dependencies used by the application. The health of this group does NOT affect the overall health of the Enterprise Application.</maml:para>
+                </maml:listItem>
+              </maml:list>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

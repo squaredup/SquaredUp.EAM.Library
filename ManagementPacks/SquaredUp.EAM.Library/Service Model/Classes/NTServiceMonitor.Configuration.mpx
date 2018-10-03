@@ -1,0 +1,49 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- This class is hosted on Dependency Monitoring objects and indicates that NT Service monitoring
+             from the computer hosting the Dependency Monitoring object is required. 
+             Discoveries for these objects are emitted into DAs created by VADA and we rely upon
+             SCOM's reference counting to cope with any overlap between VADA DAs sharing the same computers
+             for any reason -->
+        <ClassType
+          ID="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"
+          Base="System!System.Perspective"
+          Accessibility="Public"
+          Abstract="false"
+          Hosted="true"
+          Singleton="false">
+          <Property ID="ServiceName" Type="string" Key="true" CaseSensitive="false" MaxLength="256" MinLength="1" />
+          <Property ID="CheckStartupType" Type="bool" Key="true" />
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration">
+          <Name>Enterprise Application Windows Service Monitoring Configuration</Name>
+          <Description>
+            Instances of this class are hosted on Dependency Monitoring objects to configure service
+            monitoring from the computer hosting that Dependency Monitoring object. 
+            The health state of this object is used to colour the service healthy in the Squared Up "Map" perspective.
+          </Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration" SubElementID="CheckStartupType">
+          <Name>Monitor only if automatic startup</Name>
+          <Description>A value of true means that the service will only be monitored if it is configured for automatic startup.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration" SubElementID="ServiceName">
+          <Name>Service Name</Name>
+          <Description>The name of the service to monitor.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

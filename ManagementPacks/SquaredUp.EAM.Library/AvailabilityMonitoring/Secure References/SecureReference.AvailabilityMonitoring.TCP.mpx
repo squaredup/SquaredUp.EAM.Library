@@ -1,0 +1,19 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <SecureReferences>
+      <SecureReference ID="SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.TCP" Accessibility="Public" Context="System!System.Entity"/>
+    </SecureReferences>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.TCP">
+          <Name>Squared Up Enterprise Application Availability TCP Monitoring</Name>
+          <Description>Credentials used to perform outside-in TCP monitoring for Enterprise Applications.  This profile is NOT used for link monitoring between components.</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+</ManagementPackFragment>

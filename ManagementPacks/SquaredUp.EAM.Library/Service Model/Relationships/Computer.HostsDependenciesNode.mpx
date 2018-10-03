@@ -1,0 +1,29 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+    <EntityTypes>
+        <RelationshipTypes>
+        
+        <!-- Relationship to host our DependenciesNode objects on Computer objects -->
+        <RelationshipType ID="SquaredUp.EAM.Library.Relationship.ComputerHostsDependenciesNode" Accessibility="Public" Abstract="false" Base="System!System.Hosting">
+          <Source ID="source" Type="Windows!Microsoft.Windows.Computer" />
+          <Target ID="target" Type="SquaredUp.EAM.Library.Class.DependenciesNode" />
+        </RelationshipType>
+        
+      </RelationshipTypes>    
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Relationship.ComputerHostsDependenciesNode">
+          <Name>Computer Hosts Enterprise Application Dependencies node</Name>
+          <Description>Windows computer hosts instances of Enterprise Application Dependencies node.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

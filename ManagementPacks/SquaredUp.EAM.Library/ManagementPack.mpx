@@ -1,0 +1,26 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library">
+          <Name>Squared Up Enterprise Application Monitoring Library</Name>
+          <Description>Provides the underlying classes used by the Squared Up Enterprise Application Monitoring (EAM) functionality.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles>
+  
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>Provides the underlying classes used by the Squared Up Enterprise Application Monitoring (EAM) functionality.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+    
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

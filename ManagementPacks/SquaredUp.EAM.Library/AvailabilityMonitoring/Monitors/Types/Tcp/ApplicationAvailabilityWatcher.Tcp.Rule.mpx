@@ -1,0 +1,64 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <Monitoring>
+    
+    <Rules>
+      <Rule ID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.TCP.PerformanceCollection" Enabled="true" Target="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.TCP" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>PerformanceCollection</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.PowerShellScript" RunAs="SquaredUp.EAM.Library.SecureReference.AvailabilityMonitoring.TCP">
+            <IntervalSeconds>120</IntervalSeconds>
+			      <SyncTime></SyncTime>
+		        <TimeoutSeconds>120</TimeoutSeconds>
+            <ConfigurationJson>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ConfigurationJson$</ConfigurationJson>
+            <Script>$IncludeFileContent/AvailabilityMonitoring/Monitors/Types/Tcp/Scripts/TcpTest.ps1$</Script>
+            <ResponseTimeThreshold>$Target/Property[Type="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]/ResponseTimeThreshold$</ResponseTimeThreshold>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="Mapper" TypeID="SquaredUp.EAM.Library.ConditionDetection.AvailabilityMonitoring.OptimizedPerfMapper">
+          <ObjectName>TCPTest</ObjectName>
+          <CounterName>ResponseTime</CounterName>
+          <InstanceName/>
+          <Value>$Data/Property[@Name='ResponseTime']$</Value>
+          <Tolerance>10</Tolerance>
+          <ToleranceType>Absolute</ToleranceType>
+          <MaximumSampleSeparation>8</MaximumSampleSeparation>
+          <SamplingPeriodInSeconds>120</SamplingPeriodInSeconds>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="WriteToDB" TypeID="SC!Microsoft.SystemCenter.CollectPerformanceData" />
+          <WriteAction ID="WriteToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+    </Rules>
+    
+  </Monitoring>
+  
+  <LanguagePacks>
+    
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.TCP.PerformanceCollection">
+          <Name>Enterprise Application Availability Monitoring Test (TCP) ResponseTime Performance Collection Rule</Name>
+          <Description>Collects the response time of a TCP connection test.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles>
+
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.TCP.PerformanceCollection" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>Collects the response time of the application, as a TCP connection test.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+    </LanguagePack>
+    
+  </LanguagePacks>
+  
+</ManagementPackFragment>

@@ -1,0 +1,38 @@
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType
+          ID="SquaredUp.EAM.Library.Class.Availability"
+          Base="System!System.LogicalEntity"
+          Accessibility="Public"
+          Abstract="true"
+          Hosted="false"
+          Singleton="false">
+
+          <Property ID="ApplicationId" Type="guid" Key="true" />
+
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.Availability">
+          <Name>Enterprise Application - Availability</Name>
+          <Description>The top-level collection within an Enterprise Application containing availability monitors and/or groups of availability monitors.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.Availability" SubElementID="ApplicationId">
+          <Name>Enterprise Application Id</Name>
+          <Description>The Id of the Enterprise Application within which this availability collection is contained.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

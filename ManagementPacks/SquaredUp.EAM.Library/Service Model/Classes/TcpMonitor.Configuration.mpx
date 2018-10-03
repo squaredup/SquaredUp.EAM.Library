@@ -1,0 +1,55 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <!-- This class is hosted on Dependency Monitoring objects and indicates that TCP connection monitoring
+             from the computer hosting the Dependency Monitoring object to the specified target server and port
+             is required. Discoveries for these objects are emitted into DAs created by VADA and we rely upon
+             SCOM's reference counting to cope with any overlap between VADA DAs sharing the same computers
+             for any reason -->
+        <ClassType
+          ID="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration"
+          Base="System!System.Perspective"
+          Accessibility="Public"
+          Abstract="false"
+          Hosted="true"
+          Singleton="false">
+          <Property ID="TargetServerName" Type="string" Key="true" CaseSensitive="false" MaxLength="256" MinLength="1" />
+          <Property ID="TargetPort" Type="int" Key="true" />
+          <Property ID="Interval" Type="int" Key="true" />
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration">
+          <Name>Enterprise Application TCP Monitoring Configuration</Name>
+          <Description>
+            Instances of this class are hosted on Dependency Monitoring objects to configure TCP connection
+            monitoring from the computer hosting that Dependency Monitoring object to the specified target
+            address and port. The health state of this object is used to colour the links between computers
+            in the Squared Up "Map" perspective.
+          </Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration" SubElementID="TargetServerName">
+          <Name>Target Server Name</Name>
+          <Description>The DNS name or IP Address to target.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration" SubElementID="TargetPort">
+          <Name>Target Port Number</Name>
+          <Description>The TCP port number to target on the specified server.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.TcpMonitor.Configuration" SubElementID="Interval">
+          <Name>Interval between connection attempts</Name>
+          <Description>How many seconds to wait between tests of the connection to the configured target.</Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

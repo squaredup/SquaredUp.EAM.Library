@@ -1,0 +1,42 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        
+        <ClassType ID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" Base="System!System.Perspective" Accessibility="Public" Abstract="true" Hosted="true" Singleton="false">        
+          <Property ID="ConfigurationJson" Key="false" Type="string" />
+          <Property ID="ResponseTimeThreshold" Key="false" Type="double" />
+          <Property ID="ApplicationName" Key="true" Type="string" />
+        </ClassType>
+      
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher">
+          <Name>Enterprise Application Availability Test (Base)</Name>
+          <Description>Base class that all Enterprise Application Availability Tests derive from.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" SubElementID="ApplicationName">
+          <Name>Application Name</Name>
+          <Description>The name of the application this tests.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" SubElementID="ConfigurationJson">
+          <Name>Configuration JSON</Name>
+          <Description>A JSON blob used to configure tests.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" SubElementID="ResponseTimeThreshold">
+          <Name>Response Time Threshold (ms)</Name>
+          <Description>The number of milliseconds in which tests should complete.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

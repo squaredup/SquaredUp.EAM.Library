@@ -1,0 +1,73 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType ID="SquaredUp.EAM.Custom.EAM_Default" Accessibility="Public" Base="MSIL!Microsoft.SystemCenter.InstanceGroup" Abstract="false" Hosted="false" Singleton="true">
+
+        </ClassType>
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+
+    <Discoveries>
+      
+      <Discovery ID="SquaredUp.EAM.Custom.Discovery.EAM_Default.Populator" Enabled="true" Target="SquaredUp.EAM.Custom.EAM_Default" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryRelationship TypeID="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities" />
+        </DiscoveryTypes>
+        <DataSource ID="GroupPopulationDataSource" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+          <RuleId>$MPElement$</RuleId>
+          <GroupInstanceId>$Target/Id$</GroupInstanceId>
+          <MembershipRules>
+            <MembershipRule>
+              <MonitoringClass>$MPElement[Name="Windows!Microsoft.Windows.Computer"]$</MonitoringClass>
+              <RelationshipClass>$MPElement[Name="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"]$</RelationshipClass>
+              <Expression>
+               <Contains>
+                 <MonitoringClass>$MPElement[Name="SC!Microsoft.SystemCenter.RootManagementServer"]$</MonitoringClass>
+               </Contains>
+              </Expression>
+            </MembershipRule>
+          </MembershipRules>
+        </DataSource>
+      </Discovery>
+      
+    </Discoveries>
+    
+  </Monitoring>
+  
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <!-- The name of the group that will appear to users in the console. -->
+        <DisplayString ElementID="SquaredUp.EAM.Custom.EAM_Default">
+          <Name>EAM_Default availability test clients</Name>
+          <Description>The default systems that should perform availability tests against Enterprise Applications.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Custom.Discovery.EAM_Default.Populator">
+          <Name>Discover EAM_Default availability test clients members</Name>
+          <Description>This discovery rule populates the group 'EAM_Default availability test clients'</Description>
+        </DisplayString>
+      </DisplayStrings>
+      <KnowledgeArticles>
+  
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Custom.Discovery.EAM_Default.Populator" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>Discovers Enterprise Application test groups by including all SCOM groups that are prefixed with 'EAM_'</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+    
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

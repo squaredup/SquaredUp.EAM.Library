@@ -1,0 +1,69 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  
+  <TypeDefinitions>
+    <ModuleTypes>
+      <ConditionDetectionModuleType ID="SquaredUp.EAM.Library.ConditionDetection.AvailabilityMonitoring.OptimizedPerfMapper" Accessibility="Public" Batching="false" PassThrough="false" Stateful="true">
+        <Configuration>
+          <xsd:element name="ObjectName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="CounterName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="InstanceName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          <xsd:element name="Value" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="Tolerance" type="xsd:double" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="ToleranceType" minOccurs="0" maxOccurs="1">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="Absolute" />
+                <xsd:enumeration value="Percentage" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="MaximumSampleSeparation" type="xsd:unsignedInt" minOccurs="1" maxOccurs="1"/>
+          <xsd:element name="SamplingPeriodInSeconds" type="xsd:unsignedInt" minOccurs="1" maxOccurs="1"/>
+        </Configuration>
+        <OverrideableParameters />
+        <ModuleImplementation>
+          <Composite>
+            <MemberModules>
+              <ConditionDetection ID="Mapper" TypeID="Perf!System.Performance.DataGenericMapper">
+                <ObjectName>$Config/ObjectName$</ObjectName>
+                <CounterName>$Config/CounterName$</CounterName>
+                <InstanceName>$Config/InstanceName$</InstanceName>
+                <Value>$Config/Value$</Value>
+              </ConditionDetection>
+              <ConditionDetection ID="OptimizedFilter" TypeID="Perf!System.Performance.OptimizedCollectionFilter">
+                <Tolerance>$Config/Tolerance$</Tolerance>
+                <ToleranceType>$Config/ToleranceType$</ToleranceType>
+                <MaximumSampleSeparation>$Config/MaximumSampleSeparation$</MaximumSampleSeparation>
+                <SamplingPeriodInSeconds>$Config/SamplingPeriodInSeconds$</SamplingPeriodInSeconds>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="OptimizedFilter">
+                <Node ID="Mapper" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Perf!System.Performance.Data</OutputType>
+        <InputTypes>
+          <InputType>System!System.BaseData</InputType>
+        </InputTypes>
+      </ConditionDetectionModuleType>
+    </ModuleTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Library.ConditionDetection.AvailabilityMonitoring.OptimizedPerfMapper">
+          <Name>Enterprise Application Availability Monitoring Optimized Performance Mapper</Name>
+          <Description>Transforms BaseData into PerformanceData after applying the given Perf optimizer.</Description>
+        </DisplayString>
+        
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+  
+</ManagementPackFragment>

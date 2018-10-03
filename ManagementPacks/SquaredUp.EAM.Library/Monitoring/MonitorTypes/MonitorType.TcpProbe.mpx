@@ -1,0 +1,123 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <MonitorTypes>
+
+      <!-- SquaredUp.EAM.TcpMonitor.TcpProbeMonitorType -->
+      <UnitMonitorType ID="SquaredUp.EAM.Library.MonitorType.TcpMonitor.TcpProbeMonitorType" Accessibility="Public">
+        <MonitorTypeStates>
+          <MonitorTypeState ID="ConnectionOk" NoDetection="false" />
+          <MonitorTypeState ID="ConnectionFailed" NoDetection="false" />
+        </MonitorTypeStates>
+        <Configuration>
+          <xsd:element name="TargetServerName" type="xsd:string" />
+          <xsd:element name="TargetPort" type="xsd:int" />
+          <xsd:element name="Interval" type="xsd:int" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="TargetPort" ParameterType="int" Selector="$Config/TargetPort$"/>
+          <OverrideableParameter ID="Interval" ParameterType="int" Selector="$Config/Interval$"/>
+        </OverrideableParameters>
+        <MonitorImplementation>
+          <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.Scheduler">
+                <Scheduler>
+                  <SimpleReccuringSchedule>
+                    <Interval Unit="Seconds">$Config/Interval$</Interval>
+                  </SimpleReccuringSchedule>
+                  <ExcludeDates />
+                </Scheduler>
+              </DataSource>
+              <ProbeAction ID="Probe" TypeID="Synth!Microsoft.SystemCenter.SyntheticTransactions.TCPPortCheckProbe">
+                <ServerName>$Config/TargetServerName$</ServerName>
+                <Port>$Config/TargetPort$</Port>
+              </ProbeAction>
+            <ConditionDetection ID="CDConnectionOk" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="UnsignedInteger">StatusCode</XPathQuery>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value Type="UnsignedInteger">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+            <ConditionDetection ID="CDConnectionFailed" TypeID="System!System.ExpressionFilter">
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <XPathQuery Type="UnsignedInteger">StatusCode</XPathQuery>
+                  </ValueExpression>
+                  <Operator>NotEqual</Operator>
+                  <ValueExpression>
+                    <Value Type="UnsignedInteger">0</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </ConditionDetection>
+          </MemberModules>
+          <RegularDetections>
+            <RegularDetection MonitorTypeStateID="ConnectionOk">
+              <Node ID="CDConnectionOk">
+                <Node ID="Probe">
+                  <Node ID="Scheduler" />
+                </Node>
+              </Node>
+            </RegularDetection>
+            <RegularDetection MonitorTypeStateID="ConnectionFailed">
+              <Node ID="CDConnectionFailed">
+                <Node ID="Probe">
+                  <Node ID="Scheduler" />
+                </Node>
+              </Node>
+            </RegularDetection>
+          </RegularDetections>
+          <OnDemandDetections>
+            <OnDemandDetection MonitorTypeStateID="ConnectionOk">
+              <Node ID="CDConnectionOk">
+                <Node ID="Probe" />
+              </Node>
+            </OnDemandDetection>
+            <OnDemandDetection MonitorTypeStateID="ConnectionFailed">
+              <Node ID="CDConnectionOk">
+                <Node ID="Probe" />
+              </Node>
+            </OnDemandDetection>
+          </OnDemandDetections>
+        </MonitorImplementation>
+      </UnitMonitorType>
+
+    </MonitorTypes>
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.TcpMonitor.TcpProbeMonitorType">
+          <Name>Squared Up EA Tcp probe monitor type</Name>
+          <Description>Monitors Tcp connectivity between two endpoints to the target port on a defined interval.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.TcpMonitor.TcpProbeMonitorType" SubElementID="ConnectionFailed">
+          <Name>Connection Failed</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.TcpMonitor.TcpProbeMonitorType" SubElementID="ConnectionOk">
+          <Name>Connection Ok</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.TcpMonitor.TcpProbeMonitorType" SubElementID="Interval">
+          <Name>Interval (Seconds)</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.MonitorType.TcpMonitor.TcpProbeMonitorType" SubElementID="TargetPort">
+          <Name>Port Number</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -1,0 +1,195 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <Monitoring>
+    <Monitors>
+
+      <UnitMonitor ID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.ServiceRunning"
+                   Accessibility="Public"
+                   Enabled="true"
+                   Target="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"
+                   ParentMonitorID="Health!System.Health.AvailabilityState"
+                   TypeID="Windows!Microsoft.Windows.CheckNTServiceStateMonitorType"
+                   ConfirmDelivery="false" Remotable="true" Priority="Normal" >
+        <Category>AvailabilityHealth</Category>
+        <AlertSettings AlertMessage="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.ServiceRunning.AlertMessage">
+          <AlertOnState>Error</AlertOnState>
+          <AutoResolve>true</AutoResolve>
+          <AlertPriority>Normal</AlertPriority>
+          <AlertSeverity>MatchMonitorHealth</AlertSeverity>
+          <AlertParameters>
+            <AlertParameter1>$Target/Host/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</AlertParameter1>
+            <AlertParameter2>$Target/Property[Type='SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration']/ServiceName$</AlertParameter2>
+            <AlertParameter3>$Data/Context/Property[@Name='DisplayName']$</AlertParameter3>
+            <AlertParameter4>$Data/Context/Property[@Name='State']$</AlertParameter4>
+            <AlertParameter5>$Data/Context/Property[@Name='Description']$</AlertParameter5>
+          </AlertParameters>
+        </AlertSettings>
+        <OperationalStates>
+          <OperationalState ID="Running" MonitorTypeStateID="Running" HealthState="Success" />
+          <OperationalState ID="NotRunning" MonitorTypeStateID="NotRunning" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <ComputerName>$Target/Host/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</ComputerName>
+          <ServiceName>$Target/Property[Type="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"]/ServiceName$</ServiceName>
+          <CheckStartupType>$Target/Property[Type="SquaredUp.EAM.Library.Class.NTServiceMonitor.Configuration"]/CheckStartupType$</CheckStartupType>
+        </Configuration>
+      </UnitMonitor>
+
+    </Monitors>
+  </Monitoring>
+
+  <Presentation>
+    <StringResources>
+      <StringResource ID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.ServiceRunning.AlertMessage"/>
+    </StringResources>
+  </Presentation>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.ServiceRunning">
+          <Name>Service is running</Name>
+          <Description>
+            This monitors that a given service on a windows computer is running.
+          </Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.ServiceRunning" SubElementID="NotRunning">
+          <Name>Service not running</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.ServiceRunning" SubElementID="Running">
+          <Name>Service running</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.ServiceRunning.AlertMessage">
+          <Name>Enterprise Application Windows service is not running</Name>
+          <Description>
+The "{2}"({1}) service is not running on {0}.
+
+Service Status: {3}
+Service Description: {4}
+
+This may impact the health of one or more Enterprise Applications.
+          </Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles>
+        <KnowledgeArticle ElementID="SquaredUp.EAM.Library.Monitor.NTServiceMonitor.ServiceRunning" Visible="true">
+          <MamlContent>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Summary</maml:title>
+              <maml:para>A Windows service that is part of an Enterprise Application is not currently running.  This may impact the health of one or more Enterprise Applications.</maml:para>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Causes</maml:title>
+              <maml:para>The service has either failed or has been stopped.  The below table lists the status codes that this monitor may return, and their meaning.</maml:para>
+              <maml:table>
+                <maml:title>Status codes</maml:title>
+                <maml:tableHeader>
+                  <maml:row>
+                    <maml:entry>
+                      <maml:para>Status code</maml:para>
+                    </maml:entry>
+                    <maml:entry>
+                      <maml:para>Definition</maml:para>
+                    </maml:entry>
+                  </maml:row>
+                </maml:tableHeader>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>0</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Unknown</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>1</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Stopped</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>2</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Start pending</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>3</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Stop pending</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>4</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Running</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>5</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Continue pending</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>6</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Pause pending</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>7</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Paused</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>8</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Service not found</maml:para>
+                  </maml:entry>
+                </maml:row>
+                <maml:row>
+                  <maml:entry>
+                    <maml:para>9</maml:para>
+                  </maml:entry>
+                  <maml:entry>
+                    <maml:para>Server not found</maml:para>
+                  </maml:entry>
+                </maml:row>
+              </maml:table>
+            </maml:section>
+            <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
+              <maml:title>Resolutions</maml:title>
+              <maml:para>Restart the service and ensure that it has the correct startup type configured.</maml:para>
+              <maml:para>If this is a recurring issue, you can enable a SCOM recovery to automatically restart the service while you troubleshoot the issue.</maml:para>
+            </maml:section>
+          </MamlContent>
+        </KnowledgeArticle>
+
+      </KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>
