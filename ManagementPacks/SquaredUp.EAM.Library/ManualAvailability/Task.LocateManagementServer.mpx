@@ -1,0 +1,187 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+
+    <ModuleTypes>
+
+      <WriteActionModuleType ID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer" Accessibility="Internal" >
+        <Configuration>
+          <xsd:element name="State" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="success"/>
+                <xsd:enumeration value="warning"/>
+                <xsd:enumeration value="error"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Description" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SetByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="State" Selector="$Config/State$" ParameterType="string" />
+          <OverrideableParameter ID="Description" Selector="$Config/Description$" ParameterType="string" />
+          <OverrideableParameter ID="SetByUser" Selector="$Config/SetByUser$" ParameterType="string" />
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <ProbeAction ID="Lookup" TypeID="SC!Microsoft.SystemCenter.GetPoolMemberMonitoringTLME.CompositeProbe">
+                <PoolId>$MPElement[Name="SC!Microsoft.SystemCenter.AllManagementServersPool"]$</PoolId>
+                <ManagedEntityId>$Target/Id$</ManagedEntityId>
+              </ProbeAction>
+              <WriteAction ID="StartEventTask" TypeID="Windows!Microsoft.Windows.PowerShellWriteAction">
+                <ScriptName>SquaredUp.EAM.Library.WriteAction.ManualAvailability.StartEventTask.ps1</ScriptName>
+                <ScriptBody>$IncludeFileContent/ManualAvailability/SquaredUp.EAM.Library.WriteAction.ManualAvailability.StartEventTask.ps1$</ScriptBody>
+                <Parameters>
+                  <Parameter>
+                    <Name>ManagedEntityId</Name>
+                    <Value>$Target/Id$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>State</Name>
+                    <Value>$Config/State$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>Description</Name>
+                    <Value>$Config/Description$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>DisplayName</Name>
+                    <Value>$Target/Property[Type="System!System.Entity"]/DisplayName$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>ManagementServer</Name>
+                    <Value>$Data/ManagingHealthService/@healthServiceId$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>SetByUser</Name>
+                    <Value>$Config/SetByUser$</Value>
+                  </Parameter>
+                </Parameters>
+                <TimeoutSeconds>60</TimeoutSeconds>
+                <StrictErrorHandling>true</StrictErrorHandling>
+              </WriteAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="StartEventTask">
+                <Node ID="Lookup" />
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Windows!Microsoft.Windows.SerializedObjectData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </WriteActionModuleType>
+
+      <WriteActionModuleType ID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer.Healthy" Accessibility="Internal" >
+        <Configuration>
+          <xsd:element name="Description" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SetByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="Description" Selector="$Config/Description$" ParameterType="string" />
+          <OverrideableParameter ID="SetByUser" Selector="$Config/SetByUser$" ParameterType="string"/>
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <WriteAction ID="SetHealthy" TypeID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer" >
+                <State>success</State>
+                <Description>$Config/Description$</Description>
+                <SetByUser></SetByUser>
+              </WriteAction>
+            </MemberModules>
+            <Composition>
+              <Node ID="SetHealthy" />
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>Windows!Microsoft.Windows.SerializedObjectData</OutputType>
+        <InputType>System!System.BaseData</InputType>
+      </WriteActionModuleType>
+
+    </ModuleTypes>
+
+  </TypeDefinitions>
+
+  <Monitoring>
+
+    <Tasks>
+      
+      <Task ID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Healthy" Accessibility="Internal" Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.Base" Enabled="true" Remotable="true" Timeout="90" RunLocation="SC!Microsoft.SystemCenter.CollectionManagementServer">
+        <Category>Custom</Category>
+        <WriteAction ID="Publish" TypeID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer.Healthy" >
+          <Description></Description>
+          <SetByUser></SetByUser>
+        </WriteAction>
+      </Task>
+        
+      <Task ID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Unhealthy" Accessibility="Internal" Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.Base" Enabled="true" Remotable="true" Timeout="90" RunLocation="SC!Microsoft.SystemCenter.CollectionManagementServer">
+        <Category>Custom</Category>
+        <WriteAction ID="Publish" TypeID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer">
+          <State>error</State>
+          <Description>No description of the status was supplied.</Description>
+          <SetByUser></SetByUser>
+        </WriteAction>
+      </Task>
+    
+    </Tasks>
+
+  </Monitoring>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer">
+          <Name>Locate and trigger create event task write action</Name>
+          <Description>Locate the management server in the resource pool that is currently managing the target, and trigger the Create Event task on that server.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer" SubElementID="State">
+          <Name>State</Name>
+          <Description>The state to publish. Should be success|warning|error.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer" SubElementID="Description">
+          <Name>Description</Name>
+          <Description>Any context or details you wish to provide with this health state update.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer" SubElementID="SetByUser">
+          <Name>Set By User</Name>
+          <Description>The user who set this state change or reported the status.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer.Healthy">
+          <Name>Locate and trigger create healthy event task write action</Name>
+          <Description>Locate the management server in the resource pool that is currently managing the target, and trigger the Create Event task on that server.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer.Healthy" SubElementID="Description">
+          <Name>Description</Name>
+          <Description>Any context or details you wish to provide with this health state update.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer.Healthy" SubElementID="SetByUser">
+          <Name>Set By User</Name>
+          <Description>The user who set this state change or reported the status.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Healthy"> 
+          <Name>Set availability healthy</Name>
+          <Description>Set the availability state of the application to healthy.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Unhealthy">
+          <Name>Report Availability</Name>
+          <Description>Set the availability state of the application. State can be 'Success', 'Warning' or 'Error'.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+      <KnowledgeArticles></KnowledgeArticles>
+    </LanguagePack>
+  </LanguagePacks>
+
+</ManagementPackFragment>
