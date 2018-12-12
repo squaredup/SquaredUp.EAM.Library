@@ -150,7 +150,7 @@
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer" SubElementID="SetByUser">
-          <Name>Set By User</Name>
+          <Name>Set by User</Name>
           <Description>The user who set this state change or reported the status.</Description>
         </DisplayString>
 
@@ -165,12 +165,12 @@
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.LocateManagementServer.Healthy" SubElementID="SetByUser">
-          <Name>Set By User</Name>
+          <Name>Set by User</Name>
           <Description>The user who set this state change or reported the status.</Description>
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Healthy"> 
-          <Name>Set availability healthy</Name>
+          <Name>Set Availability Healthy</Name>
           <Description>Set the availability state of the application to healthy.</Description>
         </DisplayString>
 

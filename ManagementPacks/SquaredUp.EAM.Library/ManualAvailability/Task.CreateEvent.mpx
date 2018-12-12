@@ -136,17 +136,17 @@
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel" SubElementID="ManagedEntityId">
-          <Name>Enterprise Application Id</Name>
+          <Name>Enterprise Application ID</Name>
           <Description>The SCOM GUID for the Enterprise Application you wish to set state for.</Description>
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel" SubElementID="TargetDisplayName">
-          <Name>Enterprise Application DisplayName</Name>
+          <Name>Enterprise Application Display Name</Name>
           <Description>The name of the Enterprise Application you wish to set state for.</Description>
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel" SubElementID="SetByUser">
-          <Name>Set By User</Name>
+          <Name>Set by User</Name>
           <Description>The user who set this state change or reported the status.</Description>
         </DisplayString>
 
