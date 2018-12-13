@@ -145,13 +145,18 @@ function CreateClassInstanceFromId {
 			$keyProps = $instCl.GetKeyProperties()
             foreach ($keyProp in $keyProps) {
                 $propName = "[$($instCl.Name)].$($keyProp.Name)"
-                $propValue = [System.Management.Automation.LanguagePrimitives]::ConvertTo($obj."$propName".Value, $keyProp.SystemType)
-				if ($propValue -is [Guid]) {
+				$propRawValue = $obj."$propName".Value
+                if ($keyProp.SystemType.FullName -eq "System.Guid") {
 					# SCOM requires specific string syntax for GUIDs
-					$propValue = $propValue.ToString("b")
-				}
+                    $propValue = $propRawValue.ToString("b")
+                } elseif ($keyProp.SystemType.FullName -eq "System.Enum") {
+					# For enums, we use the ID GUID in SCOM's preferred notation
+                    $propValue = $propRawValue.Id.ToString("b")
+                } else {
+                    $propValue = [System.Management.Automation.LanguagePrimitives]::ConvertTo($propRawValue, $keyProp.SystemType)
+                }
 				try {
-					$objDiscoveryInstance.AddProperty($keyProp.Id, $propValue)
+				    $objDiscoveryInstance.AddProperty($keyProp.Id, $propValue)
 				} catch {
 					Write-ErrorLog "AddProperty($($keyProp.Id), $propValue) threw '$_'"
 				}
