@@ -142,24 +142,24 @@ function CreateClassInstanceFromId {
 			Write-ErrorLog "Get-ScomClass -Id '$($inst.LeastDerivedNonAbstractManagementPackClassId)' threw '$_'"
 		}
         while ($instCl) {
-			$keyProps = $instCl.GetKeyProperties()
+            $keyProps = $instCl.GetKeyProperties()
             foreach ($keyProp in $keyProps) {
                 $propName = "[$($instCl.Name)].$($keyProp.Name)"
-				$propRawValue = $obj."$propName".Value
+                $propRawValue = $obj."$propName".Value
                 if ($keyProp.SystemType.FullName -eq "System.Guid") {
-					# SCOM requires specific string syntax for GUIDs
+                    # SCOM requires specific string syntax for GUIDs
                     $propValue = $propRawValue.ToString("b")
                 } elseif ($keyProp.SystemType.FullName -eq "System.Enum") {
-					# For enums, we use the ID GUID in SCOM's preferred notation
+                    # For enums, we use the ID GUID in SCOM's preferred notation
                     $propValue = $propRawValue.Id.ToString("b")
                 } else {
                     $propValue = [System.Management.Automation.LanguagePrimitives]::ConvertTo($propRawValue, $keyProp.SystemType)
                 }
-				try {
-				    $objDiscoveryInstance.AddProperty($keyProp.Id, $propValue)
-				} catch {
-					Write-ErrorLog "AddProperty($($keyProp.Id), $propValue) threw '$_'"
-				}
+                try {
+                    $objDiscoveryInstance.AddProperty($keyProp.Id, $propValue)
+                } catch {
+                    Write-ErrorLog "AddProperty($($keyProp.Id), $propValue) threw '$_'"
+                }
             }
             $instCl = $instCl.GetBaseType()
         }
