@@ -92,7 +92,7 @@ function Get-ScomHostingParentInfo {
 		# If so, we can return information about our host to the caller
         if ($isHosting) {
             $parent = $relInst.SourceObject
-            $result = @{ ParentObJ = $parent; RelInst = $relInst }
+            $result = @{ ParentObj = $parent; RelInst = $relInst }
             break
         }
     }
@@ -142,15 +142,29 @@ function CreateClassInstanceFromId {
 			Write-ErrorLog "Get-ScomClass -Id '$($inst.LeastDerivedNonAbstractManagementPackClassId)' threw '$_'"
 		}
         while ($instCl) {
-			$keyProps = $instCl.GetKeyProperties()
+            $keyProps = $instCl.GetKeyProperties()
             foreach ($keyProp in $keyProps) {
                 $propName = "[$($instCl.Name)].$($keyProp.Name)"
-			    $objDiscoveryInstance.AddProperty($keyProp.Id, $obj.$propName.Value)
+                $propRawValue = $obj."$propName".Value
+                if ($keyProp.SystemType.FullName -eq "System.Guid") {
+                    # SCOM requires specific string syntax for GUIDs
+                    $propValue = $propRawValue.ToString("b")
+                } elseif ($keyProp.SystemType.FullName -eq "System.Enum") {
+                    # For enums, we use the ID GUID in SCOM's preferred notation
+                    $propValue = $propRawValue.Id.ToString("b")
+                } else {
+                    $propValue = [System.Management.Automation.LanguagePrimitives]::ConvertTo($propRawValue, $keyProp.SystemType)
+                }
+                try {
+                    $objDiscoveryInstance.AddProperty($keyProp.Id, $propValue)
+                } catch {
+                    Write-ErrorLog "AddProperty($($keyProp.Id), $propValue) threw '$_'"
+                }
             }
             $instCl = $instCl.GetBaseType()
         }
         $hostInfo = Get-ScomHostingParentInfo $inst
-        $nextInst = $hostInfo.ParentObJ
+        $nextInst = $hostInfo.ParentObj
     }
 
 	# Return the result
@@ -179,53 +193,57 @@ function CreateClassInstanceFromTypeId {
 # Main
 #=================================================================================
 
-foreach ($discoveryObject in $discoveries.ExistingObjects) {
-	# Create a discovery data instance object from the ID of an existing object
-	$objDiscoveryInstance = CreateClassInstanceFromId $discoveryObject $discoveryData
+try {
+	foreach ($discoveryObject in $discoveries.ExistingObjects) {
+		# Create a discovery data instance object from the ID of an existing object
+		$objDiscoveryInstance = CreateClassInstanceFromId $discoveryObject $discoveryData
 
-	# Record instance if required for relationship(s)
-	if ($objDiscoveryInstance -and $discoveryObject.InstanceId) {
-		$objInstancesByInstanceId[$discoveryObject.InstanceId] = $objDiscoveryInstance
-	}
-}
-
-foreach ($discoveryObject in $discoveries.NewObjects) {
-	# Create a discovery data instance object from the TypeID and properties for a new object
-	$objDiscoveryInstance = CreateClassInstanceFromTypeId $discoveryObject $discoveryData
-
-	# Add it to the discovery data
-	$discoveryData.AddInstance($objDiscoveryInstance)
-
-	# Record instance if required for relationship(s)
-	if ($objDiscoveryInstance -and $discoveryObject.InstanceId) {
-		$objInstancesByInstanceId[$discoveryObject.InstanceId] = $objDiscoveryInstance
-	}
-}
-
-foreach ($discoveryRelationship in $discoveries.Relationships) {
-	# Check if both objects exist
-	if ($objInstancesByInstanceId.ContainsKey($discoveryRelationship.SourceInstanceId) -and
-		$objInstancesByInstanceId.ContainsKey($discoveryRelationship.TargetInstanceId)) {
-
-		# Create a discovered relationship instance
-		$relInstance = $discoveryData.CreateRelationshipInstance($discoveryRelationship.TypeId)
-		$relInstance.Source = $objInstancesByInstanceId[$discoveryRelationship.SourceInstanceId]
-		$relInstance.Target = $objInstancesByInstanceId[$discoveryRelationship.TargetInstanceId]
-
-		# Add any properties
-		foreach ($discoveryProperty in $discoveryRelationship.Properties) {
-			$relInstance.AddProperty($discoveryProperty.PropertyId, $discoveryProperty.Value)
-		}
-
-		$discoveryData.AddInstance($relInstance)
-	} else {
-		if (-not $objInstancesByInstanceId.ContainsKey($discoveryRelationship.SourceInstanceId)) {
-			$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,"Relationship missing source '$($discoveryRelationship.SourceInstanceId)'")
-		}
-		if (-not $objInstancesByInstanceId.ContainsKey($discoveryRelationship.TargetInstanceId)) {
-			$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,"Relationship missing target '$($discoveryRelationship.TargetInstanceId)'")
+		# Record instance if required for relationship(s)
+		if ($objDiscoveryInstance -and $discoveryObject.InstanceId) {
+			$objInstancesByInstanceId[$discoveryObject.InstanceId] = $objDiscoveryInstance
 		}
 	}
+
+	foreach ($discoveryObject in $discoveries.NewObjects) {
+		# Create a discovery data instance object from the TypeID and properties for a new object
+		$objDiscoveryInstance = CreateClassInstanceFromTypeId $discoveryObject $discoveryData
+
+		# Add it to the discovery data
+		$discoveryData.AddInstance($objDiscoveryInstance)
+
+		# Record instance if required for relationship(s)
+		if ($objDiscoveryInstance -and $discoveryObject.InstanceId) {
+			$objInstancesByInstanceId[$discoveryObject.InstanceId] = $objDiscoveryInstance
+		}
+	}
+
+	foreach ($discoveryRelationship in $discoveries.Relationships) {
+		# Check if both objects exist
+		if ($objInstancesByInstanceId.ContainsKey($discoveryRelationship.SourceInstanceId) -and
+			$objInstancesByInstanceId.ContainsKey($discoveryRelationship.TargetInstanceId)) {
+
+			# Create a discovered relationship instance
+			$relInstance = $discoveryData.CreateRelationshipInstance($discoveryRelationship.TypeId)
+			$relInstance.Source = $objInstancesByInstanceId[$discoveryRelationship.SourceInstanceId]
+			$relInstance.Target = $objInstancesByInstanceId[$discoveryRelationship.TargetInstanceId]
+
+			# Add any properties
+			foreach ($discoveryProperty in $discoveryRelationship.Properties) {
+				$relInstance.AddProperty($discoveryProperty.PropertyId, $discoveryProperty.Value)
+			}
+
+			$discoveryData.AddInstance($relInstance)
+		} else {
+			if (-not $objInstancesByInstanceId.ContainsKey($discoveryRelationship.SourceInstanceId)) {
+				$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,"Relationship missing source '$($discoveryRelationship.SourceInstanceId)'")
+			}
+			if (-not $objInstancesByInstanceId.ContainsKey($discoveryRelationship.TargetInstanceId)) {
+				$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,"Relationship missing target '$($discoveryRelationship.TargetInstanceId)'")
+			}
+		}
+	}
+} catch {
+	Write-ErrorLog "Unhandled exception '$_'"
 }
 
 # End
