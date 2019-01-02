@@ -16,10 +16,16 @@
             </xsd:simpleType>
           </xsd:element>
           <xsd:element name="Description" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="ManagedEntityId" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="TargetDisplayName" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="SetByUser" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
         </Configuration>
         <OverrideableParameters>
           <OverrideableParameter ID="State" Selector="$Config/State$" ParameterType="string" />
           <OverrideableParameter ID="Description" Selector="$Config/Description$" ParameterType="string" />
+          <OverrideableParameter ID="ManagedEntityId" Selector="$Config/ManagedEntityId$" ParameterType="string"/>
+          <OverrideableParameter ID="TargetDisplayName" Selector="$Config/TargetDisplayName$" ParameterType="string" />
+          <OverrideableParameter ID="SetByUser" Selector="$Config/SetByUser$" ParameterType="string"/>
         </OverrideableParameters>
         <ModuleImplementation Isolation="Any">
           <Composite>
@@ -27,18 +33,22 @@
               <ProbeAction ID="CreatePropertyBag" TypeID="Windows!Microsoft.Windows.PowerShellPropertyBagProbe">
                 <ScriptName>SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel.ps1</ScriptName>
                 <ScriptBody>
-                  param($ManagedEntityId, $State, $Description)
+                  param($ManagedEntityId, $State, $Description, $SetByUser = "")
                   $momapi = New-Object -comObject MOM.ScriptAPI
+                  $scriptName = "SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel.ps1"
+                  $momapi.LogScriptEvent($scriptName,8999,0,"`n Script is starting. `n Attempting to set health state to '$State' with description '$Description' for $Config/TargetDisplayName$")
                   $bag = $momapi.CreatePropertyBag()
                   $bag.AddValue( "ManagedEntityId", $ManagedEntityId)
                   $bag.AddValue( "State", "$State".ToLower().Trim() )
                   $bag.AddValue( "Description" , $Description )
+                  $bag.AddValue( "SetByUser", $SetByUser )
                   $bag
+                  $momapi.LogScriptEvent($scriptName,8999,0,"`n Script is Complete.")
                 </ScriptBody>
                 <Parameters>
                   <Parameter>
                     <Name>ManagedEntityId</Name>
-                    <Value>$Target/Id$</Value>
+                    <Value>$Config/ManagedEntityId$</Value>
                   </Parameter>
                   <Parameter>
                     <Name>State</Name>
@@ -47,6 +57,10 @@
                   <Parameter>
                     <Name>Description</Name>
                     <Value>$Config/Description$</Value>
+                  </Parameter>
+                  <Parameter>
+                    <Name>SetByUser</Name>
+                    <Value>$Config/SetByUser$</Value>
                   </Parameter>
                 </Parameters>
                 <TimeoutSeconds>60</TimeoutSeconds>
@@ -64,7 +78,7 @@
               </ConditionDetection>
               <WriteAction ID="Publish" TypeID="System!System.PublishData">
                 <ManagementGroupId>$Target/ManagementGroup/Id$</ManagementGroupId>
-                <ChannelId>$Target/Id$</ChannelId>
+                <ChannelId>$Config/ManagedEntityId$</ChannelId>
               </WriteAction>
             </MemberModules>
             <Composition>
@@ -78,25 +92,7 @@
         </ModuleImplementation>
         <InputType>System!System.BaseData</InputType>
       </WriteActionModuleType>
-      
-    <WriteActionModuleType ID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel.Healthy" Accessibility="Internal" Batching="false">
-          <Configuration />
-          <ModuleImplementation Isolation="Any">
-          <Composite>
-            <MemberModules>
-              <WriteAction ID="Publish" TypeID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel">
-                <State>success</State>
-                <Description></Description>
-              </WriteAction>
-            </MemberModules>
-            <Composition>
-              <Node ID="Publish" />
-            </Composition>
-          </Composite>
-        </ModuleImplementation>
-        <InputType>System!System.BaseData</InputType>
-      </WriteActionModuleType>
-     
+
     </ModuleTypes>
 
   </TypeDefinitions>
@@ -104,20 +100,18 @@
   <Monitoring>
 
     <Tasks>
-      
-      <Task ID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Healthy" Accessibility="Internal" Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.Base" Enabled="true" Remotable="true" Timeout="90">
-        <Category>Custom</Category>
-        <WriteAction ID="Publish" TypeID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel.Healthy" />
-      </Task>
-        
-      <Task ID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Unhealthy" Accessibility="Internal" Target="SquaredUp.EAM.Library.Class.EnterpriseApplication.Base" Enabled="true" Remotable="true" Timeout="90">
+
+      <Task ID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.MS.Unhealthy" Accessibility="Internal" Target="SC!Microsoft.SystemCenter.ManagementServer" Enabled="true" Remotable="true" Timeout="90" >
         <Category>Custom</Category>
         <WriteAction ID="Publish" TypeID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel">
           <State>error</State>
           <Description>No description of the status was supplied.</Description>
+          <ManagedEntityId></ManagedEntityId>
+          <TargetDisplayName></TargetDisplayName>
+          <SetByUser></SetByUser>
         </WriteAction>
       </Task>
-    
+
     </Tasks>
 
   </Monitoring>
@@ -125,7 +119,7 @@
   <LanguagePacks>
     <LanguagePack ID="ENU" IsDefault="true">
       <DisplayStrings>
-        
+
         <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel">
           <Name>Publish status to channel</Name>
           <Description>Publishes a propertybag that indicates current manual health state.</Description>
@@ -141,19 +135,24 @@
           <Description>Any context or details you wish to provide with this health state update.</Description>
         </DisplayString>
 
-        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel.Healthy">
-          <Name>Publish status to channel (healthy)</Name>
-          <Description>Publishes a propertybag that indicates a healthy manual state.</Description>
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel" SubElementID="ManagedEntityId">
+          <Name>Enterprise Application ID</Name>
+          <Description>The SCOM GUID for the Enterprise Application you wish to set state for.</Description>
         </DisplayString>
 
-        <DisplayString ElementID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Healthy">
-          <Name>Set availability healthy</Name>
-          <Description>Set the availability state of the application to healthy.</Description>
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel" SubElementID="TargetDisplayName">
+          <Name>Enterprise Application Display Name</Name>
+          <Description>The name of the Enterprise Application you wish to set state for.</Description>
         </DisplayString>
 
-        <DisplayString ElementID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.Unhealthy">
-          <Name>Set availability unhealthy</Name>
-          <Description>Set the availability state of the application. State can be 'Success', 'Warning' or 'Error'.</Description>
+        <DisplayString ElementID="SquaredUp.EAM.Library.WriteAction.ManualAvailability.PublishToChannel" SubElementID="SetByUser">
+          <Name>Set by User</Name>
+          <Description>The user who set this state change or reported the status.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.AgentTask.ManualAvailability.MS.Unhealthy">
+          <Name>Set Enterprise Application End-User Reporting Health</Name>
+          <Description>Set the availability state of an application. State can be 'Success', 'Warning' or 'Error'.</Description>
         </DisplayString>
 
       </DisplayStrings>

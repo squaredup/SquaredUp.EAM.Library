@@ -44,6 +44,7 @@
     <ManagementPackReference Include="Microsoft.SystemCenter.Library">
       <Alias>SC</Alias>
       <MinVersion>7.0.8427.0</MinVersion>
+      <PackageToBundle>False</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="System.Library">
       <Alias>System</Alias>
@@ -138,6 +139,9 @@
     <Compile Include="ManagementPack.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ManualAvailability\Task.CreateEvent.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Modules\Datasource.DiscoveryProvider.mpx">
       <SubType>Code</SubType>
     </Compile>
@@ -168,7 +172,7 @@
     <Compile Include="ManualAvailability\Monitor.mpx">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ManualAvailability\Task.mpx">
+    <Compile Include="ManualAvailability\Task.LocateManagementServer.mpx">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Service Model\Classes\Availability.mpx">
@@ -269,6 +273,7 @@
     <EmbeddedResource Include="AvailabilityMonitoring\Monitors\Shared\Scripts\SquaredUp.EAM.AvailabilityMonitoring.Web.Basic.Monitor.DataSource.ps1" />
     <EmbeddedResource Include="AvailabilityMonitoring\Monitors\Types\Tcp\Scripts\TcpTest.ps1" />
     <EmbeddedResource Include="AvailabilityMonitoring\Monitors\Types\Web\Scripts\WebTest.ps1" />
+    <EmbeddedResource Include="ManualAvailability\SquaredUp.EAM.Library.WriteAction.ManualAvailability.StartEventTask.ps1" />
     <EmbeddedResource Include="Modules\Scripts\SquaredUp.EAM.Discovery.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
