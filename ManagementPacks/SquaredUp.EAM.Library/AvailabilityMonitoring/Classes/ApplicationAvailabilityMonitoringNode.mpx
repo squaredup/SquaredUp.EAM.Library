@@ -13,13 +13,15 @@
   <Monitoring>
     
     <Discoveries>
-      <Discovery ID="SquaredUp.EAM.Library.Discovery.AvailabilityMonitoring.MonitoringNode" Target="Windows!Microsoft.Windows.Server.OperatingSystem" Enabled="false" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+      <Discovery ID="SquaredUp.EAM.Library.Discovery.AvailabilityMonitoring.MonitoringNode" Target="Windows!Microsoft.Windows.Server.OperatingSystem" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal">
 	    <Category>Discovery</Category>
         <DiscoveryTypes>
 			<DiscoveryClass TypeID="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode" />
         </DiscoveryTypes>
-        <DataSource ID="DS" TypeID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticDiscovery">
+        <DataSource ID="DS" TypeID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery">
           <IntervalSeconds>86400</IntervalSeconds>
+          <DiscoverInstance>false</DiscoverInstance>
+          <ComputerName>$Target/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</ComputerName>
           <ClassId>$MPElement[Name="SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode"]$</ClassId>
           <InstanceSettings>
             <Settings>
@@ -49,7 +51,7 @@
         </DisplayString>
         <DisplayString ElementID="SquaredUp.EAM.Library.Discovery.AvailabilityMonitoring.MonitoringNode">
           <Name>Discover Enterprise Application Availability Monitoring Nodes</Name>
-          <Description>This discovery is disabled by default, and if enabled will mark the target server as an Application availability monitoring node.</Description>
+          <Description>This discovery is enabled by default, and if DiscoverInstance is set to true will mark the target server as an Application availability monitoring node.</Description>
         </DisplayString>
       </DisplayStrings>
       <KnowledgeArticles>
@@ -58,7 +60,7 @@
           <MamlContent>
             <maml:section xmlns:maml="http://schemas.microsoft.com/maml/2004/10">
               <maml:title>Summary</maml:title>
-              <maml:para>This discovery is disabled by default, and if enabled will mark the target server as an Application availability monitoring node.</maml:para>
+              <maml:para>This discovery is enabled by default, and if DiscoverInstance is set to true will mark the target server as an Application availability monitoring node.</maml:para>
             </maml:section>
           </MamlContent>
         </KnowledgeArticle>
