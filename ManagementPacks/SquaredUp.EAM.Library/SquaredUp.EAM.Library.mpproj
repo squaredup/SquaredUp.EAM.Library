@@ -82,6 +82,9 @@
     <Compile Include="AvailabilityMonitoring\Classes\ApplicationAvailabilityWatcher.mpx">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AvailabilityMonitoring\Classes\StaticAlwaysOnDiscoveryDataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="AvailabilityMonitoring\Classes\StaticDiscoveryDataSource.mpx">
       <SubType>Code</SubType>
     </Compile>

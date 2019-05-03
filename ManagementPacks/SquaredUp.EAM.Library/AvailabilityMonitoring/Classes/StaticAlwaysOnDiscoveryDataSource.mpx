@@ -1,0 +1,106 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+
+    <ModuleTypes>
+      <DataSourceModuleType ID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery" Accessibility="Public">
+        <Configuration>
+          <IncludeSchemaTypes>
+            <SchemaType>System!System.ExpressionEvaluatorSchema</SchemaType>
+            <SchemaType>System!System.Discovery.MapperSchema</SchemaType>
+          </IncludeSchemaTypes>
+          <xsd:element name="IntervalSeconds" type="xsd:integer" />
+          <xsd:element name="SyncTime" type="xsd:string" minOccurs="0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+          <xsd:element name="DiscoverInstance" type="xsd:boolean" />
+          <xsd:element name="ComputerName" type="xsd:string" />
+          <xsd:element name="ClassId" type="xsd:string"/>
+          <xsd:element name="InstanceSettings" minOccurs="0" maxOccurs="1" type="SettingsType"/>
+        </Configuration>
+        <OverrideableParameters>
+          <OverrideableParameter ID="IntervalSeconds" Selector="$Config/IntervalSeconds$" ParameterType="int" />
+          <OverrideableParameter ID="SyncTime" Selector="$Config/SyncTime$" ParameterType="string" />
+          <OverrideableParameter ID="DiscoverInstance" Selector="$Config/DiscoverInstance$" ParameterType="bool" />
+        </OverrideableParameters>
+        <ModuleImplementation Isolation="Any">
+          <Composite>
+            <MemberModules>
+              <DataSource ID="Scheduler" TypeID="System!System.Discovery.Scheduler">
+                <Scheduler>
+                  <SimpleReccuringSchedule>
+                    <Interval Unit="Seconds">$Config/IntervalSeconds$</Interval>
+                    <SyncTime>$Config/SyncTime$</SyncTime>
+                  </SimpleReccuringSchedule>
+                  <ExcludeDates />
+                </Scheduler>
+              </DataSource>
+              <ProbeAction ID="Registry" TypeID="Windows!Microsoft.Windows.RegistryProbe" Comment="Only required to post a logical set of DataItems to force the following Expression filter to output 0 items in the case of a non-match." >
+                <ComputerName>$Config/ComputerName$</ComputerName>
+                <RegistryAttributeDefinitions>
+                  <RegistryAttributeDefinition>
+                    <AttributeName>KeyExists</AttributeName>
+                    <Path>SOFTWARE\Microsoft</Path>
+                    <PathType>0</PathType>
+                    <AttributeType>0</AttributeType>
+                  </RegistryAttributeDefinition>
+                </RegistryAttributeDefinitions>
+              </ProbeAction>
+              <ConditionDetection ID="Mapper" TypeID="System!System.Discovery.FilteredClassSnapshotDataMapper">
+                <Expression>
+                  <SimpleExpression>
+                    <ValueExpression>
+                      <Value Type="Boolean">$Config/DiscoverInstance$</Value>
+                    </ValueExpression>
+                    <Operator>Equal</Operator>
+                    <ValueExpression>
+                      <Value Type="Boolean">true</Value>
+                    </ValueExpression>
+                  </SimpleExpression>
+                </Expression>
+                <ClassId>$Config/ClassId$</ClassId>
+                <InstanceSettings>$Config/InstanceSettings$</InstanceSettings>
+              </ConditionDetection>
+            </MemberModules>
+            <Composition>
+              <Node ID="Mapper">
+                <Node ID="Registry">
+                  <Node ID="Scheduler"/>
+                </Node>
+              </Node>
+            </Composition>
+          </Composite>
+        </ModuleImplementation>
+        <OutputType>System!System.Discovery.Data</OutputType>
+      </DataSourceModuleType>
+    </ModuleTypes>
+
+  </TypeDefinitions>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery">
+          <Name>Enterprise Application Availability Monitoring Static Always On Discovery</Name>
+          <Description>Uses a FilteredClassSnapshotDataMapper to discover instances against the workflow target, assuming a flag (typically overridden) is set.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery" SubElementID="IntervalSeconds">
+          <Name>Interval (Seconds)</Name>
+          <Description>The number of seconds between discovery attempts.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery" SubElementID="SyncTime">
+          <Name>Sync Time (hh:mm)</Name>
+          <Description>The time around which discovery attempts will be synchronized.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery" SubElementID="DiscoverInstance">
+          <Name>Discover Instance</Name>
+          <Description>If true, an instance will be discovered.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+
+  </LanguagePacks>
+
+</ManagementPackFragment>

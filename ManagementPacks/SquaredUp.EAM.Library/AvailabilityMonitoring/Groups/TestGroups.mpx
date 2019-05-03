@@ -42,10 +42,10 @@
     
     <Overrides>
       
-      <DiscoveryPropertyOverride ID="SquaredUp.EAM.Library.Override.ApplicationAvailabilityMonitoringNode.DisableDiscovery" Context="SquaredUp.EAM.Library.Group.AvailabilityMonitoring.AllEAMTestGroups" Enforced="false" Discovery="SquaredUp.EAM.Library.Discovery.AvailabilityMonitoring.MonitoringNode" Property="Enabled">
+      <DiscoveryConfigurationOverride ID="SquaredUp.EAM.Library.Override.ApplicationAvailabilityMonitoringNode.EnableDiscovery" Context="SquaredUp.EAM.Library.Group.AvailabilityMonitoring.AllEAMTestGroups" Enforced="false" Discovery="SquaredUp.EAM.Library.Discovery.AvailabilityMonitoring.MonitoringNode" Module="DS" Parameter="DiscoverInstance">
         <Value>true</Value>
-      </DiscoveryPropertyOverride>
-      
+      </DiscoveryConfigurationOverride>
+
     </Overrides>
     
   </Monitoring>
