@@ -38,15 +38,22 @@ $SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script is starting. `n 
 $discoveryData = $SCRIPT:momapi.CreateDiscoveryData(0, $sourceId, $managedEntityId)
 $discoveries = $DiscoveriesJson | ConvertFrom-Json
 $objInstancesByInstanceId = @{}
+
+# Check SDK connectivity
+#=================================================================================
+$msCl = Get-SCOMClass -Name Microsoft.SystemCenter.ManagementServer
+$msInsts = Get-SCOMClassInstance -Class $msCl
+$SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Management Server pool has $($msInsts.length) members.")
+
 #=================================================================================
 
 # Functions
 #=================================================================================
 
 function Write-ErrorLog {
-    param (
-        $message
-    )
+	param (
+		$message
+	)
 
 	$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,$message)
 	'Write-ErrorLog called: $ScriptName={0}, $ErrorEventID]{1}, $message="{2}"' -f $ScriptName,$ErrorEventID,$message
@@ -56,11 +63,11 @@ function Write-ErrorLog {
 # Get one level of SCOM hosting information for a SCOM object
 #
 function Get-ScomHostingParentInfo {
-    param (
-        $obj
-    )
+	param (
+		$obj
+	)
 
-    $result = $null
+	$result = $null
 
 	$relInsts = @()
 	try {
@@ -69,7 +76,7 @@ function Get-ScomHostingParentInfo {
 		Write-ErrorLog "Get-SCRelationshipInstance -TargetInstance '$($obj.Id)' threw '$_'"
 	}
 
-    foreach ($relInst in $relInsts) {
+	foreach ($relInst in $relInsts) {
 		# Check if it's a hosting relationship
 		$isHosting = $false
 		try {
@@ -90,14 +97,14 @@ function Get-ScomHostingParentInfo {
 		} while ($relCls.Base -and -not $isHosting)
 
 		# If so, we can return information about our host to the caller
-        if ($isHosting) {
-            $parent = $relInst.SourceObject
-            $result = @{ ParentObj = $parent; RelInst = $relInst }
-            break
-        }
-    }
+		if ($isHosting) {
+			$parent = $relInst.SourceObject
+			$result = @{ ParentObj = $parent; RelInst = $relInst }
+			break
+		}
+	}
 
-    return $result
+	return $result
 }
 
 #
@@ -105,14 +112,15 @@ function Get-ScomHostingParentInfo {
 #
 function CreateClassInstanceFromId {
 	param(
-        $discoveryObject,
-        $discoveryData
-    )
+		$discoveryObject,
+		$discoveryData
+	)
 
 	# Get the object and create a class instance discovery object using its type
 	$obj = $null
 	try {
 		$obj = Get-SCOMClassInstance -Id $discoveryObject.ObjId
+		$SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"CreateClassInstanceFromId $($discoveryObject.ObjId) - got base object OK")
 	} catch {
 		Write-ErrorLog "Get-SCOMClassInstance -Id '$($discoveryObject.ObjId)' threw '$_'"
 	}
@@ -132,8 +140,9 @@ function CreateClassInstanceFromId {
 	$objDiscoveryInstance = $discoveryData.CreateClassInstance($class)
 
 	# Loop through the object's hosting stack adding key properties at each level
-    $nextInst = $obj
-    while($nextInst) {
+	$keyPropIdsAdded = @{}
+	$nextInst = $obj
+	while($nextInst) {
 		$inst = $nextInst
 		$instCl = $null
 		try {
@@ -141,31 +150,34 @@ function CreateClassInstanceFromId {
 		} catch {
 			Write-ErrorLog "Get-ScomClass -Id '$($inst.LeastDerivedNonAbstractManagementPackClassId)' threw '$_'"
 		}
-        while ($instCl) {
-            $keyProps = $instCl.GetKeyProperties()
-            foreach ($keyProp in $keyProps) {
-                $propName = "[$($instCl.Name)].$($keyProp.Name)"
-                $propRawValue = $obj."$propName".Value
-                if ($keyProp.SystemType.FullName -eq "System.Guid") {
-                    # SCOM requires specific string syntax for GUIDs
-                    $propValue = $propRawValue.ToString("b")
-                } elseif ($keyProp.SystemType.FullName -eq "System.Enum") {
-                    # For enums, we use the ID GUID in SCOM's preferred notation
-                    $propValue = $propRawValue.Id.ToString("b")
-                } else {
-                    $propValue = [System.Management.Automation.LanguagePrimitives]::ConvertTo($propRawValue, $keyProp.SystemType)
-                }
-                try {
-                    $objDiscoveryInstance.AddProperty($keyProp.Id, $propValue)
-                } catch {
-                    Write-ErrorLog "AddProperty($($keyProp.Id), $propValue) threw '$_'"
-                }
-            }
-            $instCl = $instCl.GetBaseType()
-        }
-        $hostInfo = Get-ScomHostingParentInfo $inst
-        $nextInst = $hostInfo.ParentObj
-    }
+		while ($instCl) {
+			$keyProps = $instCl.GetKeyProperties()
+			foreach ($keyProp in $keyProps) {
+				$propName = "[$($instCl.Name)].$($keyProp.Name)"
+				$propRawValue = $obj."$propName".Value
+				if ($keyProp.SystemType.FullName -eq "System.Guid") {
+					# SCOM requires specific string syntax for GUIDs
+					$propValue = $propRawValue.ToString("b")
+				} elseif ($keyProp.SystemType.FullName -eq "System.Enum") {
+					# For enums, we use the ID GUID in SCOM's preferred notation
+					$propValue = $propRawValue.Id.ToString("b")
+				} else {
+					$propValue = [System.Management.Automation.LanguagePrimitives]::ConvertTo($propRawValue, $keyProp.SystemType)
+				}
+				if (!$keyPropIdsAdded.ContainsKey($keyProp.Id)) {
+					try {
+						$objDiscoveryInstance.AddProperty($keyProp.Id, $propValue)
+						$keyPropIdsAdded[$keyProp.Id] = $true
+					} catch {
+						Write-ErrorLog "AddProperty($($keyProp.Id), $propValue) threw '$_'"
+					}
+				}
+			}
+			$instCl = $instCl.GetBaseType()
+		}
+		$hostInfo = Get-ScomHostingParentInfo $inst
+		$nextInst = $hostInfo.ParentObj
+	}
 
 	# Return the result
 	return $objDiscoveryInstance
@@ -176,9 +188,9 @@ function CreateClassInstanceFromId {
 #
 function CreateClassInstanceFromTypeId {
 	param(
-        $discoveryObject,
-        $discoveryData
-    )
+		$discoveryObject,
+		$discoveryData
+	)
 
 	$objDiscoveryInstance = $discoveryData.CreateClassInstance($discoveryObject.TypeId)
 	foreach ($discoveryProperty in $discoveryObject.Properties) {
