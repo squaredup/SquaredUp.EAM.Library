@@ -91,7 +91,7 @@ function Get-ScomHostingParentInfo {
 
 		# If so, we can return information about our host to the caller
         if ($isHosting) {
-            $parent = $relInst.SourceObject
+            $parent = Get-ScomClassInstance -Id $relInst.SourceObject.Id
             $result = @{ ParentObj = $parent; RelInst = $relInst }
             break
         }
@@ -145,7 +145,7 @@ function CreateClassInstanceFromId {
             $keyProps = $instCl.GetKeyProperties()
             foreach ($keyProp in $keyProps) {
                 $propName = "[$($instCl.Name)].$($keyProp.Name)"
-                $propRawValue = $obj."$propName".Value
+                $propRawValue = $inst."$propName".Value
                 if ($keyProp.SystemType.FullName -eq "System.Guid") {
                     # SCOM requires specific string syntax for GUIDs
                     $propValue = $propRawValue.ToString("b")
@@ -255,3 +255,4 @@ $SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script Completed after 
 # Return discovery data
 $discoveryData
 #=================================================================================
+
