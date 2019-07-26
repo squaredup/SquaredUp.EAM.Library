@@ -38,6 +38,13 @@ $SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script is starting. `n 
 $discoveryData = $SCRIPT:momapi.CreateDiscoveryData(0, $sourceId, $managedEntityId)
 $discoveries = $DiscoveriesJson | ConvertFrom-Json
 $objInstancesByInstanceId = @{}
+
+# Check SDK connectivity by logging the names of management servers
+#=================================================================================
+$msClsId = "9189a49e-b2de-cab0-2e4f-4925b68e335d"
+$msInsts = Get-SCOMClassInstance -Class (Get-SCOMClass -Id $msClsId)
+$SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Management Server pool: [`"$([string]::Join('", "', @($msInsts | %{ $_.DisplayName })))`"]")
+
 #=================================================================================
 
 # Functions
