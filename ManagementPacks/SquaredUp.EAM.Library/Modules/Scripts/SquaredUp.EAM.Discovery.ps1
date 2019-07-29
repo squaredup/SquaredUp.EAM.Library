@@ -38,6 +38,13 @@ $SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script is starting. `n 
 $discoveryData = $SCRIPT:momapi.CreateDiscoveryData(0, $sourceId, $managedEntityId)
 $discoveries = $DiscoveriesJson | ConvertFrom-Json
 $objInstancesByInstanceId = @{}
+
+# Check SDK connectivity by logging the names of management servers
+#=================================================================================
+$msClsId = "9189a49e-b2de-cab0-2e4f-4925b68e335d"
+$msInsts = Get-SCOMClassInstance -Class (Get-SCOMClass -Id $msClsId)
+$SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Management Server pool: [`"$([string]::Join('", "', @($msInsts | %{ $_.DisplayName })))`"]")
+
 #=================================================================================
 
 # Functions
@@ -91,7 +98,7 @@ function Get-ScomHostingParentInfo {
 
 		# If so, we can return information about our host to the caller
         if ($isHosting) {
-            $parent = $relInst.SourceObject
+            $parent = Get-ScomClassInstance -Id $relInst.SourceObject.Id
             $result = @{ ParentObj = $parent; RelInst = $relInst }
             break
         }
@@ -145,7 +152,7 @@ function CreateClassInstanceFromId {
             $keyProps = $instCl.GetKeyProperties()
             foreach ($keyProp in $keyProps) {
                 $propName = "[$($instCl.Name)].$($keyProp.Name)"
-                $propRawValue = $obj."$propName".Value
+                $propRawValue = $inst."$propName".Value
                 if ($keyProp.SystemType.FullName -eq "System.Guid") {
                     # SCOM requires specific string syntax for GUIDs
                     $propValue = $propRawValue.ToString("b")
@@ -255,3 +262,4 @@ $SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script Completed after 
 # Return discovery data
 $discoveryData
 #=================================================================================
+
