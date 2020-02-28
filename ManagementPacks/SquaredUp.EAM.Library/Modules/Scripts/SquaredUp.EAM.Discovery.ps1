@@ -67,10 +67,7 @@ $objInstancesByInstanceId = @{}
 $eaId = "unknown"
 $eaDisplayName = "unknown"
 try {
-	$map = $discoveries.NewObjects | Where-Object {$_.TypeId -match "\[Name='EA_[0-9a-f]{32}_Availability'\]"}
-	$app = $map.properties | Where-Object {$_.propertyId -match "\[Name='SquaredUpEAMLibrary!SquaredUp.EAM.Library.Class.Availability'\]/ApplicationId"}
-	$eaId = $app.value
-	$EA = Get-SCOMClassInstance -id $eaId
+	$EA = Get-SCOMClassInstance -id $managedEntityId
 	$eaDisplayName = $EA.DisplayName
 
 }
@@ -83,7 +80,8 @@ catch {
 #=================================================================================
 $msClsId = "9189a49e-b2de-cab0-2e4f-4925b68e335d"
 $msInsts = Get-SCOMClassInstance -Class (Get-SCOMClass -Id $msClsId)
-Write-InfoLog "Management Server pool: [`"$([string]::Join('", "', @($msInsts | %{ $_.DisplayName })))`"]"
+$msInstsNames = $msInsts | %{ $_.DisplayName }
+Write-InfoLog "Management Server pool: [`"$([string]::Join('", "', @($msInstsNames)))`"]"
 
 #=================================================================================
 
