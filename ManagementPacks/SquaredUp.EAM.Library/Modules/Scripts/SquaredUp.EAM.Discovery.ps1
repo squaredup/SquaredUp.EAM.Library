@@ -29,6 +29,29 @@ $EventID = "8011"
 $ErrorEventID = "8012"
 #=================================================================================
 
+# Logging
+#=================================================================================
+function Write-ErrorLog {
+    param (
+        $message
+    )
+
+	$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,"eaId='$eaId' '$eaDisplayName' `n $message")
+	'Write-ErrorLog called: $ScriptName={0}, $ErrorEventID]{1}, $eaId={2}, $eaDisplayName={3}, $message="{4}"' -f $ScriptName, $ErrorEventID, $eaId, $eaDisplayName, $message
+}
+
+function Write-InfoLog{
+	param(
+		$message
+	)
+
+	$SCRIPT:momapi.LogScriptEvent($ScriptName, $EventID, 0, "eaId='$eaId' '$eaDisplayName' `n  $message")
+	#'Write-InfoLog called: $ScriptName={0}, $EventID]{1}, $eaId={2}, $eaDisplayName={3}, $message="{4}"' -f $ScriptName, $EventID, $eaId, $eaDisplayName, $message
+
+
+}
+#=================================================================================
+
 # Start
 #=================================================================================
 $start = [DateTime]::UtcNow
@@ -39,26 +62,31 @@ $discoveryData = $SCRIPT:momapi.CreateDiscoveryData(0, $sourceId, $managedEntity
 $discoveries = $DiscoveriesJson | ConvertFrom-Json
 $objInstancesByInstanceId = @{}
 
+# Get name of the EA we are running against
+#=================================================================================
+$eaId = "unknown"
+$eaDisplayName = "unknown"
+try {
+	$EA = Get-SCOMClassInstance -id $managedEntityId
+	$eaDisplayName = $EA.DisplayName
+
+}
+catch {
+	Write-ErrorLog "EA class instance not found, error thrown '$_'"
+}
+
+
 # Check SDK connectivity by logging the names of management servers
 #=================================================================================
 $msClsId = "9189a49e-b2de-cab0-2e4f-4925b68e335d"
 $msInsts = Get-SCOMClassInstance -Class (Get-SCOMClass -Id $msClsId)
-$SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Management Server pool: [`"$([string]::Join('", "', @($msInsts | %{ $_.DisplayName })))`"]")
+$msInstsNames = $msInsts | %{ $_.DisplayName }
+Write-InfoLog "Management Server pool: [`"$([string]::Join('", "', @($msInstsNames)))`"]"
 
 #=================================================================================
 
 # Functions
 #=================================================================================
-
-function Write-ErrorLog {
-    param (
-        $message
-    )
-
-	$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,$message)
-	'Write-ErrorLog called: $ScriptName={0}, $ErrorEventID]{1}, $message="{2}"' -f $ScriptName,$ErrorEventID,$message
-}
-
 #
 # Get one level of SCOM hosting information for a SCOM object
 #
@@ -242,10 +270,10 @@ try {
 			$discoveryData.AddInstance($relInstance)
 		} else {
 			if (-not $objInstancesByInstanceId.ContainsKey($discoveryRelationship.SourceInstanceId)) {
-				$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,"Relationship missing source '$($discoveryRelationship.SourceInstanceId)'")
+				Write-ErrorLog "Relationship missing source '$($discoveryRelationship.SourceInstanceId)'"
 			}
 			if (-not $objInstancesByInstanceId.ContainsKey($discoveryRelationship.TargetInstanceId)) {
-				$SCRIPT:momapi.LogScriptEvent($ScriptName,$ErrorEventID,1,"Relationship missing target '$($discoveryRelationship.TargetInstanceId)'")
+				Write-ErrorLog "Relationship missing target '$($discoveryRelationship.TargetInstanceId)'"
 			}
 		}
 	}
@@ -257,7 +285,7 @@ try {
 #=================================================================================
 # Log an event for script ending and total execution time.
 $end = [DateTime]::UtcNow
-$SCRIPT:momapi.LogScriptEvent($ScriptName,$EventID,0,"`n Script Completed after $($end - $start)")
+Write-InfoLog "Script Completed after $($end - $start)"
 
 # Return discovery data
 $discoveryData
