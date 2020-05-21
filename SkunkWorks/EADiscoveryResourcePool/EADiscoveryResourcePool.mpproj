@@ -38,7 +38,7 @@
       <PackageToBundle>false</PackageToBundle>
     </ManagementPackReference>
     <ManagementPackReference Include="SquaredUp.EAM.Library">
-      <HintPath>..\enterprise-application-monitoring\ManagementPacks\SquaredUp.EAM.Library\bin\Debug\SquaredUp.EAM.Library.mp</HintPath>
+      <HintPath>..\..\..\enterprise-application-monitoring\ManagementPacks\SquaredUp.EAM.Library\bin\Debug\SquaredUp.EAM.Library.mp</HintPath>
       <Alias>EAM</Alias>
       <MinVersion>1.0.0.0</MinVersion>
       <PackageToBundle>False</PackageToBundle>
