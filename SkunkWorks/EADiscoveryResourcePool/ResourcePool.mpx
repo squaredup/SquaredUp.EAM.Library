@@ -1,0 +1,60 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType
+          ID="SquareUp.Unsupported.EaDiscoveryResourcePool"
+          Accessibility="Internal"
+          Abstract="false"
+          Base="SC!Microsoft.SystemCenter.ManagementServicePool"
+          Hosted="false"
+          Singleton="true"
+          Extension="false" />
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+
+  <Monitoring>
+    <Discoveries>
+      <Discovery
+        ID="SquareUp.Unsupported.EaDiscoveryResourcePoolPopulator"
+        Target="SquareUp.Unsupported.EaDiscoveryResourcePool" 
+        Enabled="false"
+        Remotable="true"
+        Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryRelationship TypeID="SC!Microsoft.SystemCenter.ManagementActionPointShouldManageEntity"/>
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+          <RuleId>$MPElement$</RuleId>
+          <GroupInstanceId>$Target/Id$</GroupInstanceId>
+          <MembershipRules>
+            <MembershipRule>
+              <MonitoringClass>$MPElement[Name="EAM!SquaredUp.EAM.Library.Class.EnterpriseApplication.v1"]$</MonitoringClass>
+              <RelationshipClass>$MPElement[Name="SC!Microsoft.SystemCenter.ManagementActionPointShouldManageEntity"]$</RelationshipClass>
+            </MembershipRule>
+          </MembershipRules>
+        </DataSource>
+      </Discovery>
+    </Discoveries>
+  </Monitoring>
+
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString
+          ElementID="SquareUp.Unsupported.EaDiscoveryResourcePool">
+          <Name>Resource Pool for Running EA Discoveries</Name>
+          <Description>This resource pool contains the Management Servers which will be used for discoveries associated with SquaredUp Enterprise Applications. (Unsupported functionality)</Description>
+        </DisplayString>
+        <DisplayString
+          ElementID="SquareUp.Unsupported.EaDiscoveryResourcePoolPopulator">
+          <Name>Populator for the Resource Pool for Running EA Discoveries</Name>
+          <Description>This discovery populates the resource pool which contains the Management Servers which will be used for discoveries associated with SquaredUp Enterprise Applications. (Unsupported functionality)</Description>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>
