@@ -1,0 +1,57 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.Web01" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.Web02" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.Web03" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.App01" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.App02" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+        
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.SQL01" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.SQL02" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.Web01">
+          <Name>Sales-WEB-01.contoso.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.Web02">
+          <Name>Sales-WEB-02.contoso.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.Web03">
+          <Name>Sales-WEB-03.contoso.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.App01">
+          <Name>Sales-APP-01.contoso.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.App02">
+          <Name>Sales-APP-02.contoso.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.SQL01">
+          <Name>Sales-SQL-01.contoso.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.CompleteEnterpriseApplication.SQL02">
+          <Name>Sales-SQL-02.contoso.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

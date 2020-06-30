@@ -1,0 +1,267 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Discoveries>
+
+      <Discovery ID="SquaredUp.EAM.Samples.Discovery.AvailabilityWithSimpleMap.AvailabilityMonitoringGroupContainsWatchers" Enabled="true" Target="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.AvailabilityMonitoringGroup" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes />
+        <DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+          <RuleId>$MPElement$</RuleId>
+          <GroupInstanceId>$Target/Id$</GroupInstanceId>
+          <MembershipRules>
+            <MembershipRule>
+              <MonitoringClass>$MPElement[Name="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]$</MonitoringClass>
+              <RelationshipClass>$MPElement[Name="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"]$</RelationshipClass>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <Property>$MPElement[Name="System!System.Entity"]/DisplayName$</Property>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value>Sample - AdventureWorks OLTP</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </MembershipRule>
+          </MembershipRules>
+        </DataSource>
+      </Discovery>
+      
+      <Discovery ID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Watcher.Discovery" Enabled="true" Target="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Web">
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ConfigurationJson" />
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ApplicationName" />
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ResponseTimeThreshold" />
+          </DiscoveryClass>
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="EAM!SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery">
+          <IntervalSeconds>86400</IntervalSeconds>
+          <DiscoverInstance>false</DiscoverInstance>
+          <ComputerName>$Target/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</ComputerName>
+          <ClassId>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Web']$</ClassId>
+          <InstanceSettings>
+            <Settings>
+              <Setting>
+                <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                <Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='System!System.Entity']/DisplayName$</Name>
+                <Value>Sample - AdventureWorks OLTP</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ConfigurationJson$</Name>
+                <Value>{"url":"https://adventureworks.com","match":"Login","notmatch":""}</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ApplicationName$</Name>
+                <Value>Sample - AdventureWorks OLTP</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ResponseTimeThreshold$</Name>
+                <Value>1000</Value>
+              </Setting>
+            </Settings>
+          </InstanceSettings>
+        </DataSource>
+      </Discovery>
+
+      <Discovery ID="LocalDiscovery_EA_526ba86deec4115e9949a013c1f2d86e" Enabled="true" Target="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Availability" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Map" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Dependencies" />
+          <DiscoveryClass TypeID="EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.SampleComputer" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="EAM!SquaredUp.EAM.Library.Datasource.DiscoveryProvider">
+          <DiscoveriesJson>
+{
+    "newObjects": [
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Availability']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Availability']/ApplicationId$",
+                    "value": "526ba86d-eec4-115e-9949-a013c1f2d86e"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - AdventureWorks OLTP Availability"
+                }
+            ],
+            "instanceId": "inst_2",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Map']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/ApplicationId$",
+                    "value": "526ba86d-eec4-115e-9949-a013c1f2d86e"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - AdventureWorks OLTP Map"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/CreateServiceMonitors$",
+                    "value": "True"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/CreateTcpMonitors$",
+                    "value": "True"
+                }
+            ],
+            "instanceId": "inst_3",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Dependencies']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Dependencies']/ApplicationId$",
+                    "value": "526ba86d-eec4-115e-9949-a013c1f2d86e"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - AdventureWorks OLTP Dependencies"
+                }
+            ],
+            "instanceId": "inst_4",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/ApplicationId$",
+                    "value": "526ba86d-eec4-115e-9949-a013c1f2d86e"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/GroupId$",
+                    "value": "13bb2869-05f5-449b-aa3f-f8aa731afd18"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Servers"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/HorizIndex$",
+                    "value": "0"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/VertIndex$",
+                    "value": "0"
+                }
+            ],
+            "instanceId": "inst_5",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        }
+    ],
+    "existingObjects": [
+        {
+            "objId": "526ba86d-eec4-115e-9949-a013c1f2d86e",
+            "instanceId": "inst_1",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "objId": "42ef646c-8b4b-d3d4-9491-6b4f01b20268",
+            "instanceId": "inst_6",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "objId": "ae4c8c84-7497-6be8-b4cb-f0f263f0ac4d",
+            "instanceId": "inst_7",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "objId": "f0a4aa8e-eadb-8b69-a01e-6d2749270cb9",
+            "instanceId": "inst_8",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        }
+    ],
+    "relationships": [
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_2",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsMap']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_3",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_4",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.Availability.ContainsEntity']$",
+            "sourceInstanceId": "inst_2",
+            "targetInstanceId": "inst_6",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_526ba86deec4115e9949a013c1f2d86e_Map_Contains_13bb286905f5449baa3ff8aa731afd18']$",
+            "sourceInstanceId": "inst_3",
+            "targetInstanceId": "inst_5",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18_Contains_Entity']$",
+            "sourceInstanceId": "inst_5",
+            "targetInstanceId": "inst_7",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18_Contains_Entity']$",
+            "sourceInstanceId": "inst_5",
+            "targetInstanceId": "inst_8",
+            "properties": null
+        }
+    ]
+}
+          </DiscoveriesJson>
+          <IntervalSeconds>86400</IntervalSeconds>
+        </DataSource>
+      </Discovery>
+
+    </Discoveries>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Discovery.AvailabilityWithSimpleMap.AvailabilityMonitoringGroupContainsWatchers">
+          <Name>Discovers 'Sample - AdventureWorks OLTP' Enterprise Application Availablity Monitoring Test instances</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Watcher.Discovery">
+          <Name>Discovers 'Sample - AdventureWorks OLTP' Enterprise Application Availability Monitoring Test (Web)</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="LocalDiscovery_EA_526ba86deec4115e9949a013c1f2d86e">
+          <Name>Discovery to populate 'Sample - AdventureWorks OLTP' Enterprise Application with contained monitoring objects</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

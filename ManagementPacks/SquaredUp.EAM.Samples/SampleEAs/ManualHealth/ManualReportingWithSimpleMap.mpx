@@ -1,0 +1,65 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap" Base="EAM!SquaredUp.EAM.Library.Class.EnterpriseApplication.v1" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+        
+        <ClassType ID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Availability" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Availability" Hosted="false" Singleton="false" Extension="false" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Map" Hosted="false" Singleton="false" Extension="false" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Dependencies" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Dependencies" Hosted="false" Singleton="false" Extension="false" />
+
+        <ClassType ID="EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.MapGroup" Hosted="false" Singleton="false" Extension="false" />
+      
+      </ClassTypes>
+
+      <RelationshipTypes>
+
+        <RelationshipType ID="EA_fe49b78867f8a74afc9837cec450f74f_Map_Contains_b8579d6fa6ec2b31f342ac63ad2fc32e" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.Map.ContainsMapGroup">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e" />
+        </RelationshipType>
+        <RelationshipType ID="EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e_Contains_Entity" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="System!System.Entity" />
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap">
+          <Name>Sample - Parts Unlimited</Name>
+          <Description>Enterprise Application 'Sample - Parts Unlimited'</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Availability">
+          <Name>Sample - Parts Unlimited Availability</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map">
+          <Name>Sample - Parts Unlimited Map</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Dependencies">
+          <Name>Sample - Parts Unlimited Dependencies</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e">
+          <Name>Servers</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe49b78867f8a74afc9837cec450f74f_Map_Contains_b8579d6fa6ec2b31f342ac63ad2fc32e">
+          <Name>Relationship in EA Sample - Parts Unlimited to include group 'servers' in map.</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e_Contains_Entity">
+          <Name>Relationship in EA Sample - Parts Unlimited to include objects in map group 'servers'.</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

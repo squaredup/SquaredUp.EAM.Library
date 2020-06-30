@@ -1,0 +1,452 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Discoveries>
+
+      <Discovery ID="SquaredUp.EAM.Samples.Discovery.CompleteEnterpriseApplication.AvailabilityMonitoringGroupContainsWatchers" Enabled="true" Target="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.AvailabilityMonitoringGroup" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes />
+        <DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+          <RuleId>$MPElement$</RuleId>
+          <GroupInstanceId>$Target/Id$</GroupInstanceId>
+          <MembershipRules>
+            <MembershipRule>
+              <MonitoringClass>$MPElement[Name="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]$</MonitoringClass>
+              <RelationshipClass>$MPElement[Name="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"]$</RelationshipClass>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <Property>$MPElement[Name="System!System.Entity"]/DisplayName$</Property>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value>Sample - Contoso Sales App</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </MembershipRule>
+          </MembershipRules>
+        </DataSource>
+      </Discovery>
+      
+      <Discovery ID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Watcher.Discovery" Enabled="true" Target="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Web">
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ConfigurationJson" />
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ApplicationName" />
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ResponseTimeThreshold" />
+          </DiscoveryClass>
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="EAM!SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery">
+          <IntervalSeconds>86400</IntervalSeconds>
+          <DiscoverInstance>false</DiscoverInstance>
+          <ComputerName>$Target/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</ComputerName>
+          <ClassId>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Web']$</ClassId>
+          <InstanceSettings>
+            <Settings>
+              <Setting>
+                <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                <Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='System!System.Entity']/DisplayName$</Name>
+                <Value>Sample - Contoso Sales App</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ConfigurationJson$</Name>
+                <Value>{"url":"https://sales.contoso.com","match":"","notmatch":"Error"}</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ApplicationName$</Name>
+                <Value>Sample - Contoso Sales App</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ResponseTimeThreshold$</Name>
+                <Value>1000</Value>
+              </Setting>
+            </Settings>
+          </InstanceSettings>
+        </DataSource>
+      </Discovery>
+
+      <Discovery ID="LocalDiscovery_EA_fe2f8e898195726e0291470a92491867" Enabled="true" Target="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Availability" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Map" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Dependencies" />
+          <DiscoveryClass TypeID="EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b" />
+          <DiscoveryClass TypeID="EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189" />
+          <DiscoveryClass TypeID="EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.SampleComputer" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="EAM!SquaredUp.EAM.Library.Datasource.DiscoveryProvider">
+          <DiscoveriesJson>
+{
+    "newObjects": [
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Availability']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Availability']/ApplicationId$",
+                    "value": "fe2f8e89-8195-726e-0291-470a92491867"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Contoso Sales App Availability"
+                }
+            ],
+            "instanceId": "inst_2",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Map']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/ApplicationId$",
+                    "value": "fe2f8e89-8195-726e-0291-470a92491867"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Contoso Sales App Map"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/CreateServiceMonitors$",
+                    "value": "True"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/CreateTcpMonitors$",
+                    "value": "True"
+                }
+            ],
+            "instanceId": "inst_3",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Dependencies']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Dependencies']/ApplicationId$",
+                    "value": "fe2f8e89-8195-726e-0291-470a92491867"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Contoso Sales App Dependencies"
+                }
+            ],
+            "instanceId": "inst_4",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/ApplicationId$",
+                    "value": "fe2f8e89-8195-726e-0291-470a92491867"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/GroupId$",
+                    "value": "04489e5f-547a-450c-b90c-f20b94bfda3b"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Web Servers"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/HorizIndex$",
+                    "value": "0"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/VertIndex$",
+                    "value": "0"
+                }
+            ],
+            "instanceId": "inst_5",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/ApplicationId$",
+                    "value": "fe2f8e89-8195-726e-0291-470a92491867"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/GroupId$",
+                    "value": "7a0c0b8d-a328-4c48-81b2-720a81d7d189"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "App Servers"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/HorizIndex$",
+                    "value": "1"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/VertIndex$",
+                    "value": "0"
+                }
+            ],
+            "instanceId": "inst_6",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/ApplicationId$",
+                    "value": "fe2f8e89-8195-726e-0291-470a92491867"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/GroupId$",
+                    "value": "f76e08b0-34fc-4b0f-89e4-0fd01a895a9f"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Database"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/HorizIndex$",
+                    "value": "2"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/VertIndex$",
+                    "value": "0"
+                }
+            ],
+            "instanceId": "inst_7",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        }
+    ],
+    "existingObjects": [
+        {
+            "objId": "fe2f8e89-8195-726e-0291-470a92491867",
+            "instanceId": "inst_1",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "objId": "66d8c5fd-4f32-cfc5-aff6-01bf99da8043",
+            "instanceId": "inst_8",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "objId": "e9412568-f89d-0ad3-0156-2923699c140c",
+            "instanceId": "inst_9",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        },
+        {
+            "objId": "0aa7bb87-742f-6bff-de06-422ae32ea2b1",
+            "instanceId": "inst_10",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        },
+        {
+            "objId": "9ed0ed03-42d2-c1c6-46df-bb8fcea08a0f",
+            "instanceId": "inst_11",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        },
+        {
+            "objId": "0756b48c-d674-5e63-f849-88d34c94d298",
+            "instanceId": "inst_12",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        },
+        {
+            "objId": "95b9d532-3c21-233f-a436-9be93cfb161f",
+            "instanceId": "inst_13",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        },
+        {
+            "objId": "bd037bfb-2c61-5014-988b-3a246a83a21e",
+            "instanceId": "inst_14",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        },
+        {
+            "objId": "0946a558-b220-db8f-d9a6-0316ad231219",
+            "instanceId": "inst_15",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        },
+        {
+            "objId": "3671d805-ab9d-29a8-8049-66bb95c9a274",
+            "instanceId": "inst_16",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        },
+        {
+            "objId": "f5e63045-680d-bd0d-8e99-0b07af12f0ef",
+            "instanceId": "inst_17",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+          
+        }
+    ],
+    "relationships": [
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_2",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsMap']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_3",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_4",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.Availability.ContainsEntity']$",
+            "sourceInstanceId": "inst_2",
+            "targetInstanceId": "inst_8",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_Contains_04489e5f547a450cb90cf20b94bfda3b']$",
+            "sourceInstanceId": "inst_3",
+            "targetInstanceId": "inst_5",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b_Contains_Entity']$",
+            "sourceInstanceId": "inst_5",
+            "targetInstanceId": "inst_11",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b_Contains_Entity']$",
+            "sourceInstanceId": "inst_5",
+            "targetInstanceId": "inst_12",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b_Contains_Entity']$",
+            "sourceInstanceId": "inst_5",
+            "targetInstanceId": "inst_13",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_Contains_7a0c0b8da3284c4881b2720a81d7d189']$",
+            "sourceInstanceId": "inst_3",
+            "targetInstanceId": "inst_6",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189_Contains_Entity']$",
+            "sourceInstanceId": "inst_6",
+            "targetInstanceId": "inst_14",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189_Contains_Entity']$",
+            "sourceInstanceId": "inst_6",
+            "targetInstanceId": "inst_15",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_Contains_f76e08b034fc4b0f89e40fd01a895a9f']$",
+            "sourceInstanceId": "inst_3",
+            "targetInstanceId": "inst_7",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f_Contains_Entity']$",
+            "sourceInstanceId": "inst_7",
+            "targetInstanceId": "inst_16",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f_Contains_Entity']$",
+            "sourceInstanceId": "inst_7",
+            "targetInstanceId": "inst_17",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ReferencesMapGroup']$",
+            "sourceInstanceId": "inst_5",
+            "targetInstanceId": "inst_6",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ReferencesMapGroup']/TargetPortNumbers$",
+                    "value": "11111"
+                }
+            ]
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ReferencesMapGroup']$",
+            "sourceInstanceId": "inst_6",
+            "targetInstanceId": "inst_7",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ReferencesMapGroup']/TargetPortNumbers$",
+                    "value": "1433"
+                }
+            ]
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.Dependencies.ContainsEntity']$",
+            "sourceInstanceId": "inst_4",
+            "targetInstanceId": "inst_9",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.Dependencies.ContainsEntity']$",
+            "sourceInstanceId": "inst_4",
+            "targetInstanceId": "inst_10",
+            "properties": null
+        }
+    ]
+}
+          </DiscoveriesJson>
+          <IntervalSeconds>86400</IntervalSeconds>
+        </DataSource>
+      </Discovery>
+
+    </Discoveries>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Discovery.CompleteEnterpriseApplication.AvailabilityMonitoringGroupContainsWatchers">
+          <Name>Discovers 'Sample - Contoso Sales App' Enterprise Application Availablity Monitoring Test instances</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Watcher.Discovery">
+          <Name>Discovers 'Sample - Contoso Sales App' Enterprise Application Availability Monitoring Test (Web)</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="LocalDiscovery_EA_fe2f8e898195726e0291470a92491867">
+          <Name>Discovery to populate 'Sample - Contoso Sales App' Enterprise Application with contained monitoring objects</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

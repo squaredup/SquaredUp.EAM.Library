@@ -1,0 +1,31 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Samples.Monitor.AvailabilityWithDependencies.Watcher.Group.Rollup" 
+        Accessibility="Public" 
+        Enabled="true" 
+        Target="SquaredUp.EAM.Samples.Class.AvailabilityWithDependencies.AvailabilityMonitoringGroup" 
+        ParentMonitorID="SystemHealthLibrary!System.Health.AvailabilityState" 
+        Remotable="true" 
+        Priority="Normal" 
+        RelationshipType="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities" 
+        MemberMonitor="SystemHealthLibrary!System.Health.AvailabilityState">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+    </Monitors>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+      <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.AvailabilityWithDependencies.Watcher.Group.Rollup">
+        <Name>Availability test rollup</Name>
+      </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -1,0 +1,187 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProjectGuid>{bdf8db8d-9ff6-42a2-8949-ce05796ede38}</ProjectGuid>
+    <RootNamespace>SquaredUp.EAM.Samples</RootNamespace>
+    <Name>SquaredUp.EAM.Samples</Name>
+    <ManagementPackName>SquaredUp.EAM.Samples</ManagementPackName>
+    <Version>1.0.0.0</Version>
+    <MpFrameworkVersion>v7.0</MpFrameworkVersion>
+    <MpFrameworkProfile>OM</MpFrameworkProfile>
+    <ProductVersion>1.1.0.0</ProductVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <GenerateSealed>True</GenerateSealed>
+    <Company>Squared Up Ltd.</Company>
+    <Copyright>Copyright (c) Squared Up Ltd. All rights reserved.</Copyright>
+    <DelaySigning>False</DelaySigning>
+    <AssemblyOriginatorKeyFile>..\SquaredUp.EAM.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>bin\Release\</OutputPath>
+    <DelaySigning>False</DelaySigning>
+    <Company>Squared Up Ltd.</Company>
+    <Copyright>Copyright (c) Squared Up Ltd. All rights reserved.</Copyright>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>..\SquaredUp.EAM.snk</AssemblyOriginatorKeyFile>
+    <GenerateSealed>True</GenerateSealed>
+  </PropertyGroup>
+  <ItemGroup>
+    <ManagementPackReference Include="Microsoft.SystemCenter.DataWarehouse.Library">
+      <Alias>MSDL</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.InstanceGroup.Library">
+      <Alias>MSIL</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Library">
+      <Alias>SC</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.Windows.Library">
+      <Alias>Windows</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Health.Library">
+      <Alias>SystemHealthLibrary</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Library">
+      <Alias>System</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="Microsoft.SystemCenter.Visualization.Library">
+      <Alias>Visualization</Alias>
+      <PackageToBundle>false</PackageToBundle>
+    </ManagementPackReference>
+    <ManagementPackReference Include="System.Performance.Library">
+      <Alias>Perf</Alias>
+      <PackageToBundle>False</PackageToBundle>
+    </ManagementPackReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FakeClasses" />
+    <Folder Include="Moduiles" />
+    <Folder Include="SampleEAs\AvailabilityOnly" />
+    <Folder Include="SampleEAs\AvailabilityWithDependencies" />
+    <Folder Include="SampleEAs\AvailabilityWithSimpleMap" />
+    <Folder Include="SampleEAs\CompleteEnterpriseApplication" />
+    <Folder Include="Scripts" />
+    <Folder Include="SampleEAs" />
+    <Folder Include="SampleEAs\ManualHealth" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SquaredUp.EAM.Library\SquaredUp.EAM.Library.mpproj">
+      <Name>SquaredUp.EAM.Library</Name>
+      <Project>{196967a7-da6a-4983-a3eb-3390ad065a31}</Project>
+      <Private>True</Private>
+      <Alias>EAM</Alias>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FakeClasses\AvailabilityWatcherGroup.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FakeClasses\Monitoring.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FakeClasses\SampleComputer.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FakeClasses\SampleDependency.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ManagementPack.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Moduiles\FakeDataSource.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Moduiles\SampleComputerUnitMonitor.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityOnly\AvailabilityOnly.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityOnly\Discovery.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityOnly\Monitors.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityOnly\Overrides.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithDependencies\AvailabilityWithDependencies.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithDependencies\CloudObjects.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithDependencies\Discovery.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithDependencies\Monitors.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithDependencies\Overrides.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithSimpleMap\AvailabilityWithSimpleMap.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithSimpleMap\Computers.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithSimpleMap\Discovery.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithSimpleMap\Monitors.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\AvailabilityWithSimpleMap\Overrides.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\CompleteEnterpriseApplication\CompleteEnterpriseApplication.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\CompleteEnterpriseApplication\Computers.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\CompleteEnterpriseApplication\Dependencies.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\CompleteEnterpriseApplication\Discovery.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\CompleteEnterpriseApplication\Monitors.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\CompleteEnterpriseApplication\Overrides.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\ManualHealth\Computers.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\ManualHealth\Discovery.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\ManualHealth\ManualReportingWithSimpleMap.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\ManualHealth\Monitors.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SampleEAs\ManualHealth\Overrides.mpx">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\FakeComputerData.ps1" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VSAC\Microsoft.SystemCenter.OperationsManager.targets" />
+</Project>

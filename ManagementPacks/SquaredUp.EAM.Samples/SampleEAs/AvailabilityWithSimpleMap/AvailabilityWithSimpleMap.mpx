@@ -1,0 +1,72 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap" Base="EAM!SquaredUp.EAM.Library.Class.EnterpriseApplication.v1" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Availability" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Availability" Hosted="false" Singleton="false" Extension="false" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Map" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Map" Hosted="false" Singleton="false" Extension="false" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Dependencies" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Dependencies" Hosted="false" Singleton="false" Extension="false" />
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.AvailabilityMonitoringGroup" Accessibility="Public" Abstract="false" Base="MSIL!Microsoft.SystemCenter.InstanceGroup" Hosted="false" Singleton="true" Extension="false" />
+
+        <ClassType ID="EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.MapGroup" Hosted="false" Singleton="false" Extension="false" />
+
+      </ClassTypes>
+
+      <RelationshipTypes>
+
+        <RelationshipType ID="EA_526ba86deec4115e9949a013c1f2d86e_Map_Contains_13bb286905f5449baa3ff8aa731afd18" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.Map.ContainsMapGroup">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Map" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18" />
+        </RelationshipType>
+        <RelationshipType ID="EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18_Contains_Entity" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="System!System.Entity" />
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap">
+          <Name>Sample - AdventureWorks OLTP</Name>
+          <Description>Enterprise Application 'Sample - AdventureWorks OLTP'</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Availability">
+          <Name>Sample - AdventureWorks OLTP Availability</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Map">
+          <Name>Sample - AdventureWorks OLTP Map</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.Dependencies">
+          <Name>Sample - AdventureWorks OLTP Dependencies</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityWithSimpleMap.AvailabilityMonitoringGroup">
+          <Name>'Sample - AdventureWorks OLTP' Availability Monitors</Name>
+        </DisplayString>
+
+
+        <DisplayString ElementID="EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18">
+          <Name>Servers</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_526ba86deec4115e9949a013c1f2d86e_Map_Contains_13bb286905f5449baa3ff8aa731afd18">
+          <Name>Relationship in EA Sample - AdventureWorks OLTP to include group 'servers' in map.</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_526ba86deec4115e9949a013c1f2d86e_Map_13bb286905f5449baa3ff8aa731afd18_Contains_Entity">
+          <Name>Relationship in EA Sample - AdventureWorks OLTP to include objects in map group 'servers'.</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

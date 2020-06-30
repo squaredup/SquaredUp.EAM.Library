@@ -1,0 +1,45 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityOnly" Base="EAM!SquaredUp.EAM.Library.Class.EnterpriseApplication.v1" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Availability" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Availability" Hosted="false" Singleton="false" Extension="false" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Map" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Map" Hosted="false" Singleton="false" Extension="false" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Dependencies" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Dependencies" Hosted="false" Singleton="false" Extension="false" />
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.AvailabilityMonitoringGroup" Accessibility="Public" Abstract="false" Base="MSIL!Microsoft.SystemCenter.InstanceGroup" Hosted="false" Singleton="true" Extension="false" />
+
+      </ClassTypes>
+
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityOnly">
+          <Name>Sample - Tailspin Toys</Name>
+          <Description>Enterprise Application 'Sample - Tailspin Toys'</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Availability">
+          <Name>Sample - Tailspin Toys Availability</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Map">
+          <Name>Sample - Tailspin Toys Map</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Dependencies">
+          <Name>Sample - Tailspin Toys Dependencies</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.AvailabilityMonitoringGroup">
+          <Name>'Sample - Tailspin Toys' Availability Monitors</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

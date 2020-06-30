@@ -1,0 +1,36 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Overrides>
+      <MonitorPropertyOverride ID="SquaredUp.EAM.Samples.Override.AvailabilityOnly" Context="SquaredUp.EAM.Samples.Class.AvailabilityOnly" Enforced="false" Monitor="EAM!SquaredUp.EAM.Library.Monitor.ManualAvailability" Property="Enabled">
+        <Value>true</Value>
+      </MonitorPropertyOverride>
+
+      <DiscoveryConfigurationOverride ID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Override.WatcherDiscovery" Context="SquaredUp.EAM.Samples.EAM_Default"  Enforced="false" Discovery="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Watcher.Discovery" Parameter="DiscoverInstance" Module="DS">
+        <Value>true</Value>
+      </DiscoveryConfigurationOverride>
+
+      <MonitorConfigurationOverride ID="SquaredUp.EAM.Samples.Override.AvailabilityOnly.Availabilty.TestScript" Context="SquaredUp.EAM.Samples.Class.AvailabilityOnly.AvailabilityMonitoringGroup" Enforced="false" Monitor="EAM!SquaredUp.EAM.Library.Monitor.AvailabilityMonitoring.Web" Parameter="Script">
+        <Value>
+          $result = New-Object -TypeName PSobject -Property (@{'Success'=$true;'Description'='';'ResponseTime'=[double](Get-Random -Minimum 5500 -Maximum 10000)})
+          return $result
+        </Value>
+      </MonitorConfigurationOverride>
+
+    </Overrides>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Override.AvailabilityOnly">
+          <Name>Manual Availability Override for 'Sample - Tailspin Toys'</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Override.WatcherDiscovery">
+          <Name>Watcher Discovery Override for 'Sample - Tailspin Toys'</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Override.AvailabilityOnly.Availabilty.TestScript">
+          <Name>Web Availability Test Override for 'Sample - Tailspin Toys'</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D4B43EB3-688B-4EEE-86BD-088F0B28ABB3}") = "SquaredUp.EAM.Library", "SquaredUp.EAM.Library\SquaredUp.EAM.Library.mpproj", "{196967A7-DA6A-4983-A3EB-3390AD065A31}"
 EndProject
 Project("{D4B43EB3-688B-4EEE-86BD-088F0B28ABB3}") = "SquaredUp.EAM.Custom", "SquaredUp.EAM.Custom\SquaredUp.EAM.Custom.mpproj", "{6A8ED346-433D-4793-8C87-BA9FCF8D7FD2}"
+EndProject
+Project("{D4B43EB3-688B-4EEE-86BD-088F0B28ABB3}") = "SquaredUp.EAM.Samples", "SquaredUp.EAM.Samples\SquaredUp.EAM.Samples.mpproj", "{BDF8DB8D-9FF6-42A2-8949-CE05796EDE38}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{6A8ED346-433D-4793-8C87-BA9FCF8D7FD2}.Debug|x86.Build.0 = Debug|x86
 		{6A8ED346-433D-4793-8C87-BA9FCF8D7FD2}.Release|x86.ActiveCfg = Release|x86
 		{6A8ED346-433D-4793-8C87-BA9FCF8D7FD2}.Release|x86.Build.0 = Release|x86
+		{BDF8DB8D-9FF6-42A2-8949-CE05796EDE38}.Debug|x86.ActiveCfg = Debug|x86
+		{BDF8DB8D-9FF6-42A2-8949-CE05796EDE38}.Debug|x86.Build.0 = Debug|x86
+		{BDF8DB8D-9FF6-42A2-8949-CE05796EDE38}.Release|x86.ActiveCfg = Release|x86
+		{BDF8DB8D-9FF6-42A2-8949-CE05796EDE38}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

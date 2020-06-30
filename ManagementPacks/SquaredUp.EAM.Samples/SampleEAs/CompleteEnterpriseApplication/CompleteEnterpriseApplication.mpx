@@ -1,0 +1,119 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication" Base="EAM!SquaredUp.EAM.Library.Class.EnterpriseApplication.v1" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+        
+        <ClassType ID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Availability" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Availability" Hosted="false" Singleton="false" Extension="false" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Map" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Map" Hosted="false" Singleton="false" Extension="false" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Dependencies" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.Dependencies" Hosted="false" Singleton="false" Extension="false" />
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.AvailabilityMonitoringGroup" Accessibility="Public" Abstract="false" Base="MSIL!Microsoft.SystemCenter.InstanceGroup" Hosted="false" Singleton="true" Extension="false" /> 
+
+        <ClassType ID="EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.MapGroup" Hosted="false" Singleton="false" Extension="false" />
+        <!-- 04489e5f-547a-450c-b90c-f20b94bfda3b -->
+        <ClassType ID="EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.MapGroup" Hosted="false" Singleton="false" Extension="false" />
+        <!-- 7a0c0b8d-a328-4c48-81b2-720a81d7d189 -->
+        <ClassType ID="EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Class.MapGroup" Hosted="false" Singleton="false" Extension="false" />
+        <!-- f76e08b0-34fc-4b0f-89e4-0fd01a895a9f -->
+
+      </ClassTypes>
+
+      <RelationshipTypes>
+
+        <RelationshipType ID="EA_fe2f8e898195726e0291470a92491867_Map_Contains_04489e5f547a450cb90cf20b94bfda3b" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.Map.ContainsMapGroup">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Map" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b" />
+        </RelationshipType>
+        <RelationshipType ID="EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b_Contains_Entity" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="System!System.Entity" />
+        </RelationshipType>
+
+        <RelationshipType ID="EA_fe2f8e898195726e0291470a92491867_Map_Contains_7a0c0b8da3284c4881b2720a81d7d189" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.Map.ContainsMapGroup">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Map" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189" />
+        </RelationshipType>
+        <RelationshipType ID="EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189_Contains_Entity" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="System!System.Entity" />
+        </RelationshipType>
+
+        <RelationshipType ID="EA_fe2f8e898195726e0291470a92491867_Map_Contains_f76e08b034fc4b0f89e40fd01a895a9f" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.Map.ContainsMapGroup">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Map" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f" />
+        </RelationshipType>
+        <RelationshipType ID="EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f_Contains_Entity" Accessibility="Public" Abstract="false" Base="EAM!SquaredUp.EAM.Library.Relationship.MapGroup.ContainsEntity">
+          <Source ID="source" MinCardinality="0" MaxCardinality="2147483647" Type="EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f" />
+          <Target ID="target" MinCardinality="0" MaxCardinality="2147483647" Type="System!System.Entity" />
+        </RelationshipType>
+
+      </RelationshipTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication">
+          <Name>Sample - Contoso Sales App</Name>
+          <Description>Enterprise Application 'Sample - Contoso Sales App'</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Availability">
+          <Name>Sample - Contoso Sales App Availability</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Map">
+          <Name>Sample - Contoso Sales App Map</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Dependencies">
+          <Name>Sample - Contoso Sales App Dependencies</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.AvailabilityMonitoringGroup">
+          <Name>'Sample - Contoso Sales App' Availability Monitors</Name>
+        </DisplayString>
+
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b">
+          <Name>Web Servers</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_Contains_04489e5f547a450cb90cf20b94bfda3b">
+          <Name>Relationship in EA Sample - Contoso Sales App to include group 'Web Servers' in map.</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_04489e5f547a450cb90cf20b94bfda3b_Contains_Entity">
+          <Name>Relationship in EA Sample - Contoso Sales App to include objects in map group 'Web Servers'.</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189">
+          <Name>App Servers</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_Contains_7a0c0b8da3284c4881b2720a81d7d189">
+          <Name>Relationship in EA Sample - Contoso Sales App to include group 'App Servers' in map.</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_7a0c0b8da3284c4881b2720a81d7d189_Contains_Entity">
+          <Name>Relationship in EA Sample - Contoso Sales App to include objects in map group 'App Servers'.</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f">
+          <Name>Database</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_Contains_f76e08b034fc4b0f89e40fd01a895a9f">
+          <Name>Relationship in EA Sample - Contoso Sales App to include group 'Database' in map.</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="EA_fe2f8e898195726e0291470a92491867_Map_f76e08b034fc4b0f89e40fd01a895a9f_Contains_Entity">
+          <Name>Relationship in EA Sample - Contoso Sales App to include objects in map group 'Database'.</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

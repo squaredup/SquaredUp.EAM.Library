@@ -1,0 +1,180 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Discoveries>
+
+      <Discovery ID="LocalDiscovery_EA_fe49b78867f8a74afc9837cec450f74f" Enabled="true" Target="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Availability" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Dependencies" />
+          <DiscoveryClass TypeID="EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.SampleComputer" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="EAM!SquaredUp.EAM.Library.Datasource.DiscoveryProvider">
+          <DiscoveriesJson>
+{
+    "newObjects": [
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Availability']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Availability']/ApplicationId$",
+                    "value": "fe49b788-67f8-a74a-fc98-37cec450f74f"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Parts Unlimited Availability"
+                }
+            ],
+            "instanceId": "inst_2",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/ApplicationId$",
+                    "value": "fe49b788-67f8-a74a-fc98-37cec450f74f"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Parts Unlimited Map"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/CreateServiceMonitors$",
+                    "value": "True"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/CreateTcpMonitors$",
+                    "value": "True"
+                }
+            ],
+            "instanceId": "inst_3",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Dependencies']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Dependencies']/ApplicationId$",
+                    "value": "fe49b788-67f8-a74a-fc98-37cec450f74f"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Parts Unlimited Dependencies"
+                }
+            ],
+            "instanceId": "inst_4",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/ApplicationId$",
+                    "value": "fe49b788-67f8-a74a-fc98-37cec450f74f"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/GroupId$",
+                    "value": "b8579d6f-a6ec-2b31-f342-ac63ad2fc32e"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Servers"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/HorizIndex$",
+                    "value": "0"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.MapGroup']/VertIndex$",
+                    "value": "0"
+                }
+            ],
+            "instanceId": "inst_5",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        }
+    ],
+    "existingObjects": [
+        {
+            "objId": "fe49b788-67f8-a74a-fc98-37cec450f74f",
+            "instanceId": "inst_1",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "objId": "4dc2cf29-dfc9-012d-9ece-b51d4f23fd5c",
+            "instanceId": "inst_6",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "objId": "cd5d8514-8188-1bd7-6671-5782285b205e",
+            "instanceId": "inst_7",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        }
+    ],
+    "relationships": [
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_2",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsMap']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_3",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_4",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe49b78867f8a74afc9837cec450f74f_Map_Contains_b8579d6fa6ec2b31f342ac63ad2fc32e']$",
+            "sourceInstanceId": "inst_3",
+            "targetInstanceId": "inst_5",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e_Contains_Entity']$",
+            "sourceInstanceId": "inst_5",
+            "targetInstanceId": "inst_6",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EA_fe49b78867f8a74afc9837cec450f74f_Map_b8579d6fa6ec2b31f342ac63ad2fc32e_Contains_Entity']$",
+            "sourceInstanceId": "inst_5",
+            "targetInstanceId": "inst_7",
+            "properties": null
+        }
+    ]
+}
+          </DiscoveriesJson>
+          <IntervalSeconds>86400</IntervalSeconds>
+        </DataSource>
+      </Discovery>
+
+    </Discoveries>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="LocalDiscovery_EA_fe49b78867f8a74afc9837cec450f74f">
+          <Name>Discovery to populate 'Sample - Parts Unlimited' Enterprise Application with contained monitoring objects</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>         
+</ManagementPackFragment>
