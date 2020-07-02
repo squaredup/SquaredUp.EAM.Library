@@ -1,0 +1,23 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleCloudService" Base="System!System.Entity" Accessibility="Public" Abstract="true" Hosted="false" Singleton="false" />
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleCloudService">
+          <Name>SquaredUp EAM Sample Cloud Service</Name>
+          <Description>A sample object used to represent external dependencies to sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

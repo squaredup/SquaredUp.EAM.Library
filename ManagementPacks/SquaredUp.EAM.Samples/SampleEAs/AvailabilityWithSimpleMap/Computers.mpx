@@ -1,0 +1,29 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.AdventureWorks.Web01" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer.AdventureWorks.SQL01" Base="SquaredUp.EAM.Samples.Class.SampleComputer" Accessibility="Public" Abstract="false" Hosted="false" Singleton="true" />
+
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.AdventureWorks.Web01">
+          <Name>AW-WEB-01.AdventureWorks.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer.AdventureWorks.SQL01">
+          <Name>AW-SQL-01.AdventureWorks.com</Name>
+          <Description>A sample object used to represent a computer within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

@@ -1,0 +1,23 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        
+        <ClassType ID="SquaredUp.EAM.Samples.Class.SampleComputer" Base="System!System.Entity" Accessibility="Public" Abstract="true" Hosted="false" Singleton="false" />
+      
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.SampleComputer">
+          <Name>SquaredUp EAM Sample computer</Name>
+          <Description>A sample object used to represent computers within sample EAs. Instances of this class do not reflect a real object.</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

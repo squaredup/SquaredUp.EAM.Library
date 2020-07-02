@@ -1,0 +1,143 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Rules>
+
+      <Rule ID="SquaredUp.EAM.Samples.Rule.PerfCollection.SampleComputer.Connections" Target="SquaredUp.EAM.Samples.Class.SampleComputer" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>PerformanceCollection</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="SquaredUp.EAM.Samples.DataSource.FakeComputerData">
+            <Name>$Target/Property[Type='System!System.Entity']/DisplayName$</Name>
+            <IntervalSeconds>900</IntervalSeconds>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Perf!System.Performance.DataGenericMapper">
+          <ObjectName>Web Service</ObjectName>
+          <CounterName>Current Connections</CounterName>
+          <InstanceName />
+          <Value>$Data/Property[@Name='Connections']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="CollectToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+
+      <Rule ID="SquaredUp.EAM.Samples.Rule.PerfCollection.SampleComputer.CPUPercent" Target="SquaredUp.EAM.Samples.Class.SampleComputer" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>PerformanceCollection</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="SquaredUp.EAM.Samples.DataSource.FakeComputerData">
+            <Name>$Target/Property[Type='System!System.Entity']/DisplayName$</Name>
+            <IntervalSeconds>900</IntervalSeconds>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Perf!System.Performance.DataGenericMapper">
+          <ObjectName>Processor Information</ObjectName>
+          <CounterName>% Processor Time</CounterName>
+          <InstanceName />
+          <Value>$Data/Property[@Name='CPU']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="CollectToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+
+      <Rule ID="SquaredUp.EAM.Samples.Rule.PerfCollection.SampleComputer.Memory" Target="SquaredUp.EAM.Samples.Class.SampleComputer" Enabled="true" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>PerformanceCollection</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="SquaredUp.EAM.Samples.DataSource.FakeComputerData">
+            <Name>$Target/Property[Type='System!System.Entity']/DisplayName$</Name>
+            <IntervalSeconds>900</IntervalSeconds>
+          </DataSource>
+        </DataSources>
+        <ConditionDetection ID="CD" TypeID="Perf!System.Performance.DataGenericMapper">
+          <ObjectName>Memory</ObjectName>
+          <CounterName>PercentMemoryUsed</CounterName>
+          <InstanceName />
+          <Value>$Data/Property[@Name='Memory']$</Value>
+        </ConditionDetection>
+        <WriteActions>
+          <WriteAction ID="CollectToDW" TypeID="MSDL!Microsoft.SystemCenter.DataWarehouse.PublishPerformanceData" />
+        </WriteActions>
+      </Rule>
+
+    </Rules>
+    <Monitors>
+
+      <UnitMonitor ID="SquaredUp.EAM.Samples.Monitor.SampleCloudService.Health" Accessibility="Public" Enabled="true" Target="SquaredUp.EAM.Samples.Class.SampleCloudService" ParentMonitorID="SystemHealthLibrary!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="SquaredUp.EAM.Samples.UnitMonitorType.SampleComputerAvailability" ConfirmDelivery="false">
+        <Category>AvailabilityHealth</Category>
+        <OperationalStates>
+          <OperationalState ID="Healthy" MonitorTypeStateID="Healthy" HealthState="Success" />
+          <OperationalState ID="Unhealthy" MonitorTypeStateID="Unhealthy" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <Name>$Target/Property[Type='System!System.Entity']/DisplayName$</Name>
+          <IntervalSeconds>900</IntervalSeconds>
+        </Configuration>
+      </UnitMonitor>
+
+      <UnitMonitor ID="SquaredUp.EAM.Samples.Monitor.SampleComputer.Health" Accessibility="Public" Enabled="true" Target="SquaredUp.EAM.Samples.Class.SampleComputer" ParentMonitorID="SystemHealthLibrary!System.Health.AvailabilityState" Remotable="true" Priority="Normal" TypeID="SquaredUp.EAM.Samples.UnitMonitorType.SampleComputerAvailability" ConfirmDelivery="false">
+        <Category>AvailabilityHealth</Category>
+        <OperationalStates>
+          <OperationalState ID="Healthy" MonitorTypeStateID="Healthy" HealthState="Success" />
+          <OperationalState ID="Unhealthy" MonitorTypeStateID="Unhealthy" HealthState="Error" />
+        </OperationalStates>
+        <Configuration>
+          <Name>$Target/Property[Type='System!System.Entity']/DisplayName$</Name>
+          <IntervalSeconds>900</IntervalSeconds>
+        </Configuration>
+      </UnitMonitor>
+
+    </Monitors>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.SampleCloudService.Health">
+          <Name>Sample Cloud Service Availability</Name>
+          <Description>Simple monitor to report health state for sample cloud services.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.SampleCloudService.Health" SubElementID="Healthy">
+          <Name>Healthy</Name>
+          <Description>Healthy</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.SampleCloudService.Health" SubElementID="Unhealthy">
+          <Name>Unhealthy</Name>
+          <Description>Unhealthy</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Rule.PerfCollection.SampleComputer.Connections">
+          <Name>Collect number of Connections</Name>
+          <Description>Collects connection information</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Rule.PerfCollection.SampleComputer.CPUPercent">
+          <Name>Collect CPU Processor Percent</Name>
+          <Description>Collects CPU usage information</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Rule.PerfCollection.SampleComputer.Memory">
+          <Name>Collect Memory usage percent</Name>
+          <Description>Collects memory usage information</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.SampleComputer.Health">
+          <Name>Sample Computer Availability</Name>
+          <Description>Simple monitor to report health state for sample computers.</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.SampleComputer.Health" SubElementID="Healthy">
+          <Name>Healthy</Name>
+          <Description>Healthy</Description>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.SampleComputer.Health" SubElementID="Unhealthy">
+          <Name>Unhealthy</Name>
+          <Description>Unhealthy</Description>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

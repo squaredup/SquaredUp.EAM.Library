@@ -1,0 +1,205 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Discoveries>
+
+      <Discovery ID="SquaredUp.EAM.Samples.Discovery.AvailabilityOnly.AvailabilityMonitoringGroupContainsWatchers" Enabled="true" Target="SquaredUp.EAM.Samples.Class.AvailabilityOnly.AvailabilityMonitoringGroup" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes />
+        <DataSource ID="DS" TypeID="SC!Microsoft.SystemCenter.GroupPopulator">
+          <RuleId>$MPElement$</RuleId>
+          <GroupInstanceId>$Target/Id$</GroupInstanceId>
+          <MembershipRules>
+            <MembershipRule>
+              <MonitoringClass>$MPElement[Name="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher"]$</MonitoringClass>
+              <RelationshipClass>$MPElement[Name="MSIL!Microsoft.SystemCenter.InstanceGroupContainsEntities"]$</RelationshipClass>
+              <Expression>
+                <SimpleExpression>
+                  <ValueExpression>
+                    <Property>$MPElement[Name="System!System.Entity"]/DisplayName$</Property>
+                  </ValueExpression>
+                  <Operator>Equal</Operator>
+                  <ValueExpression>
+                    <Value>Sample - Tailspin Toys</Value>
+                  </ValueExpression>
+                </SimpleExpression>
+              </Expression>
+            </MembershipRule>
+          </MembershipRules>
+        </DataSource>
+      </Discovery>
+      <Discovery ID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Watcher.Discovery" Enabled="true" Target="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.MonitoringNode" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Web">
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ConfigurationJson" />
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ApplicationName" />
+            <Property TypeID="EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher" PropertyID="ResponseTimeThreshold" />
+          </DiscoveryClass>
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="EAM!SquaredUp.EAM.Library.DataSource.AvailabilityMonitoring.StaticAlwaysOnDiscovery">
+          <IntervalSeconds>86400</IntervalSeconds>
+          <DiscoverInstance>false</DiscoverInstance>
+          <ComputerName>$Target/Host/Property[Type='Windows!Microsoft.Windows.Computer']/PrincipalName$</ComputerName>
+          <ClassId>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher.Web']$</ClassId>
+          <InstanceSettings>
+            <Settings>
+              <Setting>
+                <Name>$MPElement[Name="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Name>
+                <Value>$Target/Host/Property[Type="Windows!Microsoft.Windows.Computer"]/PrincipalName$</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='System!System.Entity']/DisplayName$</Name>
+                <Value>Sample - Tailspin Toys</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ConfigurationJson$</Name>
+                <Value>{"url":"https://tailspintoys.com","match":"Tailspin","notmatch":"404"}</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ApplicationName$</Name>
+                <Value>Sample - Tailspin Toys</Value>
+              </Setting>
+              <Setting>
+                <Name>$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.AvailabilityMonitoring.Watcher']/ResponseTimeThreshold$</Name>
+                <Value>1000</Value>
+              </Setting>
+            </Settings>
+          </InstanceSettings>
+        </DataSource>
+      </Discovery>
+
+      <Discovery ID="LocalDiscovery_EA_428a274861615959af52b2b6e565660e" Enabled="true" Target="SquaredUp.EAM.Samples.Class.AvailabilityOnly" ConfirmDelivery="false" Remotable="true" Priority="Normal">
+        <Category>Discovery</Category>
+        <DiscoveryTypes>
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Availability" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Map" />
+          <DiscoveryClass TypeID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Dependencies" />
+        </DiscoveryTypes>
+        <DataSource ID="DS" TypeID="EAM!SquaredUp.EAM.Library.Datasource.DiscoveryProvider">
+          <DiscoveriesJson>
+{
+    "newObjects": [
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.AvailabilityOnly.Availability']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Availability']/ApplicationId$",
+                    "value": "428a2748-6161-5959-af52-b2b6e565660e"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Tailspin Toys Availability"
+                }
+            ],
+            "instanceId": "inst_2",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.AvailabilityOnly.Map']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/ApplicationId$",
+                    "value": "428a2748-6161-5959-af52-b2b6e565660e"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Tailspin Toys Map"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/CreateServiceMonitors$",
+                    "value": "True"
+                },
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Map']/CreateTcpMonitors$",
+                    "value": "True"
+                }
+            ],
+            "instanceId": "inst_3",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "typeId": "$MPElement[Name='SquaredUp.EAM.Samples.Class.AvailabilityOnly.Dependencies']$",
+            "properties": [
+                {
+                    "propertyId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Class.Dependencies']/ApplicationId$",
+                    "value": "428a2748-6161-5959-af52-b2b6e565660e"
+                },
+                {
+                    "propertyId": "$MPElement[Name='System!System.Entity']/DisplayName$",
+                    "value": "Sample - Tailspin Toys Dependencies"
+                }
+            ],
+            "instanceId": "inst_4",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        }
+    ],
+    "existingObjects": [
+        {
+            "objId": "428a2748-6161-5959-af52-b2b6e565660e",
+            "instanceId": "inst_1",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        },
+        {
+            "objId": "a361ac41-5ccb-1d07-6092-b3bba560cc8d",
+            "instanceId": "inst_5",
+            "serverId": "00000000-0000-0000-0000-000000000000",
+            "serverName": null
+        }
+    ],
+    "relationships": [
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsAvailability']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_2",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsMap']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_3",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.EnterpriseApplication.ContainsDependencies']$",
+            "sourceInstanceId": "inst_1",
+            "targetInstanceId": "inst_4",
+            "properties": null
+        },
+        {
+            "typeId": "$MPElement[Name='EAM!SquaredUp.EAM.Library.Relationship.Availability.ContainsEntity']$",
+            "sourceInstanceId": "inst_2",
+            "targetInstanceId": "inst_5",
+            "properties": null
+        }
+    ]
+}
+          </DiscoveriesJson>
+          <IntervalSeconds>86400</IntervalSeconds>
+        </DataSource>
+      </Discovery>
+
+    </Discoveries>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Discovery.AvailabilityOnly.AvailabilityMonitoringGroupContainsWatchers">
+          <Name>Discovers 'Sample - Tailspin Toys' Enterprise Application Availability Monitoring Test instances</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Watcher.Discovery">
+          <Name>Discovers 'Sample - Tailspin Toys' Enterprise Application Availability Monitoring Test (Web)</Name>
+        </DisplayString>
+
+        <DisplayString ElementID="LocalDiscovery_EA_428a274861615959af52b2b6e565660e">
+          <Name>Discovery to populate 'Sample - Tailspin Toys' Enterprise Application with contained monitoring objects</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

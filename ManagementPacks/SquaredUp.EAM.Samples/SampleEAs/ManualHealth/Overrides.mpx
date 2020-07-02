@@ -1,0 +1,18 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Overrides>
+      <MonitorPropertyOverride ID="SquaredUp.EAM.Samples.Override.ManualReportingWithSimpleMap" Context="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap" Enforced="false" Monitor="EAM!SquaredUp.EAM.Library.Monitor.ManualAvailability" Property="Enabled">
+        <Value>true</Value>
+      </MonitorPropertyOverride>
+    </Overrides>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Override.ManualReportingWithSimpleMap">
+          <Name>Manual Availability Override for 'Sample - Parts Unlimited'</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>

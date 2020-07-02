@@ -1,0 +1,78 @@
+﻿<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Monitoring>
+    <Monitors>
+      <DependencyMonitor ID="SquaredUp.EAM.Samples.Monitor.ManualReportingWithSimpleMap.Map_AvailabilityHealth_HealthMonitor" 
+                         Accessibility="Public" 
+                         Enabled="true" 
+                         Target="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map" 
+                         ParentMonitorID="SystemHealthLibrary!System.Health.AvailabilityState"
+                         Remotable="true"
+                         Priority="Normal"
+                         RelationshipType="EA_fe49b78867f8a74afc9837cec450f74f_Map_Contains_b8579d6fa6ec2b31f342ac63ad2fc32e"
+                         MemberMonitor="SystemHealthLibrary!System.Health.AvailabilityState">
+        <Category>AvailabilityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Samples.Monitor.ManualReportingWithSimpleMap.Map_ConfigurationHealth_HealthMonitor"
+                         Accessibility="Public"
+                         Enabled="true"
+                         Target="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map"
+                         ParentMonitorID="SystemHealthLibrary!System.Health.ConfigurationState"
+                         Remotable="true"
+                         Priority="Normal"
+                         RelationshipType="EA_fe49b78867f8a74afc9837cec450f74f_Map_Contains_b8579d6fa6ec2b31f342ac63ad2fc32e"
+                         MemberMonitor="SystemHealthLibrary!System.Health.ConfigurationState">
+        <Category>ConfigurationHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Samples.Monitor.ManualReportingWithSimpleMap.Map_PerformanceHealth_HealthMonitor"
+                         Accessibility="Public"
+                         Enabled="true"
+                         Target="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map"
+                         ParentMonitorID="SystemHealthLibrary!System.Health.PerformanceState"
+                         Remotable="true"
+                         Priority="Normal"
+                         RelationshipType="EA_fe49b78867f8a74afc9837cec450f74f_Map_Contains_b8579d6fa6ec2b31f342ac63ad2fc32e"
+                         MemberMonitor="SystemHealthLibrary!System.Health.PerformanceState">
+        <Category>PerformanceHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+
+      <DependencyMonitor ID="SquaredUp.EAM.Samples.Monitor.ManualReportingWithSimpleMap.Map_SecurityHealth_HealthMonitor"
+                         Accessibility="Public"
+                         Enabled="true"
+                         Target="SquaredUp.EAM.Samples.Class.ManualReportingWithSimpleMap.Map"
+                         ParentMonitorID="SystemHealthLibrary!System.Health.SecurityState"
+                         Remotable="true"
+                         Priority="Normal"
+                         RelationshipType="EA_fe49b78867f8a74afc9837cec450f74f_Map_Contains_b8579d6fa6ec2b31f342ac63ad2fc32e"
+                         MemberMonitor="SystemHealthLibrary!System.Health.SecurityState">
+        <Category>SecurityHealth</Category>
+        <Algorithm>WorstOf</Algorithm>
+      </DependencyMonitor>
+      
+    </Monitors>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.ManualReportingWithSimpleMap.Map_AvailabilityHealth_HealthMonitor">
+          <Name>Availability roll-up for 'Servers'</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.ManualReportingWithSimpleMap.Map_ConfigurationHealth_HealthMonitor">
+          <Name>Configuration roll-up for 'Servers'</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.ManualReportingWithSimpleMap.Map_PerformanceHealth_HealthMonitor">
+          <Name>Performance roll-up for 'Servers'</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Monitor.ManualReportingWithSimpleMap.Map_SecurityHealth_HealthMonitor">
+          <Name>Security roll-up for 'Servers'</Name>
+        </DisplayString>
+
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPackFragment>
