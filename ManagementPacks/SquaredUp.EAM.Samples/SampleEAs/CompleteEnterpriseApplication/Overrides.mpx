@@ -16,6 +16,18 @@
         </Value>
       </MonitorConfigurationOverride>
 
+      <RuleConfigurationOverride ID="SquaredUp.EAM.Samples.Override.CompleteEnterpriseApplication.Availability.PerfCollection"
+         Context="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.AvailabilityMonitoringGroup"
+         Enforced="false"
+         Rule="EAM!SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.Web.PerformanceCollection"
+         Module="DS"
+         Parameter="Script">
+        <Value>
+          $result = New-Object -TypeName PSobject -Property (@{'Success'=$true;'Description'='';'ResponseTime'=[double](Get-Random -Minimum 50 -Maximum 1000)})
+          return $result
+        </Value>
+      </RuleConfigurationOverride>
+
     </Overrides>
   </Monitoring>
   <LanguagePacks>
@@ -29,6 +41,9 @@
         </DisplayString>
         <DisplayString ElementID="SquaredUp.EAM.Samples.Override.CompleteEnterpriseApplication.Availabilty.TestScript">
           <Name>Web Availability Test Override for 'Sample - Contoso Sales App'</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Override.CompleteEnterpriseApplication.Availability.PerfCollection">
+          <Name>Web Availability Test Performance collection Override for 'Sample - Contoso Sales App'</Name>
         </DisplayString>
       </DisplayStrings>
     </LanguagePack>

@@ -16,6 +16,18 @@
         </Value>
       </MonitorConfigurationOverride>
 
+      <RuleConfigurationOverride ID="SquaredUp.EAM.Samples.Override.AvailabilityWithDependencies.Availability.PerfCollection"
+         Context="SquaredUp.EAM.Samples.Class.AvailabilityWithDependencies.AvailabilityMonitoringGroup"
+         Enforced="false"
+         Rule="EAM!SquaredUp.EAM.Library.Rule.AvailabilityMonitoring.Web.PerformanceCollection"
+         Module="DS"
+         Parameter="Script">
+        <Value>
+          $result = New-Object -TypeName PSobject -Property (@{'Success'=$true;'Description'='';'ResponseTime'=[double](Get-Random -Minimum 50 -Maximum 1000)})
+          return $result
+        </Value>
+      </RuleConfigurationOverride>
+
     </Overrides>
   </Monitoring>
   <LanguagePacks>
@@ -29,6 +41,9 @@
         </DisplayString>
         <DisplayString ElementID="SquaredUp.EAM.Samples.Override.AvailabilityWithDependencies.Availabilty.TestScript">
           <Name>Web Availability Test Override for 'Sample - SmartHotel 360'</Name>
+        </DisplayString>
+        <DisplayString ElementID="SquaredUp.EAM.Samples.Override.AvailabilityWithDependencies.Availability.PerfCollection">
+          <Name>Web Availability Test Performance collection Override for 'Sample - SmartHotel 360'</Name>
         </DisplayString>
       </DisplayStrings>
     </LanguagePack>
