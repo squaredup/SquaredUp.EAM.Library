@@ -435,7 +435,7 @@
       <DisplayStrings>
 
         <DisplayString ElementID="SquaredUp.EAM.Samples.Discovery.CompleteEnterpriseApplication.AvailabilityMonitoringGroupContainsWatchers">
-          <Name>Discovers 'Sample - Contoso Sales App' Enterprise Application Availablity Monitoring Test instances</Name>
+          <Name>Discovers 'Sample - Contoso Sales App' Enterprise Application Availability Monitoring Test instances</Name>
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Samples.Class.CompleteEnterpriseApplication.Watcher.Discovery">

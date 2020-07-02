@@ -43,7 +43,7 @@
           <Name>Web Availability Test Override for 'Sample - SmartHotel 360'</Name>
         </DisplayString>
         <DisplayString ElementID="SquaredUp.EAM.Samples.Override.AvailabilityWithDependencies.Availability.PerfCollection">
-          <Name>Web Availability Test Performance collection Override for 'Sample - SmartHotel 360'</Name>
+          <Name>Web Availability Test Performance Collection Override for 'Sample - SmartHotel 360'</Name>
         </DisplayString>
       </DisplayStrings>
     </LanguagePack>

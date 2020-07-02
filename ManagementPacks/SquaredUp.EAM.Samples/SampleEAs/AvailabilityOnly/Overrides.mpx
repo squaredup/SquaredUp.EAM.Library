@@ -43,7 +43,7 @@
           <Name>Web Availability Test Override for 'Sample - Tailspin Toys'</Name>
         </DisplayString>
         <DisplayString ElementID="SquaredUp.EAM.Samples.Override.AvailabilityOnly.Availability.PerfCollection">
-          <Name>Web Availability Test Performance collection Override for 'Sample - Tailspin Toys'</Name>
+          <Name>Web Availability Test Performance Collection Override for 'Sample - Tailspin Toys'</Name>
         </DisplayString>
       </DisplayStrings>
     </LanguagePack>

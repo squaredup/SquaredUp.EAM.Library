@@ -189,7 +189,7 @@
       <DisplayStrings>
 
         <DisplayString ElementID="SquaredUp.EAM.Samples.Discovery.AvailabilityOnly.AvailabilityMonitoringGroupContainsWatchers">
-          <Name>Discovers 'Sample - Tailspin Toys' Enterprise Application Availablity Monitoring Test instances</Name>
+          <Name>Discovers 'Sample - Tailspin Toys' Enterprise Application Availability Monitoring Test instances</Name>
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityOnly.Watcher.Discovery">

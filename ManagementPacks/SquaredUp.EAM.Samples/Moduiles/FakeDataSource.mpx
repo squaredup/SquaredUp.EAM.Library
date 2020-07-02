@@ -56,7 +56,7 @@
 
         <DisplayString ElementID="SquaredUp.EAM.Samples.DataSource.FakeComputerData">
           <Name>SquaredUp Sample EA fake computer data source</Name>
-          <Description>Produces fake data for health ahd performance collection</Description>
+          <Description>Produces fake data for health and performance collection</Description>
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Samples.DataSource.FakeComputerData" SubElementID="IntervalSeconds">

@@ -214,7 +214,7 @@
       <DisplayStrings>
 
         <DisplayString ElementID="SquaredUp.EAM.Samples.Discovery.AvailabilityWithDependencies.AvailabilityMonitoringGroupContainsWatchers">
-          <Name>Discovers 'Sample - SmartHotel 360' Enterprise Application Availablity Monitoring Test instances</Name>
+          <Name>Discovers 'Sample - SmartHotel 360' Enterprise Application Availability Monitoring Test instances</Name>
         </DisplayString>
 
         <DisplayString ElementID="SquaredUp.EAM.Samples.Class.AvailabilityWithDependencies.Watcher.Discovery">

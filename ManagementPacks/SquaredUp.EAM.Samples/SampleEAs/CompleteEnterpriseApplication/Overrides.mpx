@@ -43,7 +43,7 @@
           <Name>Web Availability Test Override for 'Sample - Contoso Sales App'</Name>
         </DisplayString>
         <DisplayString ElementID="SquaredUp.EAM.Samples.Override.CompleteEnterpriseApplication.Availability.PerfCollection">
-          <Name>Web Availability Test Performance collection Override for 'Sample - Contoso Sales App'</Name>
+          <Name>Web Availability Test Performance Collection Override for 'Sample - Contoso Sales App'</Name>
         </DisplayString>
       </DisplayStrings>
     </LanguagePack>
