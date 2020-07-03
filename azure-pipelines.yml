@@ -70,7 +70,7 @@
                           solution: '$(buildsolutionFile)'
                           platform: '$(buildPlatform)'
                           configuration: '$(buildConfiguration)'
-                          msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
+                          msbuildArguments: '/p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
                           clean: true
                           createLogFile: true
                       # - #Build the solution SquaredUp.App.sln
