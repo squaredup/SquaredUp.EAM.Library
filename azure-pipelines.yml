@@ -73,7 +73,7 @@
                           msbuildArguments: '/p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
                           clean: true
                           createLogFile: true
-                      - #Build the solution SquaredUp.App.sln
+                      #- #Build the solution SquaredUp.App.sln
                         # task: VSBuild@1
                         # displayName: "Visual Studio Build"
                         # inputs:
