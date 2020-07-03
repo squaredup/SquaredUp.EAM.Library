@@ -57,6 +57,8 @@
                             )
                             Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow  
                             get-content $logFile
+
+                            get-childItem ManagementPacks -recurse -force
                             
                             #Start-Process msiexec.exe -Wait -ArgumentList '/I VSAE/VisualStudioAuthoringConsole_x86.msi /quiet'
                           failOnStderr: true
