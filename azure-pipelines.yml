@@ -1,19 +1,99 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+--- 
+    name: $(Rev:r)
+    stages: 
+        -
+            stage: buildStage
+            displayName: 'Build Stage'
+            pool:
+                vmImage: "vs2017-win2016"
+                name: Azure Pipelines
+                demands:
+                    - msbuild
+                    - visualstudio
+                    - Cmd
+                    - vstest
+            jobs:
+                - 
+                    job: "buildJob"
+                    displayName: "Build Job"
+                    steps:
+                      - task: DownloadSecureFile@1
+                        inputs:
+                            secureFile: 'data-on-demand.snk'
+                        name: STRONGNAME_KEY
+                        displayName: "Download secure file"
+                      - task: ArtifactoryGenericDownload@3
+                        inputs:
+                            connection: 'jFrog-Artifactory'
+                            specSource: 'taskConfiguration'
+                            fileSpec: |
+                              {
+                                "files": [
+                                  {
+                                    "pattern": "public/com/squaredup/vsae-msi/VisualStudioAuthoringConsole_x86.msi",
+                                    "target": "VSAE/VisualStudioAuthoringConsole_x86.msi"
+                                  }
+                                ]
+                              }
+                      - task: PowerShell@2
+                        name: "prebuildTask"
+                        inputs:
+                          targetType: 'inline'
+                          script: |
+                            get-childItem D:\a\1\s\VSAE\com\squaredup\vsae-msi -recurse -force
+                            $date=$(Get-Date -Format "yyyyMMdd.HHmmss");
+                            Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
+                            
+                            $file = "D:\a\1\s\VSAE\com\squaredup\vsae-msi\VisualStudioAuthoringConsole_x86.msi"
+                            $DataStamp = get-date -Format yyyyMMddTHHmmss
+                            $logFile = '{0}-{1}.log' -f $file,$DataStamp
+                            $MSIArguments = @(
+                                "/i"
+                                ('"{0}"' -f $file)
+                                "/qn"
+                                "/norestart"
+                                "/L*v"
+                                $logFile
+                            )
+                            Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow  
+                            get-content $logFile
+                            
+                            #Start-Process msiexec.exe -Wait -ArgumentList '/I VSAE/VisualStudioAuthoringConsole_x86.msi /quiet'
+                          failOnStderr: true
+                          failNoOp: true
+                      - #Build the solution SquaredUp.App.sln
+                        task: VSBuild@1
+                        displayName: "Visual Studio Build"
+                        inputs:
+                            solution: "$(buildsolutionFile)"
+                            vsVersion: "15.0"
+                            msbuildArgs: '/verbosity:minimal /p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
+                            platform: "$(buildPlatform)"
+                            configuration: "$(buildConfiguration)"
+                            clean: true
+                            restoreNugetPackages: true
+                            msbuildArchitecture: "x86"
+                            createLogFile: true
+                            logFileVerbosity: "detailed"
+                      - task: ArtifactoryGenericUpload@2
+                        inputs:
+                            artifactoryService: 'jFrog-Artifactory'
+                            specSource: 'taskConfiguration'
+                            fileSpec: |
+                              {
+                                "files": [
+                                  {
+                                    "pattern": "ManagementPacks/SquaredUp.EAM.Library/bin/Release/*.mpb",
+                                    "target": "release/com/squaredup/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_TIMESTAMP)-$(BUILD_NUMBER).mpb"
+                                  }
+                                ]
+                              }
+                            failNoOp: true
+                      - task: PublishPipelineArtifact@1
+                        inputs:
+                            targetPath: '$(Build.ArtifactStagingDirectory)/Community.DataOnDemand-$(DEMAND_MAJOR_VERSION).$(DEMAND_MINOR_VERSION).$(DEMAND_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).zip'
+                            artifact: 'Community.DataOnDemand'
+                            publishLocation: 'pipeline'
 
-trigger:
-- master
 
-pool:
-  vmImage: 'ubuntu-latest'
-
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+                      
