@@ -103,8 +103,8 @@
                             failNoOp: true
                       - task: PublishPipelineArtifact@1
                         inputs:
-                            targetPath: '$(Build.ArtifactStagingDirectory)/Community.DataOnDemand-$(DEMAND_MAJOR_VERSION).$(DEMAND_MINOR_VERSION).$(DEMAND_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).zip'
-                            artifact: 'Community.DataOnDemand'
+                            targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release'
+                            artifact: 'Enterprise.Application.Monitoring.MP'
                             publishLocation: 'pipeline'
 
 
