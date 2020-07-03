@@ -103,7 +103,7 @@
                             failNoOp: true
                       - task: PublishPipelineArtifact@1
                         inputs:
-                            targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release'
+                            targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mp'
                             artifact: 'Enterprise.Application.Monitoring.MP'
                             publishLocation: 'pipeline'
 
