@@ -96,7 +96,7 @@
                                 "files": [
                                   {
                                     "pattern": "ManagementPacks/SquaredUp.EAM.Library/bin/Release/*.mpb",
-                                    "target": "release/com/squaredup/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_TIMESTAMP)-$(BUILD_NUMBER).mpb"
+                                    "target": "release/com/squaredup/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
                                   }
                                 ]
                               }
