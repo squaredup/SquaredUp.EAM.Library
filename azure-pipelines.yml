@@ -65,28 +65,28 @@
                             #Start-Process msiexec.exe -Wait -ArgumentList '/I VSAE/VisualStudioAuthoringConsole_x86.msi /quiet'
                           failOnStderr: true
                           failNoOp: true
-                      # - task: MSBuild@1
-                      #   inputs:
-                      #     solution: '$(buildsolutionFile)'
-                      #     platform: '$(buildPlatform)'
-                      #     configuration: '$(buildConfiguration)'
-                      #     msbuildArguments: '/p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
-                      #     clean: true
-                      #     createLogFile: true
-                      - #Build the solution SquaredUp.App.sln
-                        task: VSBuild@1
-                        displayName: "Visual Studio Build"
+                      - task: MSBuild@1
                         inputs:
-                            solution: "$(buildsolutionFile)"
-                            vsVersion: "15.0"
-                            msbuildArgs: '/verbosity:minimal /p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
-                            platform: "$(buildPlatform)"
-                            configuration: "$(buildConfiguration)"
-                            clean: true
-                            restoreNugetPackages: true
-                            msbuildArchitecture: "x86"
-                            createLogFile: true
-                            logFileVerbosity: "detailed"
+                          solution: '$(buildsolutionFile)'
+                          platform: '$(buildPlatform)'
+                          configuration: '$(buildConfiguration)'
+                          msbuildArguments: '/p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
+                          clean: true
+                          createLogFile: true
+                      - #Build the solution SquaredUp.App.sln
+                        # task: VSBuild@1
+                        # displayName: "Visual Studio Build"
+                        # inputs:
+                        #     solution: "$(buildsolutionFile)"
+                        #     vsVersion: "15.0"
+                        #     msbuildArgs: '/verbosity:minimal /p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
+                        #     platform: "$(buildPlatform)"
+                        #     configuration: "$(buildConfiguration)"
+                        #     clean: true
+                        #     restoreNugetPackages: true
+                        #     msbuildArchitecture: "x86"
+                        #     createLogFile: true
+                        #     logFileVerbosity: "detailed"
                       - task: ArtifactoryGenericUpload@2
                         inputs:
                             artifactoryService: 'jFrog-Artifactory'
