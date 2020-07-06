@@ -63,6 +63,7 @@
                           failNoOp: true
 
                       - task: MSBuild@1
+                        displayName: 'Build Library'
                         inputs:
                           solution: '$(buildsolutionFile1)'
                           platform: '$(buildPlatform)'
@@ -72,6 +73,7 @@
                           createLogFile: true
 
                       - task: MSBuild@1
+                        displayName: 'Build Custom'
                         inputs:
                           solution: '$(buildsolutionFile2)'
                           platform: '$(buildPlatform)'
@@ -102,11 +104,11 @@
                       - task: PublishPipelineArtifact@1
                         inputs:
                             targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mp'
-                            artifact: 'Enterprise.Application.Monitoring.MP'
+                            artifact: 'Enterprise.Application.Monitoring.Library.MP'
                             publishLocation: 'pipeline'
                       
                       - task: PublishPipelineArtifact@1
                         inputs:
                             targetPath: 'ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb'
-                            artifact: 'Enterprise.Application.Monitoring.MP'
+                            artifact: 'Enterprise.Application.Monitoring.Custom.MP'
                             publishLocation: 'pipeline'
