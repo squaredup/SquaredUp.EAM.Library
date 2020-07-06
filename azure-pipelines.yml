@@ -64,7 +64,7 @@
 
                       - task: MSBuild@1
                         inputs:
-                          solution: '$(buildsolutionFile2)'
+                          solution: '$(buildsolutionFile1)'
                           platform: '$(buildPlatform)'
                           configuration: '$(buildConfiguration)'
                           msbuildArguments: '/p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
