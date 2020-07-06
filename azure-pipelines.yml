@@ -107,6 +107,6 @@
                       
                       - task: PublishPipelineArtifact@1
                         inputs:
-                            targetPath: 'ManagementPacks/SquaredUp.EAM.Custom/bin/Release/SquaredUp.EAM.Custom.mp'
+                            targetPath: 'ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb'
                             artifact: 'Enterprise.Application.Monitoring.MP'
                             publishLocation: 'pipeline'
