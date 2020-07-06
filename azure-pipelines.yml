@@ -63,7 +63,7 @@
                           failNoOp: true
 
                       - task: MSBuild@1
-                        displayName: 'Build Library'
+                        displayName: 'Build Overrides MP'
                         inputs:
                           solution: '$(buildsolutionFile1)'
                           platform: '$(buildPlatform)'
@@ -73,9 +73,19 @@
                           createLogFile: true
 
                       - task: MSBuild@1
-                        displayName: 'Build Custom'
+                        displayName: 'Build Library MP'
                         inputs:
                           solution: '$(buildsolutionFile2)'
+                          platform: '$(buildPlatform)'
+                          configuration: '$(buildConfiguration)'
+                          msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
+                          clean: true
+                          createLogFile: true
+
+                      - task: MSBuild@1
+                        displayName: 'Build Samples MP'
+                        inputs:
+                          solution: '$(buildsolutionFile3)'
                           platform: '$(buildPlatform)'
                           configuration: '$(buildConfiguration)'
                           msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
@@ -96,6 +106,10 @@
                                   {
                                     "pattern": "ManagementPacks/SquaredUp.EAM.Custom/bin/Release/*.mpb",
                                     "target": "release/com/squaredup/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Overrides.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
+                                  },
+                                  {
+                                    "pattern": "ManagementPacks/SquaredUp.EAM.Samples/bin/Release/*.mpb",
+                                    "target": "release/com/squaredup/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Samples.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
                                   }
                                 ]
                               }
@@ -111,4 +125,10 @@
                         inputs:
                             targetPath: 'ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb'
                             artifact: 'Enterprise.Application.Monitoring.Custom.MP'
+                            publishLocation: 'pipeline'
+
+                      - task: PublishPipelineArtifact@1
+                        inputs:
+                            targetPath: 'ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb'
+                            artifact: 'Enterprise.Application.Monitoring.Samples.MP'
                             publishLocation: 'pipeline'
