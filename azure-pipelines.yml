@@ -19,7 +19,7 @@
                     steps:
                       - task: DownloadSecureFile@1
                         inputs:
-                            secureFile: 'data-on-demand.snk'
+                            secureFile: 'SquaredUp.EAM.snk'
                         name: STRONGNAME_KEY
                         displayName: "Download secure file"
 
