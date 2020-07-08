@@ -5,7 +5,7 @@
     <RootNamespace>SquaredUp.EAM.Samples</RootNamespace>
     <Name>SquaredUp.EAM.Samples</Name>
     <ManagementPackName>SquaredUp.EAM.Samples</ManagementPackName>
-    <Version>1.0.0.0</Version>
+    <Version>1.1.1.0</Version>
     <MpFrameworkVersion>v7.0</MpFrameworkVersion>
     <MpFrameworkProfile>OM</MpFrameworkProfile>
     <ProductVersion>1.1.0.0</ProductVersion>
@@ -80,6 +80,7 @@
       <Project>{196967a7-da6a-4983-a3eb-3390ad065a31}</Project>
       <Private>True</Private>
       <Alias>EAM</Alias>
+      <MinVersion>1.2.5.0</MinVersion>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
