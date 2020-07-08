@@ -73,9 +73,9 @@
                           createLogFile: true
 
                       - task: MSBuild@1
-                        displayName: 'Build Library MP'
+                        displayName: 'Build Samples MP'
                         inputs:
-                          solution: '$(buildsolutionFile2)'
+                          solution: '$(buildsolutionFile3)'
                           platform: '$(buildPlatform)'
                           configuration: '$(buildConfiguration)'
                           msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
@@ -83,9 +83,9 @@
                           createLogFile: true
 
                       - task: MSBuild@1
-                        displayName: 'Build Samples MP'
+                        displayName: 'Build Library MP'
                         inputs:
-                          solution: '$(buildsolutionFile3)'
+                          solution: '$(buildsolutionFile2)'
                           platform: '$(buildPlatform)'
                           configuration: '$(buildConfiguration)'
                           msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
