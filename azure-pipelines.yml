@@ -3,7 +3,7 @@ stages:
   - stage: buildStage
     displayName: Build Stage
     pool:
-      vmImage: windows-2019
+      vmImage: "vs2017-win2016"
       name: Azure Pipelines
       demands:
         - msbuild
