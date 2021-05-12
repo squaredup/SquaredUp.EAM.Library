@@ -34,12 +34,12 @@ stages:
             name: prebuildTask
             inputs:
               targetType: inline
-              script: >
+              script: |
                 $date = $(Get-Date -Format "yyyyMMdd.HHmmss");
                 Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
                 $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
                 $DataStamp = get-date -Format yyyyMMddTHHmmss
-                $logFile = '{0}-{1}.log' -f $file, $DataStamp
+                $logFile = '{0}-{1}.log' -f $file,$DataStamp
                 $MSIArguments = @(
                     "/i"
                     ('"{0}"' -f $file)
