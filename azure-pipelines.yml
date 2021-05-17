@@ -37,6 +37,7 @@ stages:
               script: |
                 $date = $(Get-Date -Format "yyyyMMdd.HHmmss");
                 Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
+                Get-ChildItem $(System.DefaultWorkingDirectory)
                 $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
                 $DataStamp = get-date -Format yyyyMMddTHHmmss
                 $logFile = '{0}-{1}.log' -f $file,$DataStamp
