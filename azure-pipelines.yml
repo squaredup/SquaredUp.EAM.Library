@@ -27,10 +27,9 @@ stages:
                 $date = $(Get-Date -Format "yyyyMMdd.HHmmss");
                 Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
                 $awsURI = "https://s3.amazonaws.com/releases.squaredup/squaredupltd/tools%26scripts/vsae-msi/VisualStudioAuthoringConsole_x86.msi"
-                $dlPath = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
-                Invoke-WebRequest $awsURI -OutFile $dlPath
-                Get-ChildItem $(System.DefaultWorkingDirectory)
                 $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
+                Invoke-WebRequest $awsURI -OutFile $file
+                Get-ChildItem $(System.DefaultWorkingDirectory)
                 $DataStamp = get-date -Format yyyyMMddTHHmmss
                 $logFile = '{0}-{1}.log' -f $file,$DataStamp
                 $MSIArguments = @(
@@ -44,7 +43,6 @@ stages:
                 Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow
 
                 Get-Content $logFile
-                Get-ChildItem ManagementPacks -recurse -force
               failOnStderr: true
               failNoOp: true
           - task: MSBuild@1
@@ -80,6 +78,7 @@ stages:
               targetType: 'inline'
               script: |
                 Write-Host "Configuring AWS Credentials"
+                Write-Host "Access Key is $(AWS_ACCESS_KEY_ID) and Secret is $(AWS_SECRET_ACCESS_KEY)"
                 aws configure set aws_access_key_id $(AWS_ACCESS_KEY_ID)
                 aws configure set aws_secret_access_key $(AWS_SECRET_ACCESS_KEY)
                 aws configure set default.region us-east-1
