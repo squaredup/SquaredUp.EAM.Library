@@ -19,6 +19,16 @@ stages:
               secureFile: SquaredUp.EAM.snk
             name: STRONGNAME_KEY
             displayName: Download secure file
+          - task: S3Download@1
+            inputs:
+              awsCredentials: 'DevOps Service Account'
+              regionName: 'us-east-1'
+              bucketName: 'releases.squaredup'
+              sourceFolder: 'squaredupltd/tools&scripts/vsae-msi'
+              globExpressions: 'VisualStudioAuthoringConsole_x86.msi'
+              targetFolder: '$(System.DefaultWorkingDirectory)'
+              logRequest: true
+              logResponse: true
           - task: PowerShell@2
             name: prebuildTask
             inputs:
@@ -26,9 +36,9 @@ stages:
               script: |
                 $date = $(Get-Date -Format "yyyyMMdd.HHmmss");
                 Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
-                $s3URI = "s3://releases.squaredup/squaredupltd/tools&scripts/vsae-msi/VisualStudioAuthoringConsole_x86.msi"
-                $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
-                aws s3 cp $s3URI $file
+                # $s3URI = "s3://releases.squaredup/squaredupltd/tools&scripts/vsae-msi/VisualStudioAuthoringConsole_x86.msi"
+                # $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
+                # aws s3 cp $s3URI $file
                 Get-ChildItem $(System.DefaultWorkingDirectory)
                 $DataStamp = get-date -Format yyyyMMddTHHmmss
                 $logFile = '{0}-{1}.log' -f $file,$DataStamp
