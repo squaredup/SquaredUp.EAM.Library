@@ -19,17 +19,6 @@ stages:
               secureFile: SquaredUp.EAM.snk
             name: STRONGNAME_KEY
             displayName: Download secure file
-          - task: AmazonWebServices.aws-vsts-tools.S3Download.S3Download@1
-            displayName: 'S3 Download: VisualStudioAuthoringConsole'
-            inputs:
-              awsCredentials: DevOps Service Account
-              regionName: us-east-1
-              bucketName: releases.squaredup
-              sourceFolder: squaredupltd/tools&scripts/vsae-msi/
-              globExpressions: VisualStudioAuthoringConsole_x86.msi
-              targetFolder: $(System.DefaultWorkingDirectory)
-              logRequest: true
-              logResponse: true
           - task: PowerShell@2
             name: prebuildTask
             inputs:
@@ -37,6 +26,9 @@ stages:
               script: |
                 $date = $(Get-Date -Format "yyyyMMdd.HHmmss");
                 Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
+                $awsURI = "https://s3.amazonaws.com/releases.squaredup/squaredupltd/tools%26scripts/vsae-msi/VisualStudioAuthoringConsole_x86.msi"
+                $dlPath = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
+                Invoke-WebRequest $awsURI -OutFile $dlPath
                 Get-ChildItem $(System.DefaultWorkingDirectory)
                 $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
                 $DataStamp = get-date -Format yyyyMMddTHHmmss
