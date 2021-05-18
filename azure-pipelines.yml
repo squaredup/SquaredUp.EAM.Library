@@ -20,18 +20,25 @@ stages:
             name: STRONGNAME_KEY
             displayName: Download secure file
           - task: PowerShell@2
-            displayName: Install VSAE
-            name: prebuildTask
+            displayName: Download VSAE
+            name: downloadVSAE
             inputs:
               targetType: inline
-              script: |
-                $date = $(Get-Date -Format "yyyyMMdd.HHmmss");
-                Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
+              script: | 
                 $s3URI = "https://s3.amazonaws.com/releases.squaredup/squaredupltd/tools%26scripts/vsae-msi/VisualStudioAuthoringConsole_x86.msi"
                 $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
                 Write-Host "Downloading Build from $s3URI to $file"
                 (New-Object System.Net.WebClient).DownloadFile($s3URI, $file)
                 Get-ChildItem $(System.DefaultWorkingDirectory)
+                Write-Host "##vso[task.setvariable variable=VSAE_InstallerPath]$file"
+              failOnStderr: true
+          - task: PowerShell@2
+            displayName: Install VSAE
+            name: installVSAE
+            inputs:
+              targetType: inline
+              script: |
+                $file = "$(VSAE_InstallerPath)"
                 $DataStamp = get-date -Format yyyyMMddTHHmmss
                 $logFile = '{0}-{1}.log' -f $file,$DataStamp
                 $MSIArguments = @(
@@ -42,11 +49,10 @@ stages:
                     "/L*v"
                     $logFile
                 )
+                Write-Host "Installing Visual Studio Authoring Extensions"
                 Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow
-
                 Get-Content $logFile
               failOnStderr: true
-              failNoOp: true
           - task: MSBuild@1
             displayName: Build Overrides MP
             inputs:
