@@ -74,25 +74,22 @@ stages:
               msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
               clean: true
               createLogFile: true
-          - task: PowerShell@2
+          - powershell: |
+              Write-Host "Configuring AWS Credentials"
+              aws configure set aws_access_key_id $env:AWS_ACCESS_KEY_ID
+              aws configure set aws_secret_access_key $env:AWS_SECRET_ACCESS_KEY
+              aws configure set default.region us-east-1
+              Write-Host "Successfully Configured AWS Credentials"
+              Write-Host "Starting Upload"
+              aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Library\bin\Release\SquaredUp.EAM.Library.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
+              aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Overrides.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
+              aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Samples.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
+              Write-Host "Artifacts Uploaded to S3"
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            env:
+                AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+                AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
             displayName: Artifacts Uploads to S3
-            inputs:
-              targetType: 'inline'
-              script: |
-                Write-Host "Configuring AWS Credentials"
-                Write-Host "Access Key is $(AWS_ACCESS_KEY_ID) and Secret is $(AWS_SECRET_ACCESS_KEY)"
-                aws configure set aws_access_key_id $(AWS_ACCESS_KEY_ID)
-                aws configure set aws_secret_access_key $(AWS_SECRET_ACCESS_KEY)
-                aws configure set default.region us-east-1
-                cat $env:USERPROFILE\.aws\config
-                cat $env:USERPROFILE\.aws\credentials
-                Write-Host "Successfully Configured AWS Credentials"
-                Write-Host "Starting Upload"
-                aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Library\bin\Release\SquaredUp.EAM.Library.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
-                aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Overrides.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
-                aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Samples.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
-                Write-Host "Artifacts Uploaded to S3"
-              workingDirectory: '$(System.DefaultWorkingDirectory)'
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mpb'
