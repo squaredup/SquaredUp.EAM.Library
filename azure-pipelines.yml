@@ -27,7 +27,7 @@ stages:
               script: |
                 $date = $(Get-Date -Format "yyyyMMdd.HHmmss");
                 Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
-                $s3URI = "s3://releases.squaredup/squaredupltd/tools&scripts/vsae-msi/VisualStudioAuthoringConsole_x86.msi"
+                $s3URI = "https://s3.amazonaws.com/releases.squaredup/squaredupltd/tools%26scripts/vsae-msi/VisualStudioAuthoringConsole_x86.msi"
                 $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
                 Write-Host "Downloading Build from $s3URI to $file"
                 (New-Object System.Net.WebClient).DownloadFile($s3URI, $file)
