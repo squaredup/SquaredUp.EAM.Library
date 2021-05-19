@@ -100,15 +100,15 @@ stages:
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mpb'
-              artifact: Enterprise.Application.Monitoring.Library.MP
+              artifact: Enterprise.Application.Monitoring.Library.MP\Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$timeStamp-$(BUILD_NUMBER).mpb
               publishLocation: pipeline
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: 'ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb'
-              artifact: Enterprise.Application.Monitoring.Custom.MP
+              artifact: Enterprise.Application.Monitoring.Custom.MP\Enterprise.Application.Monitoring.Overrides.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$timeStamp-$(BUILD_NUMBER).mpb
               publishLocation: pipeline
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: 'ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb'
-              artifact: Enterprise.Application.Monitoring.Samples.MP
+              artifact: Enterprise.Application.Monitoring.Samples.MP\Enterprise.Application.Monitoring.Samples.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$timeStamp-$(BUILD_NUMBER).mpb
               publishLocation: pipeline
