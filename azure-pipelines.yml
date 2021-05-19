@@ -95,7 +95,7 @@ stages:
             env:
                 AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
                 AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-            displayName: Artifacts Uploads to S3
+            displayName: Upload Artifacts to S3
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mpb'
