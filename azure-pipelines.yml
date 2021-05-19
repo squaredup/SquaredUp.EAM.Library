@@ -80,6 +80,21 @@ stages:
               msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
               clean: true
               createLogFile: true
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mpb'
+              artifact: Enterprise.Application.Monitoring.Library.MP
+              publishLocation: pipeline
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb'
+              artifact: Enterprise.Application.Monitoring.Custom.MP
+              publishLocation: pipeline
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb'
+              artifact: Enterprise.Application.Monitoring.Samples.MP
+              publishLocation: pipeline
           - powershell: |
               Write-Host "Configuring AWS Credentials"
               aws configure set aws_access_key_id $env:AWS_ACCESS_KEY_ID
@@ -96,18 +111,3 @@ stages:
                 AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
                 AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
             displayName: Upload Artifacts to S3
-          - task: PublishPipelineArtifact@1
-            inputs:
-              targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mpb'
-              artifact: Enterprise.Application.Monitoring.Library.MP
-              publishLocation: pipeline
-          - task: PublishPipelineArtifact@1
-            inputs:
-              targetPath: 'ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb'
-              artifact: Enterprise.Application.Monitoring.Custom.MP
-              publishLocation: pipeline
-          - task: PublishPipelineArtifact@1
-            inputs:
-              targetPath: 'ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb'
-              artifact: Enterprise.Application.Monitoring.Samples.MP
-              publishLocation: pipeline
