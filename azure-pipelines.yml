@@ -96,16 +96,24 @@ stages:
               artifact: Enterprise.Application.Monitoring.Samples.MP
               publishLocation: pipeline
           - powershell: |
-              Write-Host "Configuring AWS Credentials"
-              aws configure set aws_access_key_id $env:AWS_ACCESS_KEY_ID
-              aws configure set aws_secret_access_key $env:AWS_SECRET_ACCESS_KEY
-              aws configure set default.region us-east-1
-              Write-Host "Successfully Configured AWS Credentials"
-              Write-Host "Starting Upload"
-              aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Library\bin\Release\SquaredUp.EAM.Library.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
-              aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Overrides.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
-              aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Samples.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
-              Write-Host "Artifacts Uploaded to S3"
+              try {
+                  Write-Host "Configuring AWS Credentials"
+                  aws configure set aws_access_key_id $env:AWS_ACCESS_KEY_ID
+                  aws configure set aws_secret_access_key $env:AWS_SECRET_ACCESS_KEY
+                  aws configure set default.region us-east-1
+                  Write-Host "Successfully Configured AWS Credentials"
+                  Write-Host "Starting Upload"
+                  aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Library\bin\Release\SquaredUp.EAM.Library.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
+                  aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Overrides.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
+                  aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Samples.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
+                  Write-Host "Artifacts Uploaded to S3"
+              }
+              catch {
+                  Write-Host "Failed to Upload Artifact"
+                  Write-Host $_.scriptstackTrace
+                  Write-Host "Response : $_.Exception.Response"
+                  exit -1
+              }
             workingDirectory: '$(System.DefaultWorkingDirectory)'
             env:
                 AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
