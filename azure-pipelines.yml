@@ -1,134 +1,121 @@
---- 
-    name: $(Rev:r)
-    stages: 
-        -
-            stage: buildStage
-            displayName: 'Build Stage'
-            pool:
-                vmImage: "vs2017-win2016"
-                name: Azure Pipelines
-                demands:
-                    - msbuild
-                    - visualstudio
-                    - Cmd
-                    - vstest
-            jobs:
-                - 
-                    job: "buildJob"
-                    displayName: "Build Job"
-                    steps:
-                      - task: DownloadSecureFile@1
-                        inputs:
-                            secureFile: 'SquaredUp.EAM.snk'
-                        name: STRONGNAME_KEY
-                        displayName: "Download secure file"
-
-                      - task: ArtifactoryGenericDownload@3
-                        inputs:
-                            connection: 'jFrog-Artifactory'
-                            specSource: 'taskConfiguration'
-                            fileSpec: |
-                              {
-                                "files": [
-                                  {
-                                    "pattern": "public/com/squaredup/vsae-msi/VisualStudioAuthoringConsole_x86.msi",
-                                    "target": "VSAE/VisualStudioAuthoringConsole_x86.msi"
-                                  }
-                                ]
-                              }
-
-                      - task: PowerShell@2
-                        name: "prebuildTask"
-                        inputs:
-                          targetType: 'inline'
-                          script: |
-                            $date=$(Get-Date -Format "yyyyMMdd.HHmmss");
-                            Write-Host "##vso[task.setvariable variable=Build_Date;isOutput=true]$date"
-                            $file = "$(System.DefaultWorkingDirectory)\VSAE\com\squaredup\vsae-msi\VisualStudioAuthoringConsole_x86.msi"
-                            $DataStamp = get-date -Format yyyyMMddTHHmmss
-                            $logFile = '{0}-{1}.log' -f $file,$DataStamp
-                            $MSIArguments = @(
-                                "/i"
-                                ('"{0}"' -f $file)
-                                "/qn"
-                                "/norestart"
-                                "/L*v"
-                                $logFile
-                            )
-                            Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow  
-                            get-content $logFile
-
-                            get-childItem ManagementPacks -recurse -force
-                          failOnStderr: true
-                          failNoOp: true
-
-                      - task: MSBuild@1
-                        displayName: 'Build Overrides MP'
-                        inputs:
-                          solution: '$(buildsolutionFile1)'
-                          platform: '$(buildPlatform)'
-                          configuration: '$(buildConfiguration)'
-                          msbuildArguments: '/p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
-                          clean: true
-                          createLogFile: true
-
-                      - task: MSBuild@1
-                        displayName: 'Build Samples MP'
-                        inputs:
-                          solution: '$(buildsolutionFile3)'
-                          platform: '$(buildPlatform)'
-                          configuration: '$(buildConfiguration)'
-                          msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
-                          clean: true
-                          createLogFile: true
-
-                      - task: MSBuild@1
-                        displayName: 'Build Library MP'
-                        inputs:
-                          solution: '$(buildsolutionFile2)'
-                          platform: '$(buildPlatform)'
-                          configuration: '$(buildConfiguration)'
-                          msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
-                          clean: true
-                          createLogFile: true
-
-                      - task: ArtifactoryGenericUpload@2
-                        inputs:
-                            artifactoryService: 'jFrog-Artifactory'
-                            specSource: 'taskConfiguration'
-                            fileSpec: |
-                              {
-                                "files": [
-                                  {
-                                    "pattern": "ManagementPacks/SquaredUp.EAM.Library/bin/Release/*.mpb",
-                                    "target": "release/com/squaredup/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
-                                  },
-                                  {
-                                    "pattern": "ManagementPacks/SquaredUp.EAM.Custom/bin/Release/*.mpb",
-                                    "target": "release/com/squaredup/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Overrides.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
-                                  },
-                                  {
-                                    "pattern": "ManagementPacks/SquaredUp.EAM.Samples/bin/Release/*.mpb",
-                                    "target": "release/com/squaredup/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Samples.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(TIMESTAMP)-$(BUILD_NUMBER).mpb"
-                                  }
-                                ]
-                              }
-                            failNoOp: true
-
-                      - task: PublishPipelineArtifact@1
-                        inputs:
-                            targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mpb'
-                            artifact: 'Enterprise.Application.Monitoring.Library.MP'
-                            publishLocation: 'pipeline'
-                      
-                      - task: PublishPipelineArtifact@1
-                        inputs:
-                            targetPath: 'ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb'
-                            artifact: 'Enterprise.Application.Monitoring.Custom.MP'
-                            publishLocation: 'pipeline'
-
-                      - task: PublishPipelineArtifact@1
-                        inputs:
-                            targetPath: 'ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb'
-                            artifact: 'Enterprise.Application.Monitoring.Samples.MP'
-                            publishLocation: 'pipeline'
+name: '$(Rev:r)'
+stages:
+  - stage: buildStage
+    displayName: Build Stage
+    pool:
+      vmImage: "vs2017-win2016"
+      name: Azure Pipelines
+      demands:
+        - msbuild
+        - visualstudio
+        - Cmd
+        - vstest
+    jobs:
+      - job: buildJob
+        displayName: Build Job
+        steps:
+          - task: DownloadSecureFile@1
+            inputs:
+              secureFile: SquaredUp.EAM.snk
+            name: STRONGNAME_KEY
+            displayName: Download secure file
+          - task: PowerShell@2
+            displayName: Download VSAE
+            name: downloadVSAE
+            inputs:
+              targetType: inline
+              script: | 
+                $s3URI = "https://s3.amazonaws.com/releases.squaredup/squaredupltd/tools%26scripts/vsae-msi/VisualStudioAuthoringConsole_x86.msi"
+                $file = "$(System.DefaultWorkingDirectory)\VisualStudioAuthoringConsole_x86.msi"
+                Write-Host "Downloading Build from $s3URI to $file"
+                (New-Object System.Net.WebClient).DownloadFile($s3URI, $file)
+                Get-ChildItem $(System.DefaultWorkingDirectory)
+                Write-Host "##vso[task.setvariable variable=VSAE_InstallerPath]$file"
+              failOnStderr: true
+          - task: PowerShell@2
+            displayName: Install VSAE
+            name: installVSAE
+            inputs:
+              targetType: inline
+              script: |
+                $file = "$(VSAE_InstallerPath)"
+                $DataStamp = get-date -Format yyyyMMddTHHmmss
+                $logFile = '{0}-{1}.log' -f $file,$DataStamp
+                $MSIArguments = @(
+                    "/i"
+                    ('"{0}"' -f $file)
+                    "/qn"
+                    "/norestart"
+                    "/L*v"
+                    $logFile
+                )
+                Write-Host "Installing Visual Studio Authoring Extensions"
+                Start-Process "msiexec.exe" -ArgumentList $MSIArguments -Wait -NoNewWindow
+                Get-Content $logFile
+              failOnStderr: true
+          - task: MSBuild@1
+            displayName: Build Overrides MP
+            inputs:
+              solution: $(buildsolutionFile1)
+              platform: $(buildPlatform)
+              configuration: $(buildConfiguration)
+              msbuildArguments: '/p:Version=1.0.0.0 /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
+              clean: true
+              createLogFile: true
+          - task: MSBuild@1
+            displayName: Build Samples MP
+            inputs:
+              solution: $(buildsolutionFile3)
+              platform: $(buildPlatform)
+              configuration: $(buildConfiguration)
+              msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
+              clean: true
+              createLogFile: true
+          - task: MSBuild@1
+            displayName: Build Library MP
+            inputs:
+              solution: $(buildsolutionFile2)
+              platform: $(buildPlatform)
+              configuration: $(buildConfiguration)
+              msbuildArguments: '/p:Version=$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION).$(BUILD_NUMBER) /p:AssemblyOriginatorKeyFile=$(STRONGNAME_KEY.secureFilePath)'
+              clean: true
+              createLogFile: true
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'ManagementPacks/SquaredUp.EAM.Library/bin/Release/SquaredUp.EAM.Library.mpb'
+              artifact: Enterprise.Application.Monitoring.Library.MP
+              publishLocation: pipeline
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb'
+              artifact: Enterprise.Application.Monitoring.Custom.MP
+              publishLocation: pipeline
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb'
+              artifact: Enterprise.Application.Monitoring.Samples.MP
+              publishLocation: pipeline
+          - powershell: |
+              try {
+                  Write-Host "Configuring AWS Credentials"
+                  aws configure set aws_access_key_id $env:AWS_ACCESS_KEY_ID
+                  aws configure set aws_secret_access_key $env:AWS_SECRET_ACCESS_KEY
+                  aws configure set default.region us-east-1
+                  Write-Host "Successfully Configured AWS Credentials"
+                  Write-Host "Starting Upload"
+                  aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Library\bin\Release\SquaredUp.EAM.Library.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
+                  aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Custom\bin\Release\SquaredUp.EAM.Custom.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Overrides.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
+                  aws s3 cp "$(System.DefaultWorkingDirectory)\ManagementPacks\SquaredUp.EAM.Samples\bin\Release\SquaredUp.EAM.Samples.mpb" "s3://cibuilds.squaredup/management-packs/Enterprise.Application.Monitoring.MP/$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)/Enterprise.Application.Monitoring.Samples.MP-$(EAM_MAJOR_VERSION).$(EAM_MINOR_VERSION).$(EAM_REVISION)-$(BUILD_NUMBER).mpb"
+                  Write-Host "Artifacts Uploaded to S3"
+              }
+              catch {
+                  Write-Host "Failed to Upload Artifact"
+                  Write-Host $_.scriptstackTrace
+                  Write-Host "Response : $_.Exception.Response"
+                  exit -1
+              }
+            workingDirectory: '$(System.DefaultWorkingDirectory)'
+            env:
+                AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+                AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+            displayName: Upload Artifacts to S3
