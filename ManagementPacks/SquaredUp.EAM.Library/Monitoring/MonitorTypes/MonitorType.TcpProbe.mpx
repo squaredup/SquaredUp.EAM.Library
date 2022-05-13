@@ -81,7 +81,7 @@
               </Node>
             </OnDemandDetection>
             <OnDemandDetection MonitorTypeStateID="ConnectionFailed">
-              <Node ID="CDConnectionOk">
+              <Node ID="CDConnectionFailed">
                 <Node ID="Probe" />
               </Node>
             </OnDemandDetection>
