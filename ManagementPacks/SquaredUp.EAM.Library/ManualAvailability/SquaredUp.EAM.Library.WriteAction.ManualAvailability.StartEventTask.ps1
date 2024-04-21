@@ -27,7 +27,12 @@ $overrides = @{
 }
 
 $momapi.LogScriptEvent($scriptName,8998,0,"Triggering task to set health for '$DisplayName'")
-$taskOut = Start-SCOMTask -task $task -instance $ms -Override $overrides
+try {
+    $taskOut = Start-SCOMTask -Task $task -Instance $ms -Override $overrides -TaskCredentials $null
+}
+catch {
+    $momapi.LogScriptEvent($scriptName,8998,0,"06 `nError: $_")
+}
 
 if ($taskOut.BatchId -ne $null){
 
